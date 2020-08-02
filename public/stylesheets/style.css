@@ -1,8 +1,43 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.main_about {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 95px;
+  padding-bottom: 0
+}
+.welcome {
+  color: #000;
+  font-size: 100px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  text-align: center
+}
+/*under_welcome*/
+.under_welcome {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+/*part  left*/
+
+.if-you {
+  text-align: center;
+  color: #000;
+  font-size: 40px;
+}
+.welcome_buttons{
+  display: flex;
+  justify-content: center;
+
+}
+.wel_but{
+  width: 500px;
+  height: 70px;
+ margin: 20px;
+  font-size: 40px;
+  color:#eeeeee;
+border-radius: 7px;
+  border: none;
+  background-color: #0082e3;
 }
 
-a {
-  color: #00B7FF;
-}
