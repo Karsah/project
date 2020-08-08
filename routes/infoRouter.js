@@ -1,15 +1,19 @@
 const express = require('express');
-const infoRouter = express.Router();
-infoRouter.use('/communities', function (request, response) {
-    response.render('', {
+const infoRout = express.Router();
+infoRout.get('/communities', function (request, response) {
+    response.render('frontend/communities', {
         title: 'communities'
     })
-
 });
-infoRouter.use('/cities', function (request, response) {
-    response.render('', {
+infoRout.get('/cities', function (request, response) {
+    response.render('frontend/cities', {
         title: 'cities'
     })
 });
-module.exports = infoRouter;
+infoRout.get('/', function (request, response) {
+    response.render('frontend/information', {
+        title: 'information'
+    })
+});
+module.exports = infoRout;
 
