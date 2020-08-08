@@ -16,10 +16,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.get('/tourism', tourRout);
-app.get('/feedback', feedbackRout);
-app.get('/information', infoRout);
-app.get('/', function(req, res) {
+app.use('/tourism', tourRout);
+app.use('/feedback', feedbackRout);
+app.use('/information', infoRout);
+app.use('/', function(req, res) {
   res.render('frontend/index', { title: 'home page' });
 });
 
