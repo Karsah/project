@@ -5,11 +5,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const app = express();
 
-const backendRout = require('./routes/backendRouter');
-const infoRout = require('./routes/infoRouter');
-const tourRout = require('./routes/tourRouter');
-const feedbackRout = require('./routes/feedbackRouter');
+//main routes connection
+const backendRout = require('./routes/backend/backendRouter');
+const homeRout = require('./routes/frontend/homerouter')
 
+//main routes
+app.use('/backend',backendRout)
+app.use('/',homeRout)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,13 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/backend',backendRout)
-app.use('/tourism', tourRout);
-app.use('/feedback', feedbackRout);
-app.use('/information', infoRout);
-app.get('/', function(req, res) {
-  res.render('frontend/index', { title: 'Discover Aragatsotn' });
-});
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res) {
