@@ -1,18 +1,406 @@
 <%- include('partials/head')%>
-<section class="container">
-        <nav class="navigation">
-            <ul class="navlist" type="none">
-                <li><a href="">Item One</a></li>
-                <li><a href="">Item Two </a></li>
-                <li><a href="">Item Three </a></li>
-                <li><a href="">Item Four </a></li>
-                <li><a href="">Item Five </a></li>
-            </ul>
-        </nav>
-        <main class="main"></main>
-        <footer class="footer">
-            <p>2020 Discover Aragatsotn &#169 BackEnd</p>
-            <p>Log Out {icon}</p>
-        </footer>
-    </section>
+
+        <div class="container">
+            <header>
+                <div class="header_left_area">
+                    <h3><span>Discover</span> Aragatsotn</h3>
+                </div>
+                <div class="heeadr_right_area">
+                    <a href="#" class="logout_btn">Logout</a>
+                </div>
+            </header>
+            <div class="sidebar">
+                <div class="profile_info">
+                    <div class="profile_image"></div>
+                    <h3>Artur Qocharyan</h3>
+                    <p>artur.qocharyan2003@gmail.com</p>
+                </div>
+                <a href="#" class="active"
+                    ><i class="fas fa-desktop"></i><span>Dashboard</span></a
+                >
+                <a href="#"
+                    ><i class="fas fa-cogs"></i><span>Components</span></a
+                >
+                <a href="#"><i class="fas fa-table"></i><span>Tables</span></a>
+                <a href="#"><i class="fas fa-th"></i><span>Forms</span></a>
+                <a href="#"
+                    ><i class="fas fa-info-circle"></i><span>About</span></a
+                >
+                <a href="#"
+                    ><i class="fas fa-sliders-h"></i><span>Settings</span></a
+                >
+            </div>
+            <div class="content">
+                <!-- <div class="card">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                </div>
+                <div class="card">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                </div>
+                <div class="card">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                </div> -->
+                <div class="table-box">
+                    <table>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Comment</th>
+                            <th>Age</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>User1</td>
+                            <td>uesr1@mail.ru</td>
+                            <td>user 1`s comment</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>User2</td>
+                            <td>uesr2@mail.ru</td>
+                            <td>user 2`s comment</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>User3</td>
+                            <td>uesr3@mail.ru</td>
+                            <td>user 3`s comment</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>User4</td>
+                            <td>uesr4@mail.ru</td>
+                            <td>user 4`s comment</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>User5</td>
+                            <td>uesr5@mail.ru</td>
+                            <td>user 5`s comment</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>User6</td>
+                            <td>uesr6@mail.ru</td>
+                            <td>user 6`s comment</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>User7</td>
+                            <td>uesr7@mail.ru</td>
+                            <td>user 7`s comment</td>
+                            <td>7</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>User8</td>
+                            <td>uesr8@mail.ru</td>
+                            <td>user 8`s comment</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>User9</td>
+                            <td>uesr9@mail.ru</td>
+                            <td>user 9`s comment</td>
+                            <td>9</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>User10</td>
+                            <td>uesr10@mail.ru</td>
+                            <td>user 10`s comment</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>User11</td>
+                            <td>uesr11@mail.ru</td>
+                            <td>user 11`s comment</td>
+                            <td>11</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>User12</td>
+                            <td>uesr12@mail.ru</td>
+                            <td>user 12`s comment</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>User13</td>
+                            <td>uesr13@mail.ru</td>
+                            <td>user 13`s comment</td>
+                            <td>13</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>User14</td>
+                            <td>uesr14@mail.ru</td>
+                            <td>user 14`s comment</td>
+                            <td>14</td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td>User15</td>
+                            <td>uesr15@mail.ru</td>
+                            <td>user 15`s comment</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>User16</td>
+                            <td>uesr16@mail.ru</td>
+                            <td>user 16`s comment</td>
+                            <td>16</td>
+                        </tr>
+                        <tr>
+                            <td>17</td>
+                            <td>User17</td>
+                            <td>uesr17@mail.ru</td>
+                            <td>user 17`s comment</td>
+                            <td>17</td>
+                        </tr>
+                        <tr>
+                            <td>18</td>
+                            <td>User18</td>
+                            <td>uesr18@mail.ru</td>
+                            <td>user 18`s comment</td>
+                            <td>18</td>
+                        </tr>
+                        <tr>
+                            <td>19</td>
+                            <td>User19</td>
+                            <td>uesr19@mail.ru</td>
+                            <td>user 19`s comment</td>
+                            <td>19</td>
+                        </tr>
+                        <tr>
+                            <td>20</td>
+                            <td>User20</td>
+                            <td>uesr20@mail.ru</td>
+                            <td>user 20`s comment</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>21</td>
+                            <td>User21</td>
+                            <td>uesr21@mail.ru</td>
+                            <td>user 21`s comment</td>
+                            <td>21</td>
+                        </tr>
+                        <tr>
+                            <td>22</td>
+                            <td>User22</td>
+                            <td>uesr22@mail.ru</td>
+                            <td>user 22`s comment</td>
+                            <td>22</td>
+                        </tr>
+                        <tr>
+                            <td>23</td>
+                            <td>User23</td>
+                            <td>uesr23@mail.ru</td>
+                            <td>user 23`s comment</td>
+                            <td>23</td>
+                        </tr>
+                        <tr>
+                            <td>24</td>
+                            <td>User24</td>
+                            <td>uesr24@mail.ru</td>
+                            <td>user 24`s comment</td>
+                            <td>24</td>
+                        </tr>
+                        <tr>
+                            <td>25</td>
+                            <td>User25</td>
+                            <td>uesr25@mail.ru</td>
+                            <td>user 25`s comment</td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td>26</td>
+                            <td>User26</td>
+                            <td>uesr26@mail.ru</td>
+                            <td>user 26`s comment</td>
+                            <td>26</td>
+                        </tr>
+                        <tr>
+                            <td>27</td>
+                            <td>User27</td>
+                            <td>uesr27@mail.ru</td>
+                            <td>user 27`s comment</td>
+                            <td>27</td>
+                        </tr>
+                        <tr>
+                            <td>28</td>
+                            <td>User28</td>
+                            <td>uesr28@mail.ru</td>
+                            <td>user 28`s comment</td>
+                            <td>28</td>
+                        </tr>
+                        <tr>
+                            <td>29</td>
+                            <td>User29</td>
+                            <td>uesr29@mail.ru</td>
+                            <td>user 29`s comment</td>
+                            <td>29</td>
+                        </tr>
+                        <tr>
+                            <td>30</td>
+                            <td>User30</td>
+                            <td>uesr30@mail.ru</td>
+                            <td>user 30`s comment</td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>31</td>
+                            <td>User31</td>
+                            <td>uesr31@mail.ru</td>
+                            <td>user 31`s comment</td>
+                            <td>31</td>
+                        </tr>
+                        <tr>
+                            <td>32</td>
+                            <td>User32</td>
+                            <td>uesr32@mail.ru</td>
+                            <td>user 32`s comment</td>
+                            <td>32</td>
+                        </tr>
+                        <tr>
+                            <td>33</td>
+                            <td>User33</td>
+                            <td>uesr33@mail.ru</td>
+                            <td>user 33`s comment</td>
+                            <td>33</td>
+                        </tr>
+                        <tr>
+                            <td>34</td>
+                            <td>User34</td>
+                            <td>uesr34@mail.ru</td>
+                            <td>user 34`s comment</td>
+                            <td>34</td>
+                        </tr>
+                        <tr>
+                            <td>35</td>
+                            <td>User35</td>
+                            <td>uesr35@mail.ru</td>
+                            <td>user 35`s comment</td>
+                            <td>35</td>
+                        </tr>
+                        <tr>
+                            <td>36</td>
+                            <td>User36</td>
+                            <td>uesr36@mail.ru</td>
+                            <td>user 36`s comment</td>
+                            <td>36</td>
+                        </tr>
+                        <tr>
+                            <td>37</td>
+                            <td>User37</td>
+                            <td>uesr37@mail.ru</td>
+                            <td>user 37`s comment</td>
+                            <td>37</td>
+                        </tr>
+                        <tr>
+                            <td>38</td>
+                            <td>User38</td>
+                            <td>uesr38@mail.ru</td>
+                            <td>user 38`s comment</td>
+                            <td>38</td>
+                        </tr>
+                        <tr>
+                            <td>39</td>
+                            <td>User39</td>
+                            <td>uesr39@mail.ru</td>
+                            <td>user 39`s comment</td>
+                            <td>39</td>
+                        </tr>
+                        <tr>
+                            <td>40</td>
+                            <td>User40</td>
+                            <td>uesr40@mail.ru</td>
+                            <td>user 40`s comment</td>
+                            <td>40</td>
+                        </tr>
+                        <tr>
+                            <td>41</td>
+                            <td>User41</td>
+                            <td>uesr41@mail.ru</td>
+                            <td>user 41`s comment</td>
+                            <td>41</td>
+                        </tr>
+                        <tr>
+                            <td>42</td>
+                            <td>User42</td>
+                            <td>uesr42@mail.ru</td>
+                            <td>user 42`s comment</td>
+                            <td>42</td>
+                        </tr>
+                        <tr>
+                            <td>43</td>
+                            <td>User43</td>
+                            <td>uesr43@mail.ru</td>
+                            <td>user 43`s comment</td>
+                            <td>43</td>
+                        </tr>
+                        <tr>
+                            <td>44</td>
+                            <td>User44</td>
+                            <td>uesr44@mail.ru</td>
+                            <td>user 44`s comment</td>
+                            <td>44</td>
+                        </tr>
+                        <tr>
+                            <td>45</td>
+                            <td>User45</td>
+                            <td>uesr45@mail.ru</td>
+                            <td>user 45`s comment</td>
+                            <td>45</td>
+                        </tr>
+                        <tr>
+                            <td>46</td>
+                            <td>User46</td>
+                            <td>uesr46@mail.ru</td>
+                            <td>user 46`s comment</td>
+                            <td>46</td>
+                        </tr>
+                        <tr>
+                            <td>47</td>
+                            <td>User47</td>
+                            <td>uesr47@mail.ru</td>
+                            <td>user 47`s comment</td>
+                            <td>47</td>
+                        </tr>
+                        <tr>
+                            <td>48</td>
+                            <td>User48</td>
+                            <td>uesr48@mail.ru</td>
+                            <td>user 48`s comment</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>49</td>
+                            <td>User49</td>
+                            <td>uesr49@mail.ru</td>
+                            <td>user 49`s comment</td>
+                            <td>49</td>
+                        </tr>
+                        <tr>
+                            <td>50</td>
+                            <td>User50</td>
+                            <td>uesr50@mail.ru</td>
+                            <td>user 50`s comment</td>
+                            <td>50</td>
+                        </tr>    
+                    </table>
+                </div>
+            </div>
+        </div>
 <%- include('partials/footer')%>

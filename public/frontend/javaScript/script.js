@@ -15,7 +15,7 @@ setInterval(() => {
         slider.style.transition = "none";
         slider.style.left = '0';
     }
-}, 7000);
+}, 8000);
 
 // menu
 const open = document.querySelector("#open_menu"),
@@ -31,5 +31,8 @@ close.addEventListener("click", function () {
 window.addEventListener("resize", function () {
     if (window.innerWidth > 952) {
         menu.style.left = '0';
+    }
+    else if(window.innerWidth <=952){
+        menu.style.left = '-100%'
     }
 });

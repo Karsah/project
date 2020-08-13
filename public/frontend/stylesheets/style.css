@@ -24,14 +24,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 500%;
   height: 100%;
   transition: 0.8s;
-  /* animation: slider 10s linear infinite; */
 }
 .container > .slider > .slide {
   position: relative;
-  width: 20%;
   height: 100%;
   float: left;
   background-size: cover;
@@ -60,19 +57,6 @@
   color: #fff;
   font-size: 18px;
   transition: 0.5s;
-}
-
-.slide1 {
-  background-image: url("../images/ashtarak_photo_3.jpg");
-}
-.slide2 {
-  background-image: url("../images/amberd.jpg");
-}
-.slide3 {
-  background-image: url("../images/5058209.jpg");
-}
-.slide4 {
-  background-image: url("../images/xach.jpg");
 }
 
 /* nav_bar */
@@ -165,6 +149,42 @@ nav > ul > li > a {
   cursor: pointer;
   display: none;
 }
+
+/*Karen*/
+.welcome {
+  color: #000;
+  font-size: 100px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  text-align: center
+}
+/*under_welcome*/
+.under_welcome {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.if-you {
+  text-align: center;
+  color: #000;
+  font-size: 40px;
+}
+.welcome_buttons{
+  display: flex;
+  justify-content: center;
+
+}
+.wel_but{
+  width: 500px;
+  height: 70px;
+  margin: 20px;
+  font-size: 40px;
+  color:#eeeeee;
+  border-radius: 7px;
+  border: none;
+  background-color: #0082e3;
+}
+
 /* mediaaaaaaaaaa */
 @media (min-width: 2000px) {
   /* slider */
@@ -289,8 +309,44 @@ nav > ul > li > a {
   nav > ul > li:hover > .fa {
     transform: none;
   }
+
+
+}
+@media (max-width: 700px) {
+  .main_about{
+    padding:40px ;
+  }
+
+  .main_about > .welcome {
+    font-size: 80px;
+  }
+
+ .if-you {
+    font-size: 25px;
+  }
+
+ .wel_but{
+    font-size: 25px;
+  }
+}
+@media (max-width: 505px) {
+  .main_about > .welcome {
+    font-size: 60px;
+  }
+
+ .if-you {
+    font-size: 20px;
+  }
+
+  .wel_but{
+    font-size: 20px;
+  }
 }
 @media (max-width: 450px) {
+  .welcome{
+    font-size: 40px;
+  }
+
   /* menu */
   nav{
     height: 65px;
@@ -324,43 +380,3 @@ nav > ul > li > a {
     font-size: 15px;
   }
 }
-
-
-
-/*Karen*/
-.welcome {
-  color: #000;
-  font-size: 100px;
-  text-transform: uppercase;
-  margin-bottom: 40px;
-  text-align: center
-}
-/*under_welcome*/
-.under_welcome {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-/*part  left*/
-
-.if-you {
-  text-align: center;
-  color: #000;
-  font-size: 40px;
-}
-.welcome_buttons{
-  display: flex;
-  justify-content: center;
-
-}
-.wel_but{
-  width: 500px;
-  height: 70px;
- margin: 20px;
-  font-size: 40px;
-  color:#eeeeee;
-border-radius: 7px;
-  border: none;
-  background-color: #0082e3;
-}
-

@@ -1,66 +1,38 @@
-<%- include('partials/head')%>
-  <%- include('partials/nav')%>
-  <div class="container">
-    <div class="slider">
-      <div class="slide slide1">
-        <div class="caption">
-          <h2>Slide 1</h2>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing
-            elit. Aliquam, accusantium.
-          </p>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+<div class="container">
+    <div class="slider" style="width: <%=(slider.length+1)*100+'%'%>">
+        <% slider.forEach(function (slide, index) { %>
+            <div class="slide " style="background-image: url('/frontend/images/<%= slide.bg_image %>');width:<%=100/(slider.length+1)+'%'%>">
+                <div class="caption">
+                    <h2><%= slide.name %></h2>
+                    <p><%= slide.info %></p>
+                </div>
+            </div>
+        <% }) %>
+        <div class="slide " style="background-image: url('/frontend/images/<%= slider[0].bg_image %>');width:<%=100/(slider.length+1)+'%'%>">
+            <div class="caption">
+                <h2><%= slider[0].name %></h2>
+                <p><%= slider[0].info %></p>
+            </div>
         </div>
-      </div>
-      <div class="slide slide2">
-        <div class="caption">
-          <h2>Slide 2</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing
-            elit. Beatae, ipsam.
-          </p>
-        </div>
-      </div>
-      <div class="slide slide3">
-        <div class="caption">
-          <h2>Slide 3</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Repellat, aut?
-          </p>
-        </div>
-      </div>
-      <div class="slide slide4">
-        <div class="caption">
-          <h2>Slide 4</h2>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing
-            elit. Veniam, ipsum.
-          </p>
-        </div>
-      </div>
-      <div class="slide slide1">
-        <div class="caption">
-          <h2>Slide 1</h2>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing
-            elit. Aliquam, accusantium.
-          </p>
-        </div>
-      </div>
     </div>
-  </div>
-    <div class="main_about"><h2 class="welcome">Welcome</h2>
-      <div class="under_welcome">
+</div>
+
+<div class="main_about">
+    <h2 class="welcome">Welcome</h2>
+    <div class="under_welcome">
         <div>
-           <h2 class="if-you">Welcome to our website, we want to inform you about its structure.
-              The site consists of 2 parts, the first for getting acquainted with the sights, the second for information.
+            <h2 class="if-you">Welcome to our website, we want to inform you about its structure.
+                The site consists of 2 parts, the first for getting acquainted with the sights, the second for
+                information.
             </h2>
         </div>
     </div>
-      <div class="welcome_buttons">
+    <div class="welcome_buttons">
         <button class="wel_but" type="submit" value="">go to info</button>
         <button class="wel_but" type="submit" value="">go tourism</button>
-      </div>
     </div>
-  <script src="/frontend/javaScript/script.js"></script>
-  <%- include('partials/footer')%>
+</div>
+<script src="/frontend/javaScript/script.js"></script>
+<%- include('partials/footer') %>
