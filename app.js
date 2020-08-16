@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require("express-session");
 const app = express();
-
 app.use(session({
   secret: "kar",
   resave: false,
