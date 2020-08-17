@@ -3,6 +3,11 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/frontend/stylesheets/style.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% if(css && css.length > 0){
+        for(let key in css) { %>
+    <link rel='stylesheet' href='/frontend/stylesheets/<%=css[key]%>'>
+    <% }} %>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"

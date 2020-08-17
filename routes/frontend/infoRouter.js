@@ -11,8 +11,12 @@ infoRout.get('/cities', function (request, response) {
     })
 });
 infoRout.get('/', function (request, response) {
+    let url = request.url
+    console.log(url)
     response.render('frontend/information', {
-        title: 'information'
+        title: 'information',
+        pageName:'information',
+        css:['information.css']
     })
 });
 module.exports = infoRout;

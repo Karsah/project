@@ -74,8 +74,8 @@ nav {
 }
 nav > .logo {
   position: relative;
-  height: 80px;
-  width: 80px;
+  height: 90px;
+  width: 90px;
   transition: 0.5s;
 }
 nav > .logo > .logoimage {
@@ -208,8 +208,8 @@ nav > ul > li > a {
     padding: 30px 70px;
   }
   nav > .logo {
-    height: 65px;
-    width: 65px;
+    height: 70px;
+    width: 70px;
   }
   .sticky {
     padding: 17px 70px;

@@ -15,7 +15,6 @@ module.exports = class Admin {
             let sql = "select id, password from admins where email=?"
             con.query(sql, [email])
                 .then(result => {
-
                     if (result[0].length > 0) {
                         const hash = result[0][0].password;
                         bcrypt.compare(pass, hash)

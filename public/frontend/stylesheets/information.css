@@ -1,0 +1,330 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Arial';
+}
+body {
+    background-image: url('../images/aragac.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    padding-bottom: 100px;
+}
+
+.info-paje-container {
+    margin: 0 auto;
+    width: 1200px;
+    transition: 0.5s;
+    box-shadow: 0 0 15px #000;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+/* header   */
+
+.mainheader {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.mainheader > h1 {
+    font-size: 64px;
+    color: #fff;
+    padding: 20px 45px;
+    border-bottom: 2px solid #c7c7c7;
+    text-transform: uppercase;
+    text-shadow: 0 0 7px #000;
+}
+
+.mainheader > h2 {
+    font-size: 44px;
+    color: #fff;
+    padding-top: 20px;
+    text-shadow: 0 0 7px #000;
+}
+
+
+
+/* one */
+
+.one {
+    background-color: #f7f6f4;
+    padding:60px 80px ;
+    text-align: justify;
+}
+
+.one > p {
+    color: #333;
+    margin:20px 0;
+}
+
+.one > .info-header{
+    width: 100%;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.one > .info-header > h1 {
+    font-size: 64px;
+    color: #111;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px #c7c7c7 solid;
+}
+
+/* two */
+
+.two {
+    background-color: #1e1f23;
+    padding: 80px;
+}
+
+.firstgalleryheader {
+    background-color: #121315;
+    padding: 60px 85px;
+    text-align: center;
+}
+
+.firstgalleryheader > p {
+    color: #999;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.firstgalleryheader > h1 {
+    font-size: 64px;
+    color: #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px #eee solid;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+.gallery_image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: auto;
+}
+
+/* three */
+
+.three {
+    display: grid;
+    grid-gap: 40px;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    padding: 80px;
+    background-color: #fff;
+}
+
+.card {
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+    height: 400px;
+}
+
+.card-image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 250px;
+}
+
+.card-content {
+    padding: 25px;
+    position: relative;
+    background-color: #fff;
+    transition: 0.5s;
+}
+
+
+
+.card-content > h2 {
+    padding-bottom: 5px;
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.card-content > p {
+    font-size: 22px;
+    color: #333;
+    padding: 15px 0;
+    border-bottom: 1px solid #333;
+    border-top: 1px solid #333;
+}
+
+.card-content > a {
+    cursor: pointer;
+    color: #000;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 10px;
+    border: 2px solid #333;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.ci-1 {
+    background-image: url('../images/aragac.jpg');
+}
+
+.card:hover > .card-content {
+    transform: translateY(-250px);
+    height: 400px;
+}
+
+
+
+@media (max-width: 1280px) {
+    .two,
+    .three,
+    .one {
+        padding: 40px;
+    }
+    .info-paje-container {
+        width: 90vw;
+    }
+    .card-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 986px) {
+    /* main */
+    .info-paje-container {
+        width: 70vw;
+    }
+
+    .mainheader > h1 {
+        font-size: 50px;
+        border-bottom: none;
+    }
+
+    .mainheader > h2 {
+        font-size: 40px;
+    }
+    /* two */
+    .gallery {
+        grid-template-columns: 1fr;
+        grid-gap: 20px;
+    }
+
+    /* three */
+    .three {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        width: 100%;
+        overflow: visible;
+        height: auto;
+    }
+
+    .card-image {
+        height: 300px;
+    }
+
+    .card:hover > .card-content {
+        transform: none;
+        height: auto;
+    }
+
+    .card-content > h2 {
+        padding-bottom: 5px;
+        font-size: 25px;
+        margin-bottom: 15px;
+    }
+
+    .card-content > p {
+        font-size: 20px;
+        padding: 15px 0;
+    }
+
+    .card-content > a {
+        font-size: 20px;
+        padding: 10px;
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 725px) {
+
+    .firstgalleryheader {
+        padding: 40px;
+    }
+
+    .firstgalleryheader > h1,
+    .one > .info-header > h1{
+        font-size: 40px;
+    }
+    .firstgalleryheader > p,
+    .one > p {
+        font-size: 16px;
+    }
+
+    .card-content > p {
+        font-size: 16px;
+        padding: 15px 0;
+    }
+}
+
+@media (max-width: 650px) {
+    .three {
+        padding: 0;
+    }
+}
+
+@media (max-width: 520px){
+    body {
+        padding-bottom: 0;
+    }
+
+    .info-paje-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+    /* main */
+
+
+    .mainheader > h1 {
+        font-size: 30px;
+        padding: 0;
+    }
+
+    .mainheader > h2 {
+        font-size: 25px;
+    }
+    /* two */
+
+    .firstgalleryheader > h1,
+    .one > .info-header > h1{
+        font-size: 30px;
+    }
+
+    .one > .info-header{
+        padding: 0;
+    }
+}
