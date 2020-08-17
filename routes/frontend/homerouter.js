@@ -18,7 +18,8 @@ homeRout.get('/', function(req, res) {
     slider.GetSlides().then(results=>{
         res.render('frontend/index',{
             title: 'Discover Aragatsotn',
-            slider: results
+            slider: results,
+            css:['index.css', 'style.css']
         });
     })
 });

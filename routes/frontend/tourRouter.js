@@ -3,27 +3,28 @@ const tourRout = express.Router();
 
 tourRout.get('/churches', function (request, response) {
     response.render('frontend/churches', {
-        title: 'churches'
+        title: 'churches',
+        css :['style.css']
     })
 });
 tourRout.get('/sightseeing', function (request, response) {
     response.render('frontend/sightseeing', {
-        title: 'sightseeing'
+        title: 'sightseeing',
+        css :['style.css']
     })
 });
 tourRout.get('/monuments', function (request, response) {
     response.render('frontend/monuments', {
-        title: 'monuments'
+        title: 'monuments',
+        css :['style.css']
     })
 });
 tourRout.get('/', function (request, response) {
     response.render('frontend/tourism', {
-        title: 'tourism'
+        title: 'tourism',
+        css :['style.css']
+
     })
-});
-// catch 404 and forward to error handler
-tourRout.get(function(req, res) {
-    res.render('error.ejs')
 });
 
 module.exports = tourRout;

@@ -1,6 +1,6 @@
 <%- include('partials/head') %>
 <%- include('partials/nav') %>
-<div class="container">
+<div class="slider-container">
     <div class="slider" style="width: <%=(slider.length+1)*100+'%'%>">
         <% slider.forEach(function (slide, index) { %>
             <div class="slide " style="background-image: url('/frontend/images/<%= slide.bg_image %>');width:<%=100/(slider.length+1)+'%'%>">
@@ -19,19 +19,20 @@
     </div>
 </div>
 
-<div class="main_about">
-    <h2 class="welcome">Welcome</h2>
-    <div class="under_welcome">
-        <div>
-            <h2 class="if-you">Welcome to our website, we want to inform you about its structure.
+<div class="welcome-container">
+    <div class="description">
+            <h2 class="about-website"><span>WELCOME!</span>  to our website, we want to inform you about its structure.
                 The site consists of 2 parts, the first for getting acquainted with the sights, the second for
                 information.
             </h2>
-        </div>
+            <div class="about-main-sections">
+                <div class="to-info"><span>In the Information section</span> you can learn more about Aragatsotn region, get detailed information about the geographical location of the region, cities, communities, population and economic .</div>
+                <div class="to-tourizm"><span>In the Tourism section</span> you can find, recognize and admire the sights of Aragatsotn region, which are historical and cultural values for Armenia. Armenia is an open-air museum, part of which is the sights of Aragatsotn region.</div>
+            </div>
     </div>
     <div class="welcome_buttons">
-        <button class="wel_but" type="submit" value="">go to info</button>
-        <button class="wel_but" type="submit" value="">go tourism</button>
+        <a href="/information"><button class="wel_but wel_leftbtn" type="submit">Go to Info</button></a>
+        <a href="/tourizm"><button class="wel_but wel_rightbtn" type="submit">Go to Tourism</button></a>
     </div>
 </div>
 <script src="/frontend/javaScript/sliderscript.js"></script>
