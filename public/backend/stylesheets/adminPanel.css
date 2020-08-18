@@ -80,9 +80,17 @@ header {
     height: 100px;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url('../images/main_admin.png');
     margin-bottom: 10px;
   }
+.sidebar > .profile_info > .adm{
+    background-image: url('../images/admin.png');
+}
+
+.sidebar > .profile_info > .superadm{
+    background-image: url('../images/main_admin.png');
+}
+
+
 
   .sidebar > .profile_info > h3{
     color: #ccc;

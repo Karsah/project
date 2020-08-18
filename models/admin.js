@@ -9,6 +9,14 @@ module.exports = class Admin {
         this.password = password;
     }
 
+    static getAdminInfo(id){
+        return new Promise((resolve,reject) =>{
+            const  sql = "select name,surname,email,is_super from admins where id = ?"
+            con.query(sql,[id])
+                .then((result)=> resolve(result[0][0]))
+                .catch((err)=>reject(err))
+        })
+    }
 
     static verify(email, pass) {
         return new Promise((res, rej) => {
