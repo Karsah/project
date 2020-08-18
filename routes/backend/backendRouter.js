@@ -9,6 +9,11 @@ const auth = function(req,res,next){
     }
     next()
 };
+backendRout.get('/logout', function (request, response) {
+        request.session.destroy();
+    response.redirect('/backend')
+
+});
 backendRout.get('/adminpanel',auth, function (request, response) {
         response.render("backend/adminPanel.ejs", {
             title: "Admin Panel",
