@@ -1,8 +1,14 @@
 <div class="sidebar">
     <div class="profile_info">
-        <div class="profile_image"></div>
-        <h3>Artur Qocharyan</h3>
-        <p>artur.qocharyan2003@gmail.com</p>
+        <% if (admin.is_super === '1'){%>
+           <div class="profile_image superadm"></div>
+        <%}%>
+            <%console.log(admin.is_super)%>
+            <% if(admin.is_super === '0'){%>
+                <div class="profile_image adm"></div>
+            <%}%>
+        <h3><%=admin.name%> <%=admin.surname%></h3>
+        <p><%=admin.email%></p>
     </div>
     <a href="#" class="active"
     ><i class="fas fa-desktop"></i><span>Dashboard</span></a

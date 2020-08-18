@@ -1,18 +1,31 @@
 const Admin = require("../models/admin");
+
+
 exports.login = function (request, response) {
-    if(request.session.adminId){
+    if (request.session.adminId) {
         response.redirect('/backend/adminpanel')
-    }else {
-    response.render("backend/login.ejs",{
-        title: "Login",
-        css:["login.css"]
-    })}
+    } else {
+        response.render("backend/login.ejs", {
+            title: "Login",
+            css: ["login.css"]
+        })
+    }
 };
 exports.adminPanel = function (request, response) {
-    response.render("backend/adminPanel.ejs",{
-        title: "adminPanel",
-        css:["adminPanel.css"]
-    })
+    if (!request.session.adminId) {
+        response.status(401).redirect('/backend')
+    } else {
+        // const admin
+        Admin.getAdminInfo(request.session.adminId).then((admin) => {
+           const currentadmin = admin
+            console.log(currentadmin)
+            response.render("backend/adminPanel.ejs", {
+                title: "Admin Panel",
+                css: ["adminPanel.css"],
+                admin:currentadmin
+            })
+        })
+    }
 };
 exports.verify = function (request, response) {
     if (!request.body) return response.sendStatus(400);
@@ -34,7 +47,7 @@ exports.verify = function (request, response) {
                 response.redirect("/backend/adminPanel")
             }
         }).catch(err => {
-        console.log('1',err);
+        console.log('1', err);
         response.redirect("/backend");
     });
 
