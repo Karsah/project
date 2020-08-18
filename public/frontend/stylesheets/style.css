@@ -30,7 +30,7 @@ nav > .logo {
 }
 
 nav > .logo > .logoimage {
-    background-image: url("../images/swallow.png");
+    background-image: url("../images/swallow_black.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -86,6 +86,10 @@ nav > ul > li > a {
 .sticky {
     padding: 15px 100px;
     background-color: #0082e6;
+}
+
+.sticky > .logo > .logoimage {
+    background-image: url("../images/swallow_whiite.png");
 }
 
 .sticky > ul > li > a {
