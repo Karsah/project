@@ -1,7 +1,33 @@
 <%- include('partials/head')%>
-<div class="container">
-    <%- include('partials/header')%>
-    <%- include('partials/sidebar')%>
-    <h1>manage admins</h1>
-</div>
+    <div class="container">
+        <%- include('partials/header')%>
+        <%- include('partials/sidebar')%>
+        <div class="content">
+            <div class="table-box">
+                <table>
+                    <tr>
+                        <%fields.forEach(function (field) {%>
+                           <th><%=field%></th>
+                        <% })%>
+                        <th>Tools</th>
+                    </tr>
+                    <%adminsArray.forEach(function (item) {%>
+                        <tr>
+                            <%fields.forEach(function (field) {%>
+                                    <td><%=item[field]%></td>
+                            <%})%>
+                            <td>
+                                <a href="manageadmins/edit/<%= item.id%>" style="display:inline;"><i class="fas fa-user-edit"></i>Edit</a>
+                                <%if (admin.id != item.id){%>
+                                <a href="manageadmins/delete/<%= item.id%>" style="display:inline;"><i class="fas fa-user-minus"></i>Delete</a>
+                               <%}%>
+                            </td>
+                        </tr>
+                   <% })%>
+                </table>
+            </div>
+        </div>
+
+    </div>
 <%- include('partials/footer')%>
+

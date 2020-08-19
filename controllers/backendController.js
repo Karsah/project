@@ -1,7 +1,7 @@
 const Admin = require("../models/admin");
-const backendMenu = require('../models/backendmenu')
 
 exports.login = function (request, response) {
+<<<<<<< HEAD
     // if (request.session.admin.id) {
     //     response.redirect('/backend/adminpanel')
     // }else {
@@ -10,6 +10,16 @@ exports.login = function (request, response) {
         css: ["login.css"]
     })
     // }
+=======
+    if (request.session.admin) {
+        response.redirect('/backend/adminpanel')
+    }else {
+        response.render("backend/login.ejs", {
+            title: "Login",
+            css: ["login.css"]
+        })
+    }
+>>>>>>> 2e647527f5156dda81da72a35bc2a5bc4cbb43ab
 };
 exports.verify = function (request, response) {
     if (!request.body) return response.sendStatus(400);
@@ -37,8 +47,8 @@ exports.logout = function (request, response) {
     response.redirect('/backend')
 };
 exports.adminPanel = function (request, response) {
-    if (!request.session.admin.id) {
-        response.status(401).redirect('/backend')
+    if (!request.session.admin) {
+        response.redirect('/backend')
     } else {
         response.render("backend/adminPanel.ejs", {
             title: "Admin Panel",
@@ -61,6 +71,7 @@ exports.addAdminPage = function (request, response) {
         admin: request.session.admin
     })
 }
+<<<<<<< HEAD
 
 exports.addAdmin = function (request, response) {
     if (!request.body) return response.sendStatus(400);
@@ -80,3 +91,26 @@ exports.addAdmin = function (request, response) {
 }
 
 
+=======
+exports.manageadmins = function (request,response) {
+        Admin.getAdmins().then(result=> {
+            let fields = []
+            let adminsArr = result
+                for (let key in adminsArr[0]){
+                    fields.push(key)
+                }
+            response.render('backend/manageAdmins',{
+                title:'Manage Admins',
+                css:['adminPanel.css' , 'manageAdmins.css'],
+                admin:request.session.admin,
+                fields:fields,
+                adminsArray:adminsArr
+            })
+        })
+}
+exports.deleteadmin = function (request,response) {
+    const id = request.params.id
+    Admin.deleteAdmin(id)
+    response.redirect('/backend/manageadmins')
+}
+>>>>>>> 2e647527f5156dda81da72a35bc2a5bc4cbb43ab
