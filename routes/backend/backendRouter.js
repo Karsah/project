@@ -7,11 +7,11 @@ const backendController=require('../../controllers/backendController')
 
 const urlencodedParser = bodyParser.urlencoded({extended: false})
 
-const adminPanelRout = require('./adminPanelRouter')
-
 /* Get admin panel*/
-backendRout.get('/adminpanel', adminPanelRout)
 
+
+backendRout.get('/adminpanel', backendController.adminPanel)
+backendRout.get('/dashboard', backendController.dashboard);
 // logout from account
 backendRout.get('/logout', backendController.logout);
 /* Verify email and password. */

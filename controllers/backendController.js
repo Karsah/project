@@ -1,14 +1,15 @@
 const Admin = require("../models/admin");
+const backendMenu = require('../models/backendmenu')
 
 exports.login = function (request, response) {
-    if (request.session.adminId) {
-        response.redirect('/backend/adminpanel')
-    } else {
+    // if (request.session.admin.id) {
+    //     response.redirect('/backend/adminpanel')
+    // }else {
         response.render("backend/login.ejs", {
             title: "Login",
             css: ["login.css"]
         })
-    }
+    // }
 };
 exports.verify = function (request, response) {
     if (!request.body) return response.sendStatus(400);
@@ -19,18 +20,14 @@ exports.verify = function (request, response) {
     Admin.verify(email, password)
         .then((result) => {
             const pattern = /[0-9]+/g;
-            if (!pattern.test(result)) {
+            if (!pattern.test(result.id)) {
                 response.redirect("/backend");
-                console.log('p');
             } else {
-                session.adminId = result;
-                request.params.q = "ddd";
-
-                // localStorage.setItem('adminId',result);
+                session.admin = result;
+                session.admin.email = email
                 response.redirect("/backend/adminpanel")
             }
         }).catch(err => {
-        console.log('1', err);
         response.redirect("/backend");
     });
 
@@ -38,4 +35,25 @@ exports.verify = function (request, response) {
 exports.logout = function (request,response) {
     request.session.destroy();
     response.redirect('/backend')
+};
+exports.adminPanel = function (request, response) {
+    if (!request.session.admin.id) {
+        response.status(401).redirect('/backend')
+    } else {
+                response.render("backend/adminPanel.ejs", {
+                    title: "Admin Panel",
+                    css: ["adminPanel.css"],
+                    admin:request.session.admin,
+        })
+    }
+};
+exports.dashboard = function (request,response) {
+    response.render('backend/dashboard',{
+        title:'Dashboard',
+        css:['adminPanel.css'],
+        admin:request.session.admin
+    })
 }
+
+
+

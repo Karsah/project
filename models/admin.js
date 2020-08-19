@@ -20,7 +20,7 @@ module.exports = class Admin {
 
     static verify(email, pass) {
         return new Promise((res, rej) => {
-            let sql = "select id, password from admins where email=?"
+            let sql = "select id,name,surname,is_super, password from admins where email=?"
             con.query(sql, [email])
                 .then(result => {
                     if (result[0].length > 0) {
@@ -28,7 +28,7 @@ module.exports = class Admin {
                         bcrypt.compare(pass, hash)
                             .then(function (r) {
                                 if (r)
-                                    res(result[0][0].id)
+                                    res(result[0][0])
                             })
                             .catch(err => {
                                 rej(err)
