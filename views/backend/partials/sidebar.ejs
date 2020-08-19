@@ -3,7 +3,6 @@
         <% if (admin.is_super === '1'){%>
            <div class="profile_image superadm"></div>
         <%}%>
-            <%console.log(admin.is_super)%>
             <% if(admin.is_super === '0'){%>
                 <div class="profile_image adm"></div>
             <%}%>
@@ -12,7 +11,7 @@
     </div>
     <%if(menu.length > 0){%>
     <%menu.forEach(function (item,index) { %>
-        <a href="/backend/adminPanel/<%=item.href%>">
+        <a href="/backend/adminpanel/<%=item.href%>" id="<%=item.href%>">
             <i class="<%=item.icon%>"></i><span><%=item.name%></span>
         </a>
     <%})%>

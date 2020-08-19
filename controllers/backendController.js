@@ -1,6 +1,4 @@
 const Admin = require("../models/admin");
-const backendMenu = require('../models/backendmenu')
-
 
 exports.login = function (request, response) {
     if (request.session.adminId) {
@@ -9,26 +7,6 @@ exports.login = function (request, response) {
         response.render("backend/login.ejs", {
             title: "Login",
             css: ["login.css"]
-        })
-    }
-};
-exports.adminPanel = function (request, response) {
-    if (!request.session.adminId) {
-        response.status(401).redirect('/backend')
-    } else {
-        Admin.getAdminInfo(request.session.adminId).then((admin) => {
-            backendMenu.getMenu().then(menu=>{
-                const Menu = menu
-                const currentadmin = admin
-                console.log(currentadmin)
-                console.log(Menu)
-                response.render("backend/adminPanel.ejs", {
-                    title: "Admin Panel",
-                    css: ["adminPanel.css"],
-                    admin:currentadmin,
-                    menu:Menu
-                })
-            })
         })
     }
 };
@@ -49,7 +27,7 @@ exports.verify = function (request, response) {
                 request.params.q = "ddd";
 
                 // localStorage.setItem('adminId',result);
-                response.redirect("/backend/adminPanel")
+                response.redirect("/backend/adminpanel")
             }
         }).catch(err => {
         console.log('1', err);
@@ -57,3 +35,7 @@ exports.verify = function (request, response) {
     });
 
 };
+exports.logout = function (request,response) {
+    request.session.destroy();
+    response.redirect('/backend')
+}
