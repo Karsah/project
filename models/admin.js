@@ -42,4 +42,13 @@ module.exports = class Admin {
                 })
         });
     }
+    static addAdmin(admin){
+        return new Promise((resolve,reject)=>{
+            const sql = "INSERT INTO admins (name, surname, email,password,is_super) VALUES(?, ?, ?, ?,?)";
+            con.query(sql,admin)
+                .then(result=>resolve(result))
+                .catch(err => reject(err))
+        })
+
+    }
 };
