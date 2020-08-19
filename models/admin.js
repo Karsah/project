@@ -41,16 +41,16 @@ module.exports = class Admin {
                 })
         });
     }
-<<<<<<< HEAD
-    static addAdmin(admin){
-        return new Promise((resolve,reject)=>{
+
+    static addAdmin(admin) {
+        return new Promise((resolve, reject) => {
             const sql = "INSERT INTO admins (name, surname, email,password,is_super) VALUES(?, ?, ?, ?,?)";
-            con.query(sql,admin)
-                .then(result=>resolve(result))
+            con.query(sql, admin)
+                .then(result => resolve(result))
                 .catch(err => reject(err))
         })
+    }
 
-=======
     static deleteAdmin(id){
         return new Promise((resolve,reject)=>{
             const sql = 'DELETE FROM admins where id = ?'
@@ -62,6 +62,5 @@ module.exports = class Admin {
                     reject(err)
                 })
         })
->>>>>>> 2e647527f5156dda81da72a35bc2a5bc4cbb43ab
     }
 };

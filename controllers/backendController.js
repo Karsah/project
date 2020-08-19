@@ -1,16 +1,8 @@
 const Admin = require("../models/admin");
 
 exports.login = function (request, response) {
-<<<<<<< HEAD
-    // if (request.session.admin.id) {
-    //     response.redirect('/backend/adminpanel')
-    // }else {
-    response.render("backend/login.ejs", {
-        title: "Login",
-        css: ["login.css"]
-    })
-    // }
-=======
+
+
     if (request.session.admin) {
         response.redirect('/backend/adminpanel')
     }else {
@@ -19,7 +11,7 @@ exports.login = function (request, response) {
             css: ["login.css"]
         })
     }
->>>>>>> 2e647527f5156dda81da72a35bc2a5bc4cbb43ab
+
 };
 exports.verify = function (request, response) {
     if (!request.body) return response.sendStatus(400);
@@ -71,7 +63,7 @@ exports.addAdminPage = function (request, response) {
         admin: request.session.admin
     })
 }
-<<<<<<< HEAD
+
 
 exports.addAdmin = function (request, response) {
     if (!request.body) return response.sendStatus(400);
@@ -91,7 +83,7 @@ exports.addAdmin = function (request, response) {
 }
 
 
-=======
+
 exports.manageadmins = function (request,response) {
         Admin.getAdmins().then(result=> {
             let fields = []
@@ -113,4 +105,4 @@ exports.deleteadmin = function (request,response) {
     Admin.deleteAdmin(id)
     response.redirect('/backend/manageadmins')
 }
->>>>>>> 2e647527f5156dda81da72a35bc2a5bc4cbb43ab
+
