@@ -10,6 +10,7 @@ const urlencodedParser = bodyParser.urlencoded({extended: false})
 /* Get admin panel*/
 
 
+backendRout.get('/manageadmins/delete/:id', backendController.deleteadmin);
 backendRout.get('/manageadmins', backendController.manageadmins);
 backendRout.get('/dashboard', backendController.dashboard);
 backendRout.get('/adminpanel', backendController.adminPanel)

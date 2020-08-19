@@ -69,3 +69,8 @@ exports.manageadmins = function (request,response) {
             })
         })
 }
+exports.deleteadmin = function (request,response) {
+    const id = request.params.id
+    Admin.deleteAdmin(id)
+    response.redirect('/backend/manageadmins')
+}

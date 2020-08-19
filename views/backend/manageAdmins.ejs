@@ -18,7 +18,9 @@
                             <%})%>
                             <td>
                                 <a href="manageadmins/edit/<%= item.id%>" style="display:inline;">Edit</a>
+                                <%if (admin.id != item.id){%>
                                 <a href="manageadmins/delete/<%= item.id%>" style="display:inline;">Delete</a>
+                               <%}%>
                             </td>
                         </tr>
                    <% })%>

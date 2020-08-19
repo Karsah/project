@@ -41,4 +41,16 @@ module.exports = class Admin {
                 })
         });
     }
+    static deleteAdmin(id){
+        return new Promise((resolve,reject)=>{
+            const sql = 'DELETE FROM admins where id = ?'
+            con.query(sql,[id])
+                .then(result=>{
+                    resolve()
+                })
+                .catch(err=>{
+                    reject(err)
+                })
+        })
+    }
 };
