@@ -1,4 +1,5 @@
 const Admin = require("../models/admin");
+const backendMenu = require('../models/backendmenu')
 
 
 exports.login = function (request, response) {
@@ -15,14 +16,18 @@ exports.adminPanel = function (request, response) {
     if (!request.session.adminId) {
         response.status(401).redirect('/backend')
     } else {
-        // const admin
         Admin.getAdminInfo(request.session.adminId).then((admin) => {
-           const currentadmin = admin
-            console.log(currentadmin)
-            response.render("backend/adminPanel.ejs", {
-                title: "Admin Panel",
-                css: ["adminPanel.css"],
-                admin:currentadmin
+            backendMenu.getMenu().then(menu=>{
+                const Menu = menu
+                const currentadmin = admin
+                console.log(currentadmin)
+                console.log(Menu)
+                response.render("backend/adminPanel.ejs", {
+                    title: "Admin Panel",
+                    css: ["adminPanel.css"],
+                    admin:currentadmin,
+                    menu:Menu
+                })
             })
         })
     }
