@@ -1,15 +1,14 @@
 const Admin = require("../models/admin");
-const backendMenu = require('../models/backendmenu')
 
 exports.login = function (request, response) {
-    // if (request.session.admin.id) {
-    //     response.redirect('/backend/adminpanel')
-    // }else {
+    if (request.session.admin) {
+        response.redirect('/backend/adminpanel')
+    }else {
         response.render("backend/login.ejs", {
             title: "Login",
             css: ["login.css"]
         })
-    // }
+    }
 };
 exports.verify = function (request, response) {
     if (!request.body) return response.sendStatus(400);
@@ -37,8 +36,8 @@ exports.logout = function (request,response) {
     response.redirect('/backend')
 };
 exports.adminPanel = function (request, response) {
-    if (!request.session.admin.id) {
-        response.status(401).redirect('/backend')
+    if (!request.session.admin) {
+        response.redirect('/backend')
     } else {
                 response.render("backend/adminPanel.ejs", {
                     title: "Admin Panel",
@@ -54,6 +53,19 @@ exports.dashboard = function (request,response) {
         admin:request.session.admin
     })
 }
-
-
-
+exports.manageadmins = function (request,response) {
+        Admin.getAdmins().then(result=> {
+            let fields = []
+            let adminsArr = result
+                for (let key in adminsArr[0]){
+                    fields.push(key)
+                }
+            response.render('backend/manageAdmins',{
+                title:'Manage Admins',
+                css:['adminPanel.css' , 'manageAdmins.css'],
+                admin:request.session.admin,
+                fields:fields,
+                adminsArray:adminsArr
+            })
+        })
+}

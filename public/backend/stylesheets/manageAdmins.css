@@ -1,0 +1,46 @@
+/* table css start */
+
+.table-box{
+    min-width: 800px;
+    background-color: #fff;
+    box-shadow: 0 10px 100px rgba(0,0,0,0.7);
+    overflow-y: auto;
+}
+
+.table-box table{
+    width: 100%;
+    position: relative;
+}
+
+.table-box table, .table-box table tr td , .table-box table tr th{
+    border: 1px solid #005277;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table-box table tr td , .table-box table tr th{
+    padding: 10px;
+}
+
+.table-box table tr th{
+    background: #19B3D3;
+    color: #fff;
+}
+
+.table-box table tr th:nth-child(1){
+    text-align: center;
+    background-color: #03707c;
+    width: 50px;
+}
+
+.table-box table tr td:nth-child(1){
+    text-align: center;
+    background-color: #19B3D3;
+    color: #fff;
+}
+
+.table-box table tr th{
+    position: sticky;
+    top: -1px;
+}
+/* table css end */

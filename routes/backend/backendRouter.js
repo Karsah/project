@@ -10,8 +10,9 @@ const urlencodedParser = bodyParser.urlencoded({extended: false})
 /* Get admin panel*/
 
 
-backendRout.get('/adminpanel', backendController.adminPanel)
+backendRout.get('/manageadmins', backendController.manageadmins);
 backendRout.get('/dashboard', backendController.dashboard);
+backendRout.get('/adminpanel', backendController.adminPanel)
 // logout from account
 backendRout.get('/logout', backendController.logout);
 /* Verify email and password. */
