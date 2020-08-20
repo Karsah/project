@@ -17,7 +17,7 @@
                                     <td><%=item[field]%></td>
                             <%})%>
                             <td>
-                                <a href="manageadmins/edit/<%= item.id%>" id="manage_tool"><i class="fas fa-user-edit"></i>Edit</a>
+                                <a href="manageadmins/editadmin/<%= item.id%>" id="manage_tool"><i class="fas fa-user-edit"></i>Edit</a>
                                 <%if (admin.id != item.id){%>
                                 <a href="manageadmins/delete/<%= item.id%>" id="manage_tool"><i class="fas fa-user-times"></i>Delete</a>
                                <%}%>

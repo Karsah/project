@@ -109,5 +109,33 @@ exports.deleteadmin = function (request,response) {
     const id = request.params.id
     Admin.deleteAdmin(id)
     response.redirect('/backend/manageadmins')
+};
+exports.editAdmin = function (request,response) {
+    if (!request.body) return response.sendStatus(400);
+    let is_super = request.body.is_super
+    if (is_super === undefined) {is_super = '0'}
+    const admin = [
+        request.body.name,
+        request.body.surname,
+        request.body.email,
+        is_super,
+        request.body.id
+
+    ];
+    console.log(request.body)
+    console.log('admin-',admin)
+    Admin.editAdmin(admin).then(result=>{
+        response.redirect('/backend/manageadmins')
+    })
+}
+exports.getEditAdmin=function (request,response) {
+    Admin.getAdmin(request.params.id).then(result=> response.render('backend/editAdmin.ejs',{
+        title: 'editAdmin',
+        editingAdminInfo: result,
+        css: ['addAdmin.css', 'adminPanel.css'],
+        admin: request.session.admin
+    }))
+
+
 }
 
