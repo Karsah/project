@@ -4,7 +4,7 @@
     <%- include('partials/sidebar')%>
     <div class="wrapper">
         <div class="title">
-            Registration Form
+           Add Admin Form
         </div>
         <form action="addadmin/add" class="form" method="post">
             <div class="inputfield">
@@ -21,16 +21,15 @@
             </div>
             <div class="inputfield">
                 <label>Confirm Password</label>
-                <input type="password" class="input">
+                <input type="password" class="input" name="confirm_pass">
             </div>
-            <% if(admin.is_super === '0'){ %>
+            <% if(admin.is_super === '1'){ %>
             <div class="inputfield">
                 <label>Is Super Admin</label>
                 <div class="custom_select">
-                    <select>
-                        <option value="">False</option>
-                        <option value="male">True</option>
-
+                    <select name="is_super">
+                        <option value="0">False</option>
+                        <option value="1">True</option>
                     </select>
                 </div>
             </div>
@@ -40,7 +39,7 @@
                 <input type="text" class="input" name="email">
             </div>
             <div class="inputfield">
-                <input type="submit" value="Register" class="btn">
+                <input type="submit" value="Add Admin" class="btn">
             </div>
         </form>
     </div>

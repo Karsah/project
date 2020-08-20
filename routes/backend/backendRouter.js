@@ -14,7 +14,7 @@ backendRout.get('/manageadmins/delete/:id', backendController.deleteadmin);
 backendRout.get('/manageadmins', backendController.manageadmins);
 backendRout.get('/dashboard', backendController.dashboard);
 
-backendRout.get('/addadmin', backendController.addAdminPage)
+backendRout.get('/addadmin', backendController.GetAddAdminPage)
 backendRout.post('/addadmin/add',urlencodedParser,backendController.addAdmin);
 
 backendRout.get('/adminpanel', backendController.adminPanel)

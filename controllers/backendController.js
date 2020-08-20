@@ -1,4 +1,6 @@
 const Admin = require("../models/admin");
+const bcrypt = require('bcrypt');
+let saltRounds = 12
 
 exports.login = function (request, response) {
 
@@ -56,33 +58,36 @@ exports.dashboard = function (request, response) {
         admin: request.session.admin
     })
 }
-exports.addAdminPage = function (request, response) {
+exports.GetAddAdminPage = function (request, response) {
     response.render('backend/addAdmin.ejs', {
         title: 'addAdmin',
-        css: ['register.css', 'adminPanel.css'],
+        css: ['addAdmin.css', 'adminPanel.css'],
         admin: request.session.admin
     })
 }
-
-
 exports.addAdmin = function (request, response) {
     if (!request.body) return response.sendStatus(400);
-
+    if(request.body.password !== request.body.confirm_pass) {
+        response.redirect('/backend/addadmin')
+        return
+    }
+    const salt = bcrypt.genSaltSync(saltRounds);
+     let password = bcrypt.hashSync(request.body.password, salt);
+    let is_super = request.body.is_super
+    if (is_super === undefined) {is_super = '0'}
     const admin = [
         request.body.name,
         request.body.surname,
         request.body.email,
-        request.body.password,
-        '0'
+        password,
+        is_super
     ];
-    console.log(request.body.name,)
+    console.log(request.body)
+    console.log('admin-',admin)
     Admin.addAdmin(admin).then(result=>{
     response.redirect('/backend/adminpanel')
     })
-
 }
-
-
 
 exports.manageadmins = function (request,response) {
         Admin.getAdmins().then(result=> {

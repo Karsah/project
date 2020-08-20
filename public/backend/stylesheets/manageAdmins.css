@@ -2,6 +2,7 @@
 
 .table-box{
     min-width: 800px;
+    width: 1000px;
     background-color: #fff;
     box-shadow: 0 10px 100px rgba(0,0,0,0.7);
     overflow-y: auto;
@@ -13,29 +14,52 @@
 }
 
 .table-box table, .table-box table tr td , .table-box table tr th{
-    border: 1px solid #005277;
+    border: 1px solid #22242a;
     border-collapse: collapse;
     text-align: left;
 }
 
 .table-box table tr td , .table-box table tr th{
     padding: 10px;
+    font-size: 18px;
+}
+
+.table-box table tr td #manage_tool {
+    padding: 5px;
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 20px;
+    display: inline-block;
+    color: #fff;
+    border: 1px solid #22242a;
+    border-radius: 4px;
+}
+
+.table-box table tr td #manage_tool:nth-child(1){
+    background-color: #0082e6;
+}
+.table-box table tr td #manage_tool:nth-child(2){
+    background-color: #c00;
+}
+
+.table-box table tr td #manage_tool i{
+    margin: 0 5px;
 }
 
 .table-box table tr th{
-    background: #19B3D3;
+    background: #2f323a;
     color: #fff;
 }
 
 .table-box table tr th:nth-child(1){
     text-align: center;
-    background-color: #03707c;
+    background: #22242a;
     width: 50px;
 }
 
 .table-box table tr td:nth-child(1){
     text-align: center;
-    background-color: #19B3D3;
+    background: #2f323a;
     color: #fff;
 }
 
