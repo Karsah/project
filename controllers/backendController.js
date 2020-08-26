@@ -1,16 +1,19 @@
 const Admin = require("../models/admin");
 const bcrypt = require('bcrypt');
 let saltRounds = 12
+const {Validator} = require('node-input-validator');
 
 exports.login = function (request, response) {
 
 
     if (request.session.admin) {
         response.redirect('/backend/adminpanel')
-    }else {
+    } else {
+        let errors = (!request.session.errors) ? "" : request.session.errors;
         response.render("backend/login.ejs", {
             title: "Login",
-            css: ["login.css"]
+            css: ["login.css"],
+            errors: errors
         })
     }
 
@@ -21,19 +24,48 @@ exports.verify = function (request, response) {
     const email = request.body.email;
     const password = request.body.password;
     const session = request.session;
-    Admin.verify(email, password)
-        .then((result) => {
-            const pattern = /[0-9]+/g;
-            if (!pattern.test(result.id)) {
-                response.redirect("/backend");
-            } else {
-                session.admin = result;
-                session.admin.email = email
-                response.redirect("/backend/adminpanel")
-            }
-        }).catch(err => {
-        response.redirect("/backend");
+    const v = new Validator(request.body, {
+        email: 'required|email',
+        password: 'required'
     });
+
+    v.check().then((matched) => {
+        if (matched) {
+            Admin.verify(email, password)
+                .then((result) => {
+                    const pattern = /[0-9]+/g;
+                    if (!pattern.test(result.id)) {
+                        response.redirect("/backend");
+                    } else {
+                        session.admin = result;
+                        session.admin.email = email
+                        response.redirect("/backend/adminpanel")
+                    }
+                })
+                .catch(errors => {
+                    response.render("backend/login.ejs", {
+                        title: "Login",
+                        css: ["login.css"],
+                        errors: errors
+                    })
+                })
+        } else {
+            session.errors = v.errors
+            let errors=[];
+            for (let key in v.errors){
+                if(v.errors.hasOwnProperty(key))
+                    errors.push(v.errors[key].message)
+            }
+            response.render("backend/login.ejs", {
+                title: "Login",
+                css: ["login.css"],
+                errors: errors
+            })
+
+            console.log(errors)
+        }
+    });
+
 
 };
 exports.logout = function (request, response) {
@@ -67,14 +99,16 @@ exports.GetAddAdminPage = function (request, response) {
 }
 exports.addAdmin = function (request, response) {
     if (!request.body) return response.sendStatus(400);
-    if(request.body.password !== request.body.confirm_pass) {
+    if (request.body.password !== request.body.confirm_pass) {
         response.redirect('/backend/addadmin')
         return
     }
     const salt = bcrypt.genSaltSync(saltRounds);
-     let password = bcrypt.hashSync(request.body.password, salt);
+    let password = bcrypt.hashSync(request.body.password, salt);
     let is_super = request.body.is_super
-    if (is_super === undefined) {is_super = '0'}
+    if (is_super === undefined) {
+        is_super = '0'
+    }
     const admin = [
         request.body.name,
         request.body.surname,
@@ -83,37 +117,39 @@ exports.addAdmin = function (request, response) {
         is_super
     ];
     console.log(request.body)
-    console.log('admin-',admin)
-    Admin.addAdmin(admin).then(result=>{
-    response.redirect('/backend/adminpanel')
+    console.log('admin-', admin)
+    Admin.addAdmin(admin).then(result => {
+        response.redirect('/backend/adminpanel')
     })
 }
 
-exports.manageadmins = function (request,response) {
-        Admin.getAdmins().then(result=> {
-            let fields = []
-            let adminsArr = result
-                for (let key in adminsArr[0]){
-                    fields.push(key)
-                }
-            response.render('backend/manageAdmins',{
-                title:'Manage Admins',
-                css:['adminPanel.css' , 'manageAdmins.css'],
-                admin:request.session.admin,
-                fields:fields,
-                adminsArray:adminsArr
-            })
+exports.manageadmins = function (request, response) {
+    Admin.getAdmins().then(result => {
+        let fields = []
+        let adminsArr = result
+        for (let key in adminsArr[0]) {
+            fields.push(key)
+        }
+        response.render('backend/manageAdmins', {
+            title: 'Manage Admins',
+            css: ['adminPanel.css', 'manageAdmins.css'],
+            admin: request.session.admin,
+            fields: fields,
+            adminsArray: adminsArr
         })
+    })
 }
-exports.deleteadmin = function (request,response) {
+exports.deleteadmin = function (request, response) {
     const id = request.params.id
     Admin.deleteAdmin(id)
     response.redirect('/backend/manageadmins')
 };
-exports.editAdmin = function (request,response) {
+exports.editAdmin = function (request, response) {
     if (!request.body) return response.sendStatus(400);
     let is_super = request.body.is_super
-    if (is_super === undefined) {is_super = '0'}
+    if (is_super === undefined) {
+        is_super = '0'
+    }
     const admin = [
         request.body.name,
         request.body.surname,
@@ -122,14 +158,12 @@ exports.editAdmin = function (request,response) {
         request.body.id
 
     ];
-    console.log(request.body)
-    console.log('admin-',admin)
-    Admin.editAdmin(admin).then(result=>{
+    Admin.editAdmin(admin).then(result => {
         response.redirect('/backend/manageadmins')
     })
 }
-exports.getEditAdmin=function (request,response) {
-    Admin.getAdmin(request.params.id).then(result=> response.render('backend/editAdmin.ejs',{
+exports.getEditAdmin = function (request, response) {
+    Admin.getAdmin(request.params.id).then(result => response.render('backend/editAdmin.ejs', {
         title: 'editAdmin',
         editingAdminInfo: result,
         css: ['addAdmin.css', 'adminPanel.css'],
