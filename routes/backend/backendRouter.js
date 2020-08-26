@@ -17,6 +17,9 @@ backendRout.get('/dashboard', backendController.dashboard);
 backendRout.get('/addadmin', backendController.GetAddAdminPage)
 backendRout.post('/addadmin/add',urlencodedParser,backendController.addAdmin);
 
+backendRout.get('/manageadmins/editadmin/:id',backendController.getEditAdmin);
+backendRout.post('/manageadmins/editadmin/:id/',urlencodedParser,backendController.editAdmin);
+
 backendRout.get('/adminpanel', backendController.adminPanel)
 
 // logout from account

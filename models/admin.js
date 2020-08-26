@@ -17,6 +17,14 @@ module.exports = class Admin {
                 .catch((err)=>reject(err))
         })
     }
+    static getAdmin(id){
+        return new Promise((resolve,reject) =>{
+            const  sql = "select id,name,surname,email,is_super from admins WHERE id=? "
+            con.execute(sql,[id])
+                .then((result)=> resolve(result[0][0]))
+                .catch((err)=>reject(err))
+        })
+    }
     static verify(email, pass) {
         return new Promise((res, rej) => {
             let sql = "select id,name,surname,is_super, password from admins where email=?"
@@ -50,6 +58,14 @@ module.exports = class Admin {
                 .catch(err => reject(err))
         })
     }
+    static editAdmin(admin){
+        return new Promise((resolve,reject)=>{
+            const sql= 'UPDATE admins SET name=?, surname=?, email=?,is_super=? WHERE id=?'
+            con.query(sql,admin)
+                .then(result=>resolve(result))
+                .catch(err=>reject(err))
+        })
+    }
 
     static deleteAdmin(id){
         return new Promise((resolve,reject)=>{
@@ -64,3 +80,4 @@ module.exports = class Admin {
         })
     }
 };
+
