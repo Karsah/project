@@ -1,0 +1,35 @@
+<%- include('partials/head')%>
+<div class="container">
+    <%if(feedbacks[0] === null){%>
+        <h2 class="nullFeedbacksArr"><%=feedbacks[1]%></h2>
+    <%}%>
+    <%if(feedbacks[0] !== null){%>
+    <div class="feedback-container">
+        <% feedbacks.forEach(function (item,index) { %>
+            <div class="feedback">
+                <h3 class="feedback-writer"><%=item.name +' '+item.surname%></h3>
+                <div class="rate">
+                    <div class="feedback-stars">
+                        <%for(let i = 1 ; i<=5;i++){%>
+                            <%if(i <= item.stars_count){%>
+                            <i class="fas fa-star"></i>
+                           <%} %>
+                        <% if (i > item.stars_count) {%>
+                            <i class="far fa-star"></i>
+                           <%} %>
+                        <%}%>
+                    </div>
+                    <%let date = `${item.date.getDate()}.${item.date.getMonth()+1}.${item.date.getFullYear()}` %>
+                    <div class="feedback-date"><%=date%></div>
+                </div>
+                <p><%=item.message%></p>
+            </div>
+
+        <%})%>
+
+    </div>
+    <%}%>
+</div>
+<a href="/<%= back%>" class="back-button"><i class="fas fa-arrow-circle-left"></i></a>
+</body>
+</html>

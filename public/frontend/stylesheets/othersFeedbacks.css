@@ -1,0 +1,65 @@
+.container {
+    background-image: url("/frontend/images/others-feedbacks-fon.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    color: #fff;
+    min-height: 100vh;
+}
+
+.feedback-container {
+    height: 100%;
+    background: #0082e69c;
+    display: grid;
+    grid-template-columns: 55vw;
+    grid-gap: 25px;
+    padding: 40px;
+    margin: 40px;
+    border-radius: 25px;
+    box-shadow: 0 0 50px #000000;
+}
+.feedback-writer {
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.rate {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.feedback-stars i {
+    color: orange;
+    font-size: 22px;
+}
+
+.feedback-date {
+    margin: 0 10px;
+    font-size: 22px;
+}
+.feedback > p {
+    font-size: 25px;
+}
+
+.nullFeedbacksArr{
+    font-size: 40px;
+    color: #111;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    .feedback-conteiner {
+        margin: 10px;
+    }
+}
+

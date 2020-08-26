@@ -1,0 +1,89 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("/frontend/images/leave-feedback-fon.jpg");
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    padding: 43px 0;
+}
+
+.stars i{
+    font-size: 40px;
+    color: orange;
+}
+
+.feedbackform{
+    display: grid;
+    grid-template-columns:repeat(2,28vw);
+    grid-gap: 12px;
+    margin-top: 30px;
+}
+
+.rank{
+    font-size: 35px;
+    margin: 15px;
+    text-align: center;
+}
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.input-label{
+    font-size: 25px;
+    margin-left: 20px;
+}
+
+.fb-input{
+    height: 45px;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.7)
+}
+
+.message{
+    height: 150px;
+    resize: none;
+}
+
+.message-container{
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: column;
+}
+
+.submit{
+    grid-column: 1/-1;
+    background-color: #0082e6;
+    cursor: pointer;
+    width: 140px;
+    margin: auto;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.submit:hover{
+    background-color: rgba(0, 130, 230, 0.65);
+}
+
+@media (max-width: 700px) {
+    .feedbackform{
+        display: flex;
+        flex-direction: column;
+        width: 80vw;
+        min-width: 320px;
+    }
+    .container{
+        height: 100%;
+    }
+}

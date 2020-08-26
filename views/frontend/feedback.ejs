@@ -1,22 +1,15 @@
 <%- include('partials/head')%>
 <%- include('partials/nav')%>
-<h1><%= title%></h1>
-<%- include('partials/footer')%>
 <div class="container">
-    <div class="slider" style="width: <%=(slider.length+1)*100+'%'%>">
-        <% slider.forEach(function (slide, index) { %>
-            <div class="slide " style="background-image: url('/frontend/images/<%= slide.bg_image %>');width:<%=100/(slider.length+1)+'%'%>">
-                <div class="caption">
-                    <h2><%= slide.name %></h2>
-                    <p><%= slide.info %></p>
-                </div>
-            </div>
-        <% }) %>
-        <div class="slide " style="background-image: url('/frontend/images/<%= slider[0].bg_image %>');width:<%=100/(slider.length+1)+'%'%>">
-            <div class="caption">
-                <h2><%= slider[0].name %></h2>
-                <p><%= slider[0].info %></p>
-            </div>
+    <div class="buttons">
+        <div class="btn">
+            <a href="/feedback/leavefeedback"><div class="feedback">Leave Feedback</div></a>
+            <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+        <div class="btn">
+            <a href="/feedback/othersfeedbacks"><div class="feedback">Others Feedbacks</div></a>
+            <i class="fas fa-long-arrow-alt-right"></i>
         </div>
     </div>
 </div>
+<%- include('partials/footer')%>

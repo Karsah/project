@@ -1,3 +1,40 @@
 <%- include('partials/head')%>
-<h1><%= title%></h1>
-<%- include('partials/footer')%>
+<div class="container">
+    <h2 class="rank">How do you rate our website?</h2>
+    <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </div>
+
+    <form class="feedbackform" action="/feedback/leavefeedback/leave" method="post">
+        <div class="input-container">
+            <label class="input-label"><i class="fas fa-user"></i> Name</label>
+            <input type="text" name="name" class="fb-input" >
+        </div>
+        <div class="input-container">
+            <label class="input-label"><i class="fas fa-user"></i> Surname</label>
+            <input type="text" name="surname" class="fb-input" >
+        </div>
+        <div class="input-container">
+            <label class="input-label"><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" name="email" class="fb-input" >
+        </div>
+        <div class="input-container">
+            <label class=" input-label"><i class="fas fa-calendar-alt"></i> Age</label>
+            <input type="number" name="age" class="fb-input" >
+        </div>
+        <div class="message-container">
+            <label class="input-label"><i class="fas fa-comment-dots"></i> Message</label>
+            <textarea class="message fb-input" name="message"></textarea>
+        </div>
+        <input type="hidden" value="" name="starscount" id="starscount">
+        <button class="submit fb-input">Submit</button>
+    </form>
+</div>
+<a href="/<%= back%>" class="back-button"><i class="fas fa-arrow-circle-left"></i></a>
+<script src="/frontend/javaScript/leavefeedback.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+.container {
+    background-image: url("/frontend/images/we-want-your-feedback.jpg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #42a5f8;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.buttons .btn a {
+    text-decoration: none;
+    width: 100%;
+}
+.feedback {
+    color: white;
+    font-size: 35px;
+    width: 100%;
+    background-color: #0082e6;
+    margin: 15px 0;
+    border-top-left-radius: 60px;
+    border-bottom-left-radius: 60px;
+    padding: 20px 30px;
+    box-shadow: 5px 10px 30px #000000;
+    text-align: center;
+    transition: 0.5s;
+    position: relative;
+    z-index: 15;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+}
+
+.btn i {
+    display: none;
+    font-size: 50px;
+    color: #eee;
+    transform: translateX(-30px);
+    animation: animate linear 0.3s;
+    position: relative;
+    z-index: 5;
+}
+
+.btn:hover .feedback {
+    transform: translateX(-70px);
+    border-radius: 60px;
+}
+
+.btn:hover i {
+    display: block;
+}
+
+@keyframes animate {
+    0% {
+        transform: translateX(-150px);
+    }
+
+    100% {
+        transform: translateX(-30px);
+    }
+}
+
+@media (max-width: 450px) {
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .buttons {
+        position: static;
+        align-items: center;
+    }
+
+    .feedback{
+        font-size: 25px;
+    }
+
+    .btn:hover a .feedback {
+        transform: none;
+    }
+
+    .btn:hover i {
+        display: none;
+    }
+
+    .btn a .feedback {
+        border-radius: 60px;
+    }
+
+    .btn  i {
+        display: none;
+    }
+}
