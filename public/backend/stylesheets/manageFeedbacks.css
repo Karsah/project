@@ -1,0 +1,81 @@
+/* table css start */
+
+.table-box{
+    min-width: 800px;
+    width: 1000px;
+    background-color: #fff;
+    box-shadow: 0 10px 100px rgba(0,0,0,0.7);
+    overflow-y: auto;
+}
+
+.table-box table{
+    width: 100%;
+    position: relative;
+}
+
+.table-box table, .table-box table tr td , .table-box table tr th{
+    border: 1px solid #22242a;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table-box table tr td , .table-box table tr th{
+    padding: 10px;
+    font-size: 18px;
+}
+
+
+
+.block{
+    background-color: #0082e6;
+}
+
+.unblock{
+    background-color: #339900;
+}
+
+.delete{
+    background-color: #cc0000;
+}
+
+.table-box table tr td .manage_tool {
+    padding: 5px;
+    margin: 5px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #fff;
+    border: 1px solid #22242a;
+    border-radius: 4px;
+    height: 50px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-box table tr td .manage_tool i{
+    margin: 0 5px;
+}
+
+.table-box table tr th{
+    background: #2f323a;
+    color: #fff;
+}
+
+.table-box table tr th:nth-child(1){
+    text-align: center;
+    background: #22242a;
+    width: 50px;
+}
+
+.table-box table tr td:nth-child(1){
+    text-align: center;
+    background: #2f323a;
+    color: #fff;
+}
+
+.table-box table tr th{
+    position: sticky;
+    top: -1px;
+}
+/* table css end */

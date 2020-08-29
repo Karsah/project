@@ -9,12 +9,16 @@ const urlencodedParser = bodyParser.urlencoded({extended: false})
 
 /* Get admin panel*/
 
+backendRout.get('/managefeedbacks/unblock/:id',backendController.unblockFeedback)
+backendRout.get('/managefeedbacks/block/:id',backendController.blockFeedback)
+backendRout.get('/managefeedbacks/delete/:id', backendController.deleteFeedback);
+backendRout.get('/managefeedbacks',backendController.getManageFeedbacksPage)
 
 backendRout.get('/manageadmins/delete/:id', backendController.deleteadmin);
 backendRout.get('/manageadmins', backendController.manageadmins);
 backendRout.get('/dashboard', backendController.dashboard);
 
-backendRout.get('/addadmin', backendController.GetAddAdminPage)
+backendRout.get('/addadmin', backendController.getAddAdminPage)
 backendRout.post('/addadmin/add',urlencodedParser,backendController.addAdmin);
 
 backendRout.get('/manageadmins/editadmin/:id',backendController.getEditAdmin);

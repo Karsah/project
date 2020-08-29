@@ -1,0 +1,46 @@
+<%- include('partials/head') %>
+<div class="container">
+    <%- include('partials/header') %>
+    <%- include('partials/sidebar') %>
+    <div class="content">
+
+        <% if(feedbacksArray.length == 0){ %>
+            <h2>There is not any Feedbacks yet !</h2>
+        <% } %>
+        <% if(feedbacksArray.length > 0){ %>
+        <div class="table-box">
+            <table>
+                <tr>
+                    <% fields.forEach(function (field) { %>
+                    <th><%= field %></th>
+                    <% }) %>
+                    <th>Tools</th>
+                </tr>
+                <% feedbacksArray.forEach(function (item) { %>
+                <tr>
+                    <% fields.forEach(function (field) { %>
+                    <td><%= item[field] %></td>
+                    <% }) %>
+                    <td class="manage-tools">
+                        <% if(item.status === 'not-blocked'){ %>
+                            <a href="managefeedbacks/block/<%= item.id %>" class="block manage_tool"><i
+                                        class="fas fa-lock"></i>Block</a>
+                        <% } %>
+                        <% if(item.status === 'blocked'){ %>
+                            <a href="managefeedbacks/unblock/<%= item.id %>" class="unblock manage_tool"><i
+                                        class="fas fa-lock-open"></i>Unblock</a>
+                        <% } %>
+                        <a href="managefeedbacks/delete/<%= item.id %>" class="delete manage_tool"><i
+                                    class="fas fa-trash"></i>Delete</a>
+                    </td>
+                </tr>
+                <% }) %>
+            </table>
+        </div>
+        <% } %>
+
+    </div>
+
+</div>
+<%- include('partials/footer') %>
+

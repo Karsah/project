@@ -9,4 +9,6 @@ create table  if not exists feedbacks(
     date datetime default CURRENT_TIMESTAMP
 );
 
+alter table feedbacks
+add status varchar(16) default 'not-blocked' not null;
 truncate table feedbacks

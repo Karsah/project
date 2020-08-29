@@ -1,4 +1,6 @@
 const Admin = require("../models/admin");
+const Feedbacks = require('../models/feedback');
+
 const bcrypt = require('bcrypt');
 let saltRounds = 12
 
@@ -58,7 +60,7 @@ exports.dashboard = function (request, response) {
         admin: request.session.admin
     })
 }
-exports.GetAddAdminPage = function (request, response) {
+exports.getAddAdminPage = function (request, response) {
     response.render('backend/addAdmin.ejs', {
         title: 'addAdmin',
         css: ['addAdmin.css', 'adminPanel.css'],
@@ -139,3 +141,35 @@ exports.getEditAdmin=function (request,response) {
 
 }
 
+exports.getManageFeedbacksPage = function (request,response) {
+    Feedbacks.getAllFeedbacksForManagement().then(result=> {
+        let fields = []
+        let feedbacksArr = result
+        for (let key in feedbacksArr[0]){
+            fields.push(key)
+        }
+        response.render('backend/manageFeedbacks',{
+            title:'Manage Feedbacks',
+            css:['adminPanel.css' , 'manageFeedbacks.css'],
+            admin:request.session.admin,
+            fields:fields,
+            feedbacksArray:feedbacksArr
+        })
+    })
+
+}
+exports.deleteFeedback = function (request,response) {
+    const id = request.params.id
+    Feedbacks.deleteFeedback(id)
+    response.redirect('/backend/managefeedbacks')
+}
+exports.blockFeedback = function (request,response) {
+    const id = request.params.id
+    Feedbacks.blockFeedback(id)
+    response.redirect('/backend/managefeedbacks')
+}
+exports.unblockFeedback = function (request,response) {
+    const id = request.params.id
+    Feedbacks.unblockFeedback(id)
+    response.redirect('/backend/managefeedbacks')
+}
