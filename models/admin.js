@@ -30,18 +30,20 @@ module.exports = class Admin {
             let sql = "select id,name,surname,is_super, password from admins where email=?"
             con.query(sql, [email])
                 .then(result => {
+                    console.log(result[0])
                     if (result[0].length > 0) {
                         const hash = result[0][0].password;
                         bcrypt.compare(pass, hash)
-                            .then(function (r) {
-                                if (r)
+                            .then(function (compareResult) {
+                                if (compareResult) {
                                     res(result[0][0])
+                                }else{
+                                    rej(['The password you entered is incorrect'])
+                                }
                             })
-                            .catch(err => {
-                                rej(err)
-                            });
-                    } else {
-                        rej(false)
+                    }
+                    else if(result[0].length == 0){
+                        rej(['There is no admin with the email you wrote'])
                     }
                 })
                 .catch(err => {

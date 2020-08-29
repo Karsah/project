@@ -1,7 +1,12 @@
 <%- include('partials/head')%>
     <form  class="login_form" action="/backend/verify" method="post">
         <h1>Login</h1>
-        <input type="email" class="email" placeholder="Email" name="email">
+        <%if(errors.length>0){%>
+            <% errors.forEach(function (item) {%>
+                <p class="err"><i class="fas fa-exclamation-circle"></i> <%= item%></p>
+            <%})%>
+        <%}%>
+        <input type="text" class="email" placeholder="Email" name="email">
         <input type="password" class="password" placeholder="Password" name="password">
         <input type="submit" class="login" value="login">
     </form>
