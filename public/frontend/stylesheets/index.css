@@ -42,14 +42,14 @@
     margin: 0 0 20px;
     padding: 0;
     color: #fff;
-    font-size: 48px;
+    font-size: 60px;
     transition: 0.5s;
 }
 .slider-container > .slider > .slide > .caption > p {
     margin: 0;
     padding: 0;
     color: #fff;
-    font-size: 18px;
+    font-size: 30px;
     transition: 0.5s;
 }
 
@@ -130,10 +130,10 @@
     }
     .slider-container > .slider > .slide > .caption > h2 {
         margin: 0 0 40px;
-        font-size: 80px;
+        font-size: 100px;
     }
     .slider-container > .slider > .slide > .caption > p {
-        font-size: 38px;
+        font-size: 50px;
     }
 }
 
@@ -160,10 +160,10 @@
     }
     .slider-container > .slider > .slide > .caption > h2 {
         margin: 0 0 10px;
-        font-size: 35px;
+        font-size: 44px;
     }
     .slider-container > .slider > .slide > .caption > p {
-        font-size: 18px;
+        font-size: 26px;
     }
 
 /*    welcome*/
@@ -254,11 +254,8 @@
     }
     .slider-container > .slider > .slide > .caption > h2 {
         margin: 0 0 10px;
-        font-size: 30px;
     }
-    .slider-container > .slider > .slide > .caption > p {
-        font-size: 15px;
-    }
+
 }
 @media (max-width: 330px){
     .about-main-sections{

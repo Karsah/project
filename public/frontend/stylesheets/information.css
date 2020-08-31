@@ -1,25 +1,14 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: #fff;
-    font-size: 18px;
-    font-family: 'Arial';
-}
 body {
     background-image: url('../images/aragac.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
-    padding-bottom: 100px;
 }
 
 .info-paje-container {
-    margin: 0 auto;
-    width: 1200px;
+    width: 100%;
     transition: 0.5s;
-    box-shadow: 0 0 15px #000;
 }
 
 main {
@@ -56,26 +45,26 @@ main {
 
 
 
-/* one */
+/* information-section */
 
-.one {
+.information-section {
     background-color: #f7f6f4;
-    padding:60px 80px ;
+    padding:3vw 10vw ;
     text-align: justify;
 }
 
-.one > p {
+.information-section > p {
     color: #333;
     margin:20px 0;
 }
 
-.one > .info-header{
+.information-section > .info-header{
     width: 100%;
     text-align: center;
-    padding: 0 20px;
+    padding: 0 10vw;
 }
 
-.one > .info-header > h1 {
+.information-section > .info-header > h1 {
     font-size: 64px;
     color: #111;
     padding-bottom: 10px;
@@ -87,7 +76,7 @@ main {
 
 .two {
     background-color: #1e1f23;
-    padding: 80px;
+    padding:3vw 10vw ;
 }
 
 .firstgalleryheader {
@@ -128,90 +117,90 @@ main {
 
 .three {
     display: grid;
-    grid-gap: 40px;
+    grid-gap: 10px;
     grid-template-columns: repeat(2, minmax(300px, 1fr));
-    padding: 80px;
+    padding:3vw 10vw ;
     background-color: #fff;
 }
 
 .card {
     box-shadow: 0 7px 20px rgba(0, 0, 0, 0.9);
     overflow: hidden;
-    height: 400px;
-}
-
-.card-image {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 250px;
-}
-
-.card-content {
-    padding: 25px;
     position: relative;
-    background-color: #fff;
+    height: 100%;
+    width: 100%;
     transition: 0.5s;
 }
 
 
-
-.card-content > h2 {
-    padding-bottom: 5px;
-    font-size: 26px;
-    color: #333;
-    margin-bottom: 15px;
+.card img {
+    height: auto;
+    display: block;
+    width: 100%;
+    transition: 0.2s;
+}
+.card> .card-name {
+    font-size: 50px;
+    display: flex;
+    color: #fff;
+    position: absolute;
+    text-shadow: 0 0 10px #000;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
 }
 
-.card-content > p {
-    font-size: 22px;
-    color: #333;
-    padding: 15px 0;
-    border-bottom: 1px solid #333;
-    border-top: 1px solid #333;
+.card > .buttons {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
 }
 
-.card-content > a {
+.card > .buttons > a {
     cursor: pointer;
-    color: #000;
     text-decoration: none;
+    display: block;
+    border: 2px solid #fff;
+    margin: 15px;
+    text-align: center;
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    color: #ffffff;
     font-size: 20px;
+    width: 100%;
+    line-height: 2;
+    transition: 0.5s;
     padding: 10px;
-    border: 2px solid #333;
-    display: inline-block;
-    margin-top: 15px;
+}
+
+.card > .buttons > a >  i{
+    margin-right: 10px;
+}
+
+.card > .buttons >  a:hover{
+    background-color: rgba(0,0,0,0.5);
 }
 
 .ci-1 {
     background-image: url('../images/aragac.jpg');
 }
 
-.card:hover > .card-content {
-    transform: translateY(-250px);
-    height: 400px;
+.card:hover > img{
+    filter: blur(5px);
+    transition: 0.2s;
 }
 
-
-
-@media (max-width: 1280px) {
-    .two,
-    .three,
-    .one {
-        padding: 40px;
-    }
-    .info-paje-container {
-        width: 90vw;
-    }
-    .card-content {
-        padding: 20px;
-    }
+.card:hover > .card-name{
+    display: none;
 }
-
+.card:hover > .buttons{
+    display: flex;
+}
 @media (max-width: 986px) {
     /* main */
-    .info-paje-container {
-        width: 70vw;
-    }
 
     .mainheader > h1 {
         font-size: 50px;
@@ -237,34 +226,40 @@ main {
 
     .card {
         width: 100%;
+        height: auto;
         overflow: visible;
-        height: auto;
     }
 
-    .card-image {
-        height: 300px;
-    }
 
-    .card:hover > .card-content {
+    .card > .buttons , .card > .card-name {
+        background-color: #0082e6;
+        display: flex;
+        flex-direction: row;
+        text-align: center;
         transform: none;
-        height: auto;
+        align-items: center;
+        position: static;
     }
 
-    .card-content > h2 {
-        padding-bottom: 5px;
-        font-size: 25px;
-        margin-bottom: 15px;
+    .card > .buttons > a {
+        width: 40%;
+        margin: 15px auto;
     }
 
-    .card-content > p {
-        font-size: 20px;
-        padding: 15px 0;
+
+    .card:hover > img{
+        filter: none;
     }
 
-    .card-content > a {
-        font-size: 20px;
-        padding: 10px;
-        margin-top: 15px;
+    .card > .card-name{
+        text-shadow: none;
+    }
+
+    .card:hover > .card-name , .card > .card-name{
+        display: block;
+    }
+    .card:hover > .buttons{
+        display: flex;
     }
 }
 
@@ -275,35 +270,26 @@ main {
     }
 
     .firstgalleryheader > h1,
-    .one > .info-header > h1{
+    .information-section > .info-header > h1{
         font-size: 40px;
     }
     .firstgalleryheader > p,
-    .one > p {
+    .information-section > p {
         font-size: 16px;
     }
 
-    .card-content > p {
-        font-size: 16px;
-        padding: 15px 0;
+
+    .card > .buttons{
+        flex-direction: column ;
+    }
+
+    .card  > .buttons a  {
+        margin: 15px;
+        padding: 10px 15px;
+        width: 200px ;
     }
 }
 
-@media (max-width: 650px) {
-    .three {
-        padding: 0;
-    }
-}
-
-@media (max-width: 520px){
-    body {
-        padding-bottom: 0;
-    }
-
-    .info-paje-container {
-        width: 100%;
-    }
-}
 
 @media (max-width: 450px) {
     /* main */
@@ -320,11 +306,11 @@ main {
     /* two */
 
     .firstgalleryheader > h1,
-    .one > .info-header > h1{
+    .information-section > .info-header > h1{
         font-size: 30px;
     }
 
-    .one > .info-header{
+    .information-section > .info-header{
         padding: 0;
     }
 }

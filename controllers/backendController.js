@@ -12,6 +12,7 @@ exports.login = function (request, response) {
         response.redirect('/backend/adminpanel')
     } else {
         let errors = (!request.session.errors) ? "" : request.session.errors;
+        console.log('errors' , errors)
         response.render("backend/login.ejs", {
             title: "Login",
             css: ["login.css"],
@@ -45,26 +46,17 @@ exports.verify = function (request, response) {
                     }
                 })
                 .catch(errors => {
-                    response.render("backend/login.ejs", {
-                        title: "Login",
-                        css: ["login.css"],
-                        errors: errors
-                    })
+                    session.errors = errors
+                    response.redirect("/backend")
                 })
         } else {
-            session.errors = v.errors
             let errors=[];
             for (let key in v.errors){
                 if(v.errors.hasOwnProperty(key))
                     errors.push(v.errors[key].message)
             }
-            response.render("backend/login.ejs", {
-                title: "Login",
-                css: ["login.css"],
-                errors: errors
-            })
-
-            console.log(errors)
+            session.errors = errors
+            response.redirect('/backend')
         }
     });
 
