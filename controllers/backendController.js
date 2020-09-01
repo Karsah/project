@@ -179,7 +179,8 @@ exports.getManageFeedbacksPage = function (request,response) {
             css:['adminPanel.css' , 'manageFeedbacks.css'],
             admin:request.session.admin,
             fields:fields,
-            feedbacksArray:feedbacksArr
+            feedbacksArray:feedbacksArr,
+            url:'feedback'
         })
     })
 
