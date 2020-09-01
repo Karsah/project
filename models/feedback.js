@@ -16,7 +16,7 @@ module.exports = class feedback {
 
     static getAllFeedbacksForFrontend(){
         return new Promise((resolve,reject)=>{
-            const sql = "SELECT stars_count,name,surname ,message, date FROM feedbacks where status = 'not-blocked'"
+            const sql = "SELECT stars_count,name,surname ,message, date FROM feedbacks where status = 'not-blocked' order by date desc"
             con.execute(sql)
                 .then((result)=>{
                     if(result[0].length >0) resolve(result[0])

@@ -1,7 +1,7 @@
 <%- include('partials/head')%>
     <form  class="login_form" action="/backend/verify" method="post">
         <h1>Login</h1>
-        <%if(errors.length>0){%>
+        <%if(errors !== ''){%>
             <% errors.forEach(function (item) {%>
                 <p class="err"><i class="fas fa-exclamation-circle"></i> <%= item%></p>
             <%})%>

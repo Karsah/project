@@ -145,5 +145,17 @@ header {
     align-items: center;
     justify-content: center;
 }
+.admin-panel-content{
+    background-image: url('/backend/images/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.admin-panel-content > h2{
+    font-size: 80px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 0 5px #000;
+}
 
 /* main content end */

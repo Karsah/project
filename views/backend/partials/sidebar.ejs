@@ -10,19 +10,19 @@
         <p><%= admin.email %></p>
     </div>
 
-    <a href="/backend/dashboard" id="dashboard">
+    <a href="/backend/dashboard" id="dashboard" class="menu-item">
         <i class="fas fa-desktop"></i><span>Dashboard</span>
     </a>
     <% if (admin.is_super === '1'){ %>
-    <a href="/backend/manageadmins" id="manageadmins">
+    <a href="/backend/manageadmins" id="manageadmins" class="menu-item">
         <i class="fas fa-users-cog"></i><span>Manage Admins</span>
     </a>
     <% } %>
 
-    <a href="/backend/addadmin" id="addAdmin">
+    <a href="/backend/addadmin" id="addAdmin" class="menu-item">
         <i class="fas fa-user-plus"></i><span>Add Admin </span>
     </a>
-    <a href="/backend/managefeedbacks" id="">
+    <a href="/backend/managefeedbacks" id="feedback" >
         <i class="fas fa-comments"></i><span>Manage Feedbacks</span>
     </a>
 

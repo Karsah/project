@@ -12,6 +12,7 @@ exports.login = function (request, response) {
         response.redirect('/backend/adminpanel')
     } else {
         let errors = (!request.session.errors) ? "" : request.session.errors;
+        console.log('errors' , errors)
         response.render("backend/login.ejs", {
             title: "Login",
             css: ["login.css"],
@@ -45,24 +46,18 @@ exports.verify = function (request, response) {
                     }
                 })
                 .catch(errors => {
-                    response.render("backend/login.ejs", {
-                        title: "Login",
-                        css: ["login.css"],
-                        errors: errors
-                    })
+                    session.errors = errors
+                    response.redirect("/backend")
                 })
         } else {
-            session.errors = v.errors
-            let errors = [];
-            for (let key in v.errors) {
-                if (v.errors.hasOwnProperty(key))
+
+            let errors=[];
+            for (let key in v.errors){
+                if(v.errors.hasOwnProperty(key))
                     errors.push(v.errors[key].message)
             }
-            response.render("backend/login.ejs", {
-                title: "Login",
-                css: ["login.css"],
-                errors: errors
-            })
+            session.errors = errors
+            response.redirect('/backend')
         }
     });
 
@@ -211,12 +206,14 @@ exports.getManageFeedbacksPage = function (request, response) {
         for (let key in feedbacksArr[0]) {
             fields.push(key)
         }
+
         response.render('backend/manageFeedbacks', {
             title: 'Manage Feedbacks',
             css: ['adminPanel.css', 'manageFeedbacks.css'],
             admin: request.session.admin,
             fields: fields,
             feedbacksArray: feedbacksArr
+
         })
     })
 
