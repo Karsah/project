@@ -180,7 +180,6 @@ exports.getManageFeedbacksPage = function (request,response) {
             admin:request.session.admin,
             fields:fields,
             feedbacksArray:feedbacksArr,
-            url:'feedback'
         })
     })
 

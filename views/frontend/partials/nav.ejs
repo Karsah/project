@@ -1,13 +1,25 @@
 <nav>
     <a href="/" class="logo"><div class="logoimage"></div></a>
     <ul id="menu">
-        <i class="fa fa-times" id="close_menu"></i>
-        <li class="active" >
+        <i  class="fa fa-times" id="close_menu"></i>
+        <li id="information">
             <i class="fa fa-globe"></i><a href="/information">Information</a>
         </li>
         <li><i class="fa fa-image"></i><a href="#">Tourism</a></li>
         <li><i class="fa fa-users"></i><a href="#">Team</a></li>
-        <li><i class="fa fa-comments"></i><a href="/feedback">Feedback</a></li>
+        <li id="feedback"><i class="fa fa-comments"></i><a href="/feedback">Feedback</a></li>
     </ul>
     <i class="fa fa-bars "  id="open_menu"></i>
+
 </nav>
+<script>
+    let URLArr = window.location.href.split('/')
+    let activeItemsArr = Array.from(document.querySelectorAll('#menu li'))
+    let index = 3
+     setActiveItem(index)
+
+    function setActiveItem(index) {
+        let activeItem = document.getElementById(URLArr[index])
+        if (activeItemsArr.includes(activeItem)) activeItem.classList.toggle('active')
+    }
+</script>
