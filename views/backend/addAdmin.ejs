@@ -36,6 +36,8 @@
             <% } %>
             <div class="inputfield">
                 <label>Email Address</label>
+                <% if(errors){%>
+                <p><%= errors%></p><%}%>
                 <input type="text" class="input" name="email">
             </div>
             <div class="inputfield">

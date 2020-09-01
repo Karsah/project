@@ -53,9 +53,9 @@ exports.verify = function (request, response) {
                 })
         } else {
             session.errors = v.errors
-            let errors=[];
-            for (let key in v.errors){
-                if(v.errors.hasOwnProperty(key))
+            let errors = [];
+            for (let key in v.errors) {
+                if (v.errors.hasOwnProperty(key))
                     errors.push(v.errors[key].message)
             }
             response.render("backend/login.ejs", {
@@ -63,8 +63,6 @@ exports.verify = function (request, response) {
                 css: ["login.css"],
                 errors: errors
             })
-
-            console.log(errors)
         }
     });
 
@@ -93,35 +91,66 @@ exports.dashboard = function (request, response) {
     })
 }
 exports.getAddAdminPage = function (request, response) {
+    let errors = (!request.session.addAdminErrors) ? "" : request.session.addAdminErrors;
+
     response.render('backend/addAdmin.ejs', {
         title: 'addAdmin',
         css: ['addAdmin.css', 'adminPanel.css'],
-        admin: request.session.admin
+        admin: request.session.admin,
+        errors: errors
     })
+    console.log(request.session.admin.email)
 }
+
 exports.addAdmin = function (request, response) {
     if (!request.body) return response.sendStatus(400);
     if (request.body.password !== request.body.confirm_pass) {
+        request.session.addAdminErrors = ['Please confirm password correctly']
         response.redirect('/backend/addadmin')
-        return
     }
-    const salt = bcrypt.genSaltSync(saltRounds);
-    let password = bcrypt.hashSync(request.body.password, salt);
-    let is_super = request.body.is_super
-    if (is_super === undefined) {
-        is_super = '0'
-    }
-    const admin = [
-        request.body.name,
-        request.body.surname,
-        request.body.email,
-        password,
-        is_super
-    ];
-    console.log(request.body)
-    console.log('admin-', admin)
-    Admin.addAdmin(admin).then(result => {
-        response.redirect('/backend/adminpanel')
+
+    const v = new Validator(request.body, {
+        email: 'required|email',
+        password: 'required',
+        name: 'required',
+        surname: 'required'
+    });
+    v.check().then((matched) => {
+        if(matched) {
+            Admin.isThereAdminWithThisEmail(request.body.email)
+                .then(result=>{
+                if (result.length > 0){
+                    request.session.addAdminErrors = ['Already there is admin with email you entered']
+                    response.redirect('/backend/addadmin')
+                }
+                    const salt = bcrypt.genSaltSync(saltRounds);
+                    let password = bcrypt.hashSync(request.body.password, salt);
+                    let is_super = request.body.is_super
+                    if (!is_super) {
+                        is_super = '0'
+                    }
+                    const admin = [
+                        request.body.name,
+                        request.body.surname,
+                        request.body.email,
+                        password,
+                        is_super
+                    ];
+                    Admin.addAdmin(admin).then(result => {
+
+                        response.redirect('/backend/adminpanel')
+                    })
+            })
+        }else{
+            let errors = [];
+            for (let key in v.errors) {
+                if (v.errors.hasOwnProperty(key))
+                    errors.push(v.errors[key].message)
+            }
+            request.session.addAdminErrors = errors
+            response.redirect('/backend/addadmin')
+
+        }
     })
 }
 
@@ -175,34 +204,34 @@ exports.getEditAdmin = function (request, response) {
 
 }
 
-exports.getManageFeedbacksPage = function (request,response) {
-    Feedbacks.getAllFeedbacksForManagement().then(result=> {
+exports.getManageFeedbacksPage = function (request, response) {
+    Feedbacks.getAllFeedbacksForManagement().then(result => {
         let fields = []
         let feedbacksArr = result
-        for (let key in feedbacksArr[0]){
+        for (let key in feedbacksArr[0]) {
             fields.push(key)
         }
-        response.render('backend/manageFeedbacks',{
-            title:'Manage Feedbacks',
-            css:['adminPanel.css' , 'manageFeedbacks.css'],
-            admin:request.session.admin,
-            fields:fields,
-            feedbacksArray:feedbacksArr
+        response.render('backend/manageFeedbacks', {
+            title: 'Manage Feedbacks',
+            css: ['adminPanel.css', 'manageFeedbacks.css'],
+            admin: request.session.admin,
+            fields: fields,
+            feedbacksArray: feedbacksArr
         })
     })
 
 }
-exports.deleteFeedback = function (request,response) {
+exports.deleteFeedback = function (request, response) {
     const id = request.params.id
     Feedbacks.deleteFeedback(id)
     response.redirect('/backend/managefeedbacks')
 }
-exports.blockFeedback = function (request,response) {
+exports.blockFeedback = function (request, response) {
     const id = request.params.id
     Feedbacks.blockFeedback(id)
     response.redirect('/backend/managefeedbacks')
 }
-exports.unblockFeedback = function (request,response) {
+exports.unblockFeedback = function (request, response) {
     const id = request.params.id
     Feedbacks.unblockFeedback(id)
     response.redirect('/backend/managefeedbacks')

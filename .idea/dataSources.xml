@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="da_database@localhost" uuid="168ab55f-6ef7-471d-987f-8e1fcfc94e41">
+    <data-source source="LOCAL" name="@localhost" uuid="168ab55f-6ef7-471d-987f-8e1fcfc94e41">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/da_database</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/</jdbc-url>
       <driver-properties>
         <property name="serverTimezone" value="UTC" />
       </driver-properties>

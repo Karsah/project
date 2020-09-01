@@ -9,14 +9,6 @@ module.exports = class Admin {
         this.password = password;
     }
 
-    static getAdmins(id){
-        return new Promise((resolve,reject) =>{
-            const  sql = "select id,name,surname,email,is_super from admins "
-            con.execute(sql)
-                .then((result)=> resolve(result[0]))
-                .catch((err)=>reject(err))
-        })
-    }
     static getAdmin(id){
         return new Promise((resolve,reject) =>{
             const  sql = "select id,name,surname,email,is_super from admins WHERE id=? "
@@ -79,6 +71,16 @@ module.exports = class Admin {
                 .catch(err=>{
                     reject(err)
                 })
+        })
+    }
+    static isThereAdminWithThisEmail(email){
+        return new Promise((resolve,reject)=>{
+            const sql = "select id from admins where email = ?"
+            con.query(sql,[email])
+                .then(result=>{
+                    resolve(result[0])
+                })
+                .catch(err=>reject(err))
         })
     }
 };

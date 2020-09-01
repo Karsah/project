@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title%></title>
+    <link rel='stylesheet' href='/frontend/stylesheets/error.css'>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+            crossorigin="anonymous">
+    <link rel="icon" type="image/icon" sizes="32x32" href="/favicon.ico">
+</head>
+<body>
+
+<div class="container">
+    <div class="content">
+        <h2>500</h2>
+        <h4>OPPS! Page Not Found</h4>
+        <p>oops, that's not something</p>
+        <a href="/">Back To Home</a>
+    </div>
+    <script>
+        const container = document.querySelector(".container")
+        window.addEventListener('mousemove',function (e) {
+            let x = e.clientX/5,
+                y = e.clientY/5
+            container.style.backgroundPositionX = 0-x + 'px'
+            container.style.backgroundPositionY = 0-y + 'px'
+        })
+    </script>
+</div>
+</body>
+</html>
