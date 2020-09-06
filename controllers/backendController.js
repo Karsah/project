@@ -49,9 +49,9 @@ exports.verify = function (request, response) {
                     response.redirect("/backend")
                 })
         } else {
-            let errors = [];
-            for (let key in v.errors) {
-                if (v.errors.hasOwnProperty(key))
+            let errors=[];
+            for (let key in v.errors){
+                if(v.errors.hasOwnProperty(key))
                     errors.push(v.errors[key].message)
             }
             session.errors = errors
@@ -157,33 +157,66 @@ exports.dashboard = function (request, response) {
     })
 }
 exports.getAddAdminPage = function (request, response) {
+    let errors = (!request.session.addAdminErrors) ? "" : request.session.addAdminErrors;
+
     response.render('backend/addAdmin.ejs', {
         title: 'addAdmin',
         css: ['addAdmin.css', 'adminPanel.css'],
-        admin: request.session.admin
+        admin: request.session.admin,
+        errors: errors
     })
+    console.log(request.session.admin.email)
 }
+
 exports.addAdmin = function (request, response) {
     if (!request.body) return response.sendStatus(400);
     if (request.body.password !== request.body.confirm_pass) {
+        request.session.addAdminErrors = ['Please confirm password correctly']
         response.redirect('/backend/addadmin')
-        return
     }
-    const salt = bcrypt.genSaltSync(saltRounds);
-    let password = bcrypt.hashSync(request.body.password, salt);
-    let is_super = request.body.is_super
-    if (is_super === undefined) {
-        is_super = '0'
-    }
-    const admin = [
-        request.body.name,
-        request.body.surname,
-        request.body.email,
-        password,
-        is_super
-    ];
-    Admin.addAdmin(admin).then(result => {
-        response.redirect('/backend/adminpanel')
+
+    const v = new Validator(request.body, {
+        email: 'required|email',
+        password: 'required',
+        name: 'required',
+        surname: 'required'
+    });
+    v.check().then((matched) => {
+        if(matched) {
+            Admin.isThereAdminWithThisEmail(request.body.email)
+                .then(result=>{
+                if (result.length > 0){
+                    request.session.addAdminErrors = ['Already there is admin with email you entered']
+                    response.redirect('/backend/addadmin')
+                }
+                    const salt = bcrypt.genSaltSync(saltRounds);
+                    let password = bcrypt.hashSync(request.body.password, salt);
+                    let is_super = request.body.is_super
+                    if (!is_super) {
+                        is_super = '0'
+                    }
+                    const admin = [
+                        request.body.name,
+                        request.body.surname,
+                        request.body.email,
+                        password,
+                        is_super
+                    ];
+                    Admin.addAdmin(admin).then(result => {
+
+                        response.redirect('/backend/adminpanel')
+                    })
+            })
+        }else{
+            let errors = [];
+            for (let key in v.errors) {
+                if (v.errors.hasOwnProperty(key))
+                    errors.push(v.errors[key].message)
+            }
+            request.session.addAdminErrors = errors
+            response.redirect('/backend/addadmin')
+
+        }
     })
 }
 
@@ -273,6 +306,3 @@ exports.unblockFeedback = function (request, response) {
 exports.getManageSliderPage = function (request, response) {
 }
 
-/*
-
-*/

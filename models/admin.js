@@ -9,22 +9,24 @@ module.exports = class Admin {
         this.password = password;
     }
 
-    static getAdmins(id){
-        return new Promise((resolve,reject) =>{
-            const  sql = "select id,name,surname,email,is_super from admins "
+    static getAdmin(id) {
+        return new Promise((resolve, reject) => {
+            const sql = "select id,name,surname,email,is_super from admins WHERE id=? "
+            con.execute(sql, [id])
+                .then((result) => resolve(result[0][0]))
+                .catch((err) => reject(err))
+        })
+    }
+
+    static getAdmins(id) {
+        return new Promise((resolve, reject) => {
+            const sql = "select id,name,surname,email,is_super from admins "
             con.execute(sql)
-                .then((result)=> resolve(result[0]))
-                .catch((err)=>reject(err))
+                .then((result) => resolve(result[0]))
+                .catch((err) => reject(err))
         })
     }
-    static getAdmin(id){
-        return new Promise((resolve,reject) =>{
-            const  sql = "select id,name,surname,email,is_super from admins WHERE id=? "
-            con.execute(sql,[id])
-                .then((result)=> resolve(result[0][0]))
-                .catch((err)=>reject(err))
-        })
-    }
+
     static verify(email, pass) {
         return new Promise((res, rej) => {
             let sql = "select id,name,surname,is_super, password from admins where email=?"
@@ -37,12 +39,11 @@ module.exports = class Admin {
                             .then(function (compareResult) {
                                 if (compareResult) {
                                     res(result[0][0])
-                                }else{
+                                } else {
                                     rej(['The password you entered is incorrect'])
                                 }
                             })
-                    }
-                    else if(result[0].length == 0){
+                    } else if (result[0].length == 0) {
                         rej(['There is no admin with the email you wrote'])
                     }
                 })
@@ -60,62 +61,75 @@ module.exports = class Admin {
                 .catch(err => reject(err))
         })
     }
-    static editAdmin(admin){
-        return new Promise((resolve,reject)=>{
-            const sql= 'UPDATE admins SET name=?, surname=?, email=?,is_super=? WHERE id=?'
-            con.query(sql,admin)
-                .then(result=>resolve(result))
-                .catch(err=>reject(err))
+
+    static editAdmin(admin) {
+        return new Promise((resolve, reject) => {
+            const sql = 'UPDATE admins SET name=?, surname=?, email=?,is_super=? WHERE id=?'
+            con.query(sql, admin)
+                .then(result => resolve(result))
+                .catch(err => reject(err))
         })
     }
 
-    static deleteAdmin(id){
-        return new Promise((resolve,reject)=>{
+    static deleteAdmin(id) {
+        return new Promise((resolve, reject) => {
             const sql = 'DELETE FROM admins where id = ?'
-            con.query(sql,[id])
-                .then(result=>{
+            con.query(sql, [id])
+                .then(result => {
                     resolve()
                 })
-                .catch(err=>{
+                .catch(err => {
                     reject(err)
                 })
         })
     }
 
-    static comparePass(pass,email){
-        return new Promise((resolve,reject)=>{
+    static comparePass(pass, email) {
+        return new Promise((resolve, reject) => {
             const sql = 'select password from admins where email = ?'
-            con.query(sql,[email])
-                .then(result=>{
-                    if(result[0].length>0){
+            con.query(sql, [email])
+                .then(result => {
+                    if (result[0].length > 0) {
                         if (result[0].length > 0) {
                             const hash = result[0][0].password;
                             console.log('hash', hash)
                             bcrypt.compare(pass, hash)
                                 .then(function (compareResult) {
-                                    console.log('compared',compareResult)
+                                    console.log('compared', compareResult)
                                     if (compareResult) {
                                         resolve(true)
-                                    }else if(!compareResult){
+                                    } else if (!compareResult) {
                                         resolve(false)
                                     }
                                 })
-                                // .catch(reject())
+                            // .catch(reject())
                         }
                     }
                 })
-                .catch(err=>{
+                .catch(err => {
                     reject()
                 })
         })
     }
-    static setNewPass(newPass,email){
-        return new Promise((resolve,reject)=>{
+
+    static setNewPass(newPass, email){
+        return new Promise((resolve, reject) => {
             const sql = 'update admins set password = ? where email = ?'
-            con.query(sql,[newPass,email])
+            con.query(sql, [newPass, email])
                 .then(resolve())
                 .catch(reject(err))
         })
     }
-};
+
+    static isThereAdminWithThisEmail(email) {
+        return new Promise((resolve, reject) => {
+            const sql = "select id from admins where email = ?"
+            con.query(sql, [email])
+                .then(result => {
+                    resolve(result[0])
+                })
+                .catch(err => reject(err))
+        })
+    }
+}
 
