@@ -81,5 +81,41 @@ module.exports = class Admin {
                 })
         })
     }
+
+    static comparePass(pass,email){
+        return new Promise((resolve,reject)=>{
+            const sql = 'select password from admins where email = ?'
+            con.query(sql,[email])
+                .then(result=>{
+                    if(result[0].length>0){
+                        if (result[0].length > 0) {
+                            const hash = result[0][0].password;
+                            console.log('hash', hash)
+                            bcrypt.compare(pass, hash)
+                                .then(function (compareResult) {
+                                    console.log('compared',compareResult)
+                                    if (compareResult) {
+                                        resolve(true)
+                                    }else if(!compareResult){
+                                        resolve(false)
+                                    }
+                                })
+                                // .catch(reject())
+                        }
+                    }
+                })
+                .catch(err=>{
+                    reject()
+                })
+        })
+    }
+    static setNewPass(newPass,email){
+        return new Promise((resolve,reject)=>{
+            const sql = 'update admins set password = ? where email = ?'
+            con.query(sql,[newPass,email])
+                .then(resolve())
+                .catch(reject(err))
+        })
+    }
 };
 

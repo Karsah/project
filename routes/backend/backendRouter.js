@@ -7,7 +7,12 @@ const backendController=require('../../controllers/backendController')
 
 const urlencodedParser = bodyParser.urlencoded({extended: false})
 
-/* Get admin panel*/
+/* Get */
+
+backendRout.post('/changepass/change',backendController.changePass)
+backendRout.get('/changepass',backendController.getChangePassPage)
+
+backendRout.get('/manageslider',backendController.getManageSliderPage)
 
 backendRout.get('/managefeedbacks/unblock/:id',backendController.unblockFeedback)
 backendRout.get('/managefeedbacks/block/:id',backendController.blockFeedback)

@@ -12,10 +12,9 @@ exports.login = function (request, response) {
         response.redirect('/backend/adminpanel')
     } else {
         let errors = (!request.session.errors) ? "" : request.session.errors;
-        console.log('errors' , errors)
         response.render("backend/login.ejs", {
             title: "Login",
-            css: ["login.css"],
+            css: ["login.css", 'adminPanel.css'],
             errors: errors
         })
     }
@@ -50,9 +49,9 @@ exports.verify = function (request, response) {
                     response.redirect("/backend")
                 })
         } else {
-            let errors=[];
-            for (let key in v.errors){
-                if(v.errors.hasOwnProperty(key))
+            let errors = [];
+            for (let key in v.errors) {
+                if (v.errors.hasOwnProperty(key))
                     errors.push(v.errors[key].message)
             }
             session.errors = errors
@@ -66,6 +65,79 @@ exports.logout = function (request, response) {
     request.session.destroy();
     response.redirect('/backend')
 };
+exports.getChangePassPage = function (request, response) {
+    let changePassErrors = (!request.session.changepasserrors) ? "" : request.session.changepasserrors;
+    response.render("backend/changepass.ejs", {
+        title: "Change Password",
+        css: ["changepass.css", 'adminPanel.css'],
+        errors: changePassErrors,
+        admin: request.session.admin,
+    })
+}
+exports.changePass = function (request, response) {
+    if (!request.body) return response.sendStatus(400);
+
+    const v = new Validator(request.body, {
+        currentpass: 'required',
+        newpass: 'required|minLength:5',
+        confirmnewpass: 'required|minLength:5'
+    });
+    v.check().then(matched => {
+        if (matched) {
+            const currentpassword = request.body.currentpass;
+            const sessionemail = request.session.admin.email
+            console.log(sessionemail)
+            Admin.comparePass(currentpassword, sessionemail)
+                .then(result => {
+                    console.log('type', result, typeof result)
+                    if (result) {
+                        const newpassword = request.body.newpass;
+                        const confirmnewpass = request.body.confirmnewpass;
+                        console.log(newpassword, confirmnewpass)
+                        if (newpassword != confirmnewpass) {
+                            console.log('havasar chein')
+                            request.session.changepasserrors = ['Confirm your new password correctly']
+                            response.redirect('/backend/changepass')
+                        }
+                        else if (newpassword === confirmnewpass) {
+                            console.log('havasar ein')
+                            console.log('new password', newpassword)
+                            const salt = bcrypt.genSaltSync(saltRounds);
+                            let newpass = bcrypt.hashSync(newpassword, salt);
+                            console.log('new password hash', newpass)
+                            Admin.setNewPass(newpass, sessionemail)
+                                .then(()=>{
+                                    request.session.destroy();
+                                    response.redirect('/backend')
+                                })
+                                .catch((err)=>{
+                                    console.log(err)
+                                })
+                        }
+                    } else if (!result) {
+                        console.log('res', result)
+                        console.log('type', typeof result)
+                        console.log('resolved')
+                        request.session.changepasserrors = ['Insert your current password correctly']
+                        response.redirect('/backend/changepass')
+                    }
+                })
+                .catch((result) => {
+                    console.log(result)
+                })
+        } else {
+            let errors = [];
+            for (let key in v.errors) {
+                if (v.errors.hasOwnProperty(key))
+                    errors.push(v.errors[key].message)
+            }
+            request.session.changepasserrors = errors
+            response.redirect('/backend/changepass')
+        }
+    })
+}
+
+
 exports.adminPanel = function (request, response) {
     if (!request.session.admin) {
         response.redirect('/backend')
@@ -110,8 +182,6 @@ exports.addAdmin = function (request, response) {
         password,
         is_super
     ];
-    console.log(request.body)
-    console.log('admin-', admin)
     Admin.addAdmin(admin).then(result => {
         response.redirect('/backend/adminpanel')
     })
@@ -126,7 +196,7 @@ exports.manageadmins = function (request, response) {
         }
         response.render('backend/manageAdmins', {
             title: 'Manage Admins',
-            css: ['adminPanel.css', 'manageAdmins.css'],
+            css: ['adminPanel.css'],
             admin: request.session.admin,
             fields: fields,
             adminsArray: adminsArr
@@ -167,35 +237,42 @@ exports.getEditAdmin = function (request, response) {
 
 }
 
-exports.getManageFeedbacksPage = function (request,response) {
-    Feedbacks.getAllFeedbacksForManagement().then(result=> {
+exports.getManageFeedbacksPage = function (request, response) {
+    Feedbacks.getAllFeedbacksForManagement().then(result => {
         let fields = []
         let feedbacksArr = result
-        for (let key in feedbacksArr[0]){
+        for (let key in feedbacksArr[0]) {
             fields.push(key)
         }
-        response.render('backend/manageFeedbacks',{
-            title:'Manage Feedbacks',
-            css:['adminPanel.css' , 'manageFeedbacks.css'],
-            admin:request.session.admin,
-            fields:fields,
-            feedbacksArray:feedbacksArr,
+        response.render('backend/manageFeedbacks', {
+            title: 'Manage Feedbacks',
+            css: ['adminPanel.css'],
+            admin: request.session.admin,
+            fields: fields,
+            feedbacksArray: feedbacksArr,
         })
     })
 
 }
-exports.deleteFeedback = function (request,response) {
+exports.deleteFeedback = function (request, response) {
     const id = request.params.id
     Feedbacks.deleteFeedback(id)
     response.redirect('/backend/managefeedbacks')
 }
-exports.blockFeedback = function (request,response) {
+exports.blockFeedback = function (request, response) {
     const id = request.params.id
     Feedbacks.blockFeedback(id)
     response.redirect('/backend/managefeedbacks')
 }
-exports.unblockFeedback = function (request,response) {
+exports.unblockFeedback = function (request, response) {
     const id = request.params.id
     Feedbacks.unblockFeedback(id)
     response.redirect('/backend/managefeedbacks')
 }
+
+exports.getManageSliderPage = function (request, response) {
+}
+
+/*
+
+*/
