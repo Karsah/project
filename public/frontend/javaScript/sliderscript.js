@@ -12,5 +12,5 @@ setInterval(() => {
         slider.style.transition = "none";
         slider.style.left = '0';
     }
-}, 8000);
+}, 4000);
 

@@ -12,7 +12,7 @@ exports.login = function (request, response) {
         response.redirect('/backend/adminpanel')
     } else {
         let errors = (!request.session.errors) ? "" : request.session.errors;
-        console.log('errors' , errors)
+        console.log('errors', errors)
         response.render("backend/login.ejs", {
             title: "Login",
             css: ["login.css"],
@@ -51,9 +51,9 @@ exports.verify = function (request, response) {
                 })
         } else {
 
-            let errors=[];
-            for (let key in v.errors){
-                if(v.errors.hasOwnProperty(key))
+            let errors = [];
+            for (let key in v.errors) {
+                if (v.errors.hasOwnProperty(key))
                     errors.push(v.errors[key].message)
             }
             session.errors = errors
@@ -94,7 +94,6 @@ exports.getAddAdminPage = function (request, response) {
         admin: request.session.admin,
         errors: errors
     })
-    console.log(request.session.admin.email)
 }
 
 exports.addAdmin = function (request, response) {
@@ -111,13 +110,13 @@ exports.addAdmin = function (request, response) {
         surname: 'required'
     });
     v.check().then((matched) => {
-        if(matched) {
+        if (matched) {
             Admin.isThereAdminWithThisEmail(request.body.email)
-                .then(result=>{
-                if (result.length > 0){
-                    request.session.addAdminErrors = ['Already there is admin with email you entered']
-                    response.redirect('/backend/addadmin')
-                }
+                .then(result => {
+                    if (result.length > 0) {
+                        request.session.addAdminErrors = ['Already there is admin with email you entered']
+                        response.redirect('/backend/addadmin')
+                    }
                     const salt = bcrypt.genSaltSync(saltRounds);
                     let password = bcrypt.hashSync(request.body.password, salt);
                     let is_super = request.body.is_super
@@ -135,8 +134,8 @@ exports.addAdmin = function (request, response) {
 
                         response.redirect('/backend/adminpanel')
                     })
-            })
-        }else{
+                })
+        } else {
             let errors = [];
             for (let key in v.errors) {
                 if (v.errors.hasOwnProperty(key))
@@ -170,30 +169,58 @@ exports.deleteadmin = function (request, response) {
     Admin.deleteAdmin(id)
     response.redirect('/backend/manageadmins')
 };
-exports.editAdmin = function (request, response) {
+exports.editAdmin = function (request, response) {{
     if (!request.body) return response.sendStatus(400);
-    let is_super = request.body.is_super
-    if (is_super === undefined) {
-        is_super = '0'
-    }
-    const admin = [
-        request.body.name,
-        request.body.surname,
-        request.body.email,
-        is_super,
-        request.body.id
+    const v = new Validator(request.body, {
+        email: 'required|email',
+        name: 'required',
+        surname: 'required'
+    });
+    v.check().then((matched) => {
+        if (matched) {
+            Admin.isThereAdminWithThisEmail(request.body.email)
+                .then(result => {
+                    if (result.length > 0) {
+                        request.session.addAdminErrors = ['Already there is admin with email you entered']
+                        response.redirect('/backend/editadmin')
+                    }
+                    let is_super = request.body.is_super
+                    if (!is_super) {
+                        is_super = '0'
+                    }
+                    const admin = [
+                        request.body.name,
+                        request.body.surname,
+                        request.body.email,
+                        is_super
+                    ];
+                    Admin.editAdmin(admin).then(result => {
 
-    ];
-    Admin.editAdmin(admin).then(result => {
-        response.redirect('/backend/manageadmins')
+                        response.redirect('/backend/adminpanel')
+                    })
+                })
+        } else {
+            let errors = [];
+            for (let key in v.errors) {
+                if (v.errors.hasOwnProperty(key))
+                    errors.push(v.errors[key].message)
+            }
+            request.session.addAdminErrors = errors
+            response.redirect('/backend/editadmin')
+
+        }
     })
 }
+}
 exports.getEditAdmin = function (request, response) {
+
+    let errors = (!request.session.addAdminErrors) ? "" : request.session.addAdminErrors;
     Admin.getAdmin(request.params.id).then(result => response.render('backend/editAdmin.ejs', {
         title: 'editAdmin',
         editingAdminInfo: result,
         css: ['addAdmin.css', 'adminPanel.css'],
-        admin: request.session.admin
+        admin: request.session.admin,
+        errors: errors
     }))
 
 

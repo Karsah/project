@@ -5,9 +5,13 @@
     <div class="wrapper">
         <div class="title">
             Edit Admin Form
+            <% if(errors){%>
+                <p class="err"><%= errors%></p><%}%>
         </div>
         <form action="edit" class="form" method="post">
             <div class="inputfield">
+                <% if(errors){%>
+                    <p><%= errors%></p><%}%>
                 <label> Name</label>
                 <input type="text" class="input" name="name" value="<%= editingAdminInfo.name%>">
             </div>
