@@ -203,7 +203,12 @@ header {
     height: 100%;
     align-items:center;
     justify-content: center;
-    flex-direction: row;
+    flex-direction: column;
+}
+.manage-tools > div{
+    display: flex;
+    align-items:center;
+    justify-content: center;
 }
 
 .table-box table tr td .manage_tool {
@@ -214,11 +219,12 @@ header {
     color: #fff;
     border: 1px solid #22242a;
     border-radius: 4px;
-    height: 50px;
-    width: 150px;
+    min-height: 50px;
+    min-width: 150px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+    text-align: center;
 }
 
 .table-box table tr td .manage_tool i{
@@ -261,5 +267,10 @@ header {
 .table-box table tr th{
     position: sticky;
     top: -1px;
+}
+
+.image-demo > img{
+    width: 300px;
+    height: 170px;
 }
 /* table css end */

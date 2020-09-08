@@ -1,0 +1,44 @@
+<%- include('partials/head') %>
+<div class="container">
+    <%- include('partials/header') %>
+    <%- include('partials/sidebar') %>
+    <div class="content">
+        <% if(slidesArray.length == 0){ %>
+            <h2>There is not any Slides yet !</h2>
+        <% } %>
+        <% if(slidesArray.length > 0){ %>
+        <div class="table-box">
+            <table>
+                <tr>
+                    <% fields.forEach(function (field) { %>
+                    <th><%= field %></th>
+                    <% }) %>
+                     <th>Image Demo</th>
+                    <th>Tools</th>
+                </tr>
+                <% slidesArray.forEach(function (item) { %>
+                <tr>
+                    <% fields.forEach(function (field) { %>
+
+                    <td><%= item[field] %></td>
+                    <% }) %>
+                        <td class="image-demo"><img src="/frontend/images/<%=item.bg_image%>" ></td>
+                    <td>
+                        <div class="manage-tools">
+                            <div><a href="manageslider/edit/<%= item.id %>" class="manage_tool edit"><i
+                                            class="fas fa-user-edit"></i>Edit</a>
+                                <a href="manageslider/delete/<%= item.id %>" class="delete manage_tool"><i class="fas fa-trash"></i>Delete</a>
+                            </div>
+                        </div>
+                 </td>
+                </tr>
+                <% }) %>
+            </table>
+        </div>
+        <% } %>
+
+    </div>
+
+</div>
+<%- include('partials/footer') %>
+

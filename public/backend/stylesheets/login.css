@@ -64,6 +64,7 @@ h1 {
     background-color: #0082e6;
 }
 .err{
+    text-align: center;
     color: #e00c0c;
     font-size: 18px;
 }

@@ -2,39 +2,48 @@
 <div class="container">
     <%- include('partials/header')%>
     <%- include('partials/sidebar')%>
-    <div class="wrapper">
-        <div class="title">
-            Edit Admin Form
-        </div>
-        <form action="edit" class="form" method="post">
-            <div class="inputfield">
-                <label> Name</label>
-                <input type="text" class="input" name="name" value="<%= editingAdminInfo.name%>">
+    <div class="content">
+        <div class="wrapper">
+            <div class="title">
+                Edit Admin Form
             </div>
-            <div class="inputfield">
-                <label>Surname</label>
-                <input type="text" class="input" name="surname" value="<%= editingAdminInfo.surname%>">
-            </div>
-            <% if(admin.is_super === '1'){ %>
+            <form action="edit" class="form" method="post">
                 <div class="inputfield">
-                    <label>Is Super Admin</label>
-                    <div class="custom_select">
-                        <select name="is_super" >
-                            <option value="0">False</option>
-                            <option value="1">True</option>
-                        </select>
-                    </div>
+                    <label> Name</label>
+                    <input type="text" class="input" name="name" value="<%= editingAdminInfo.name%>">
                 </div>
-            <% } %>
-            <div class="inputfield">
-                <label>Email Address</label>
-                <input type="text" class="input" name="email" value="<%= editingAdminInfo.email%>">
-            </div>
-            <input style="visibility: hidden" value="<%=editingAdminInfo.id%>" name="id">
-            <div class="inputfield">
-                <input type="submit" value="Edit Admin" class="btn">
-            </div>
-        </form>
+                <div class="inputfield">
+                    <label>Surname</label>
+                    <input type="text" class="input" name="surname" value="<%= editingAdminInfo.surname%>">
+                </div>
+                <% if(admin.is_super === '1'){ %>
+                    <div class="inputfield">
+                        <label>Is Super Admin</label>
+                        <div class="custom_select">
+                            <select name="is_super" >
+                                <% if(editingAdminInfo.is_super === '1'){%>
+                                    <option value="0">False</option>
+                                    <option value="1" selected>True</option>
+                                <%}%>
+                                <% if(editingAdminInfo.is_super === '0'){%>
+                                    <option value="0" selected>False</option>
+                                    <option value="1" >True</option>
+                                <%}%>
+                            </select>
+                        </div>
+                    </div>
+                <% } %>
+                <div class="inputfield">
+                    <label>Email Address</label>
+                    <input type="text" class="input" name="email" value="<%= editingAdminInfo.email%>">
+                </div>
+                <input style="visibility: hidden" value="<%=editingAdminInfo.id%>" name="id">
+                <div class="inputfield">
+                    <input type="submit" value="Edit Admin" class="btn">
+                </div>
+            </form>
+        </div>
+
     </div>
 </div>
 <%- include('partials/footer')%>

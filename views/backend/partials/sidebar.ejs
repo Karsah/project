@@ -9,10 +9,6 @@
         <h3><%= admin.name %> <%= admin.surname %></h3>
         <p><%= admin.email %></p>
     </div>
-
-    <a href="/backend/dashboard" id="dashboard" class="menu-item">
-        <i class="fas fa-desktop"></i><span>Dashboard</span>
-    </a>
     <% if (admin.is_super === '1'){ %>
         <a href="/backend/manageadmins" id="manageadmins" class="menu-item">
             <i class="fas fa-users-cog"></i><span>Manage Admins</span>
@@ -27,6 +23,9 @@
     </a>
     <a href="/backend/manageslider" id="manageslider" class="menu-item">
         <i class="far fa-images"></i><span>Manage Slider</span>
+    </a>
+    <a href="/backend/uploadimage" id="uploadimage" class="menu-item">
+        <i class="fas fa-upload"></i></i><span>Upload Image</span>
     </a>
     <script>
 

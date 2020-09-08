@@ -1,9 +1,14 @@
 const Admin = require("../models/admin");
 const Feedbacks = require('../models/feedback');
+const Slider = require('../models/mainSlider');
+
+let fs = require('fs')
 
 const bcrypt = require('bcrypt');
 let saltRounds = 12
 const {Validator} = require('node-input-validator');
+
+//login
 
 exports.login = function (request, response) {
 
@@ -49,9 +54,9 @@ exports.verify = function (request, response) {
                     response.redirect("/backend")
                 })
         } else {
-            let errors=[];
-            for (let key in v.errors){
-                if(v.errors.hasOwnProperty(key))
+            let errors = [];
+            for (let key in v.errors) {
+                if (v.errors.hasOwnProperty(key))
                     errors.push(v.errors[key].message)
             }
             session.errors = errors
@@ -61,6 +66,8 @@ exports.verify = function (request, response) {
 
 
 };
+
+// logout and change password
 exports.logout = function (request, response) {
     request.session.destroy();
     response.redirect('/backend')
@@ -98,19 +105,18 @@ exports.changePass = function (request, response) {
                             console.log('havasar chein')
                             request.session.changepasserrors = ['Confirm your new password correctly']
                             response.redirect('/backend/changepass')
-                        }
-                        else if (newpassword === confirmnewpass) {
+                        } else if (newpassword === confirmnewpass) {
                             console.log('havasar ein')
                             console.log('new password', newpassword)
                             const salt = bcrypt.genSaltSync(saltRounds);
                             let newpass = bcrypt.hashSync(newpassword, salt);
                             console.log('new password hash', newpass)
                             Admin.setNewPass(newpass, sessionemail)
-                                .then(()=>{
+                                .then(() => {
                                     request.session.destroy();
                                     response.redirect('/backend')
                                 })
-                                .catch((err)=>{
+                                .catch((err) => {
                                     console.log(err)
                                 })
                         }
@@ -137,7 +143,7 @@ exports.changePass = function (request, response) {
     })
 }
 
-
+// admin panel welcome
 exports.adminPanel = function (request, response) {
     if (!request.session.admin) {
         response.redirect('/backend')
@@ -149,25 +155,19 @@ exports.adminPanel = function (request, response) {
         })
     }
 };
-exports.dashboard = function (request, response) {
-    response.render('backend/dashboard', {
-        title: 'Dashboard',
-        css: ['adminPanel.css'],
-        admin: request.session.admin
-    })
-}
+
+// add admin
 exports.getAddAdminPage = function (request, response) {
     let errors = (!request.session.addAdminErrors) ? "" : request.session.addAdminErrors;
 
     response.render('backend/addAdmin.ejs', {
         title: 'addAdmin',
-        css: ['addAdmin.css', 'adminPanel.css'],
+        css: ['addandEditForm.css', 'adminPanel.css'],
         admin: request.session.admin,
         errors: errors
     })
     console.log(request.session.admin.email)
 }
-
 exports.addAdmin = function (request, response) {
     if (!request.body) return response.sendStatus(400);
     if (request.body.password !== request.body.confirm_pass) {
@@ -182,19 +182,23 @@ exports.addAdmin = function (request, response) {
         surname: 'required'
     });
     v.check().then((matched) => {
-        if(matched) {
+        if (matched) {
             Admin.isThereAdminWithThisEmail(request.body.email)
-                .then(result=>{
-                if (result.length > 0){
-                    request.session.addAdminErrors = ['Already there is admin with email you entered']
-                    response.redirect('/backend/addadmin')
-                }
+                .then(result => {
+                    if (result.length > 0) {
+                        request.session.addAdminErrors = ['Already there is admin with email you entered']
+                        response.redirect('/backend/addadmin')
+                    }
                     const salt = bcrypt.genSaltSync(saltRounds);
                     let password = bcrypt.hashSync(request.body.password, salt);
                     let is_super = request.body.is_super
-                    if (!is_super) {
-                        is_super = '0'
+                    if (!is_super) is_super = '0'
+
+                    if(is_super != '1' || is_super !='0'){
+                        request.session.addAdminErrors = ['Admin status is not correct']
+                        response.redirect('/backend/addadmin')
                     }
+
                     const admin = [
                         request.body.name,
                         request.body.surname,
@@ -206,8 +210,8 @@ exports.addAdmin = function (request, response) {
 
                         response.redirect('/backend/adminpanel')
                     })
-            })
-        }else{
+                })
+        } else {
             let errors = [];
             for (let key in v.errors) {
                 if (v.errors.hasOwnProperty(key))
@@ -219,7 +223,7 @@ exports.addAdmin = function (request, response) {
         }
     })
 }
-
+// manage admins
 exports.manageadmins = function (request, response) {
     Admin.getAdmins().then(result => {
         let fields = []
@@ -263,13 +267,14 @@ exports.getEditAdmin = function (request, response) {
     Admin.getAdmin(request.params.id).then(result => response.render('backend/editAdmin.ejs', {
         title: 'editAdmin',
         editingAdminInfo: result,
-        css: ['addAdmin.css', 'adminPanel.css'],
+        css: ['addandEditForm.css', 'adminPanel.css'],
         admin: request.session.admin
     }))
 
 
 }
 
+//manage feedbacks
 exports.getManageFeedbacksPage = function (request, response) {
     Feedbacks.getAllFeedbacksForManagement().then(result => {
         let fields = []
@@ -303,6 +308,110 @@ exports.unblockFeedback = function (request, response) {
     response.redirect('/backend/managefeedbacks')
 }
 
+//manage slider
 exports.getManageSliderPage = function (request, response) {
+    Slider.GetSlides().then((result) => {
+        let fields = []
+        let slidesArr = result
+        for (let key in slidesArr[0]) {
+            fields.push(key)
+        }
+
+        response.render('backend/manageMainSlider', {
+            title: 'Manage Main SLider',
+            css: ['adminPanel.css'],
+            admin: request.session.admin,
+            fields: fields,
+            slidesArray: slidesArr,
+        })
+    })
+
+
+}
+exports.deleteslider = function (request, response) {
+    const id = request.params.id
+    Slider.deleteSlider(id)
+    response.redirect('/backend/manageslider')
+};
+exports.getEditSliderPAge = function(request,response){
+
+}
+
+//upload image
+exports.getUploadImagePage = function (request, response) {
+    let errors = (!request.session.uploadErrors) ? "" : request.session.uploadErrors;
+
+    response.render('backend/uploadImage', {
+        title: 'Upload Image',
+        css: ['adminPanel.css', 'addandEditForm.css'],
+        admin: request.session.admin,
+        errors: errors
+    })
+}
+exports.uploadimage = function (request, response) {
+    let filedata = request.file;
+    if (!filedata) {
+        request.session.uploadErrors = ['No file selected']
+        response.redirect('/backend/uploadimage')
+    }
+
+    const v = new Validator(request.body, {
+        storage: 'required',
+        name: 'required',
+    });
+    v.check().then((matched) => {
+        if (matched) {
+            new Promise((resolve, reject) => {
+                //    storage checking
+                let storageArr = ['backend', 'frontend']
+                if (storageArr.includes(request.body.storage)){
+                    // file name validation
+                    const fileExtensionArr = ['.png', '.jpg', '.jpeg']
+                    let fileNameArr = request.body.name.split('.')
+                    let extension = '.' + fileNameArr[fileNameArr.length - 1]
+                    if (fileExtensionArr.includes(extension)) resolve()
+                    else if (!(fileExtensionArr.includes(extension))) reject(['wrong file extension'])
+                }
+                else if (!(storageArr.includes(request.body.storage))) reject(['wrong storage selected'])
+            })
+                .then(() => {
+                    function callback(err) {
+                        if (err) {request.session.uploadErrors = prError
+                        response.redirect('/backend/uploadimage') ;}
+                    }
+                    fs.copyFile(`public/uploads/${filedata.originalname}`,`public/${request.body.storage}/images/${request.body.name}` , callback);
+                    fs.unlink(`public/uploads/${filedata.originalname}`, (err) => {
+                        if (err) throw err;
+                        console.log('successfully deleted ', filedata.originalname);
+                    });
+                    console.log(`public/uploads/${filedata.originalname} was copied to public/${request.body.storage}/images/${request.body.name}`);
+                    response.redirect('/backend/uploadimage')
+                })
+                .catch((prError) => {
+                    console.log(prError)
+                    fs.unlink(`public/uploads/${filedata.originalname}`, (err) => {
+                        if (err) throw err;
+                        console.log('successfully deleted ', filedata.originalname);
+                    });
+                    request.session.uploadErrors = prError
+                    response.redirect('/backend/uploadimage')
+                })
+            console.log('image', filedata)
+            console.log('image original name - ', filedata.originalname)
+        } else if (!matched) {
+            let errors = [];
+            for (let key in v.errors) {
+                if (v.errors.hasOwnProperty(key))
+                    errors.push(v.errors[key].message)
+            }
+
+            fs.unlink(`public/uploads/${filedata.originalname}`, (err) => {
+                if (err) throw err;
+                console.log('successfully deleted ', filedata.originalname);
+            });
+            request.session.uploadErrors = errors
+            response.redirect('/backend/uploadimage')
+        }
+    })
 }
 

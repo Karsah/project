@@ -1,0 +1,51 @@
+<%- include('partials/head')%>
+<div class="container">
+    <%- include('partials/header')%>
+    <%- include('partials/sidebar')%>
+    <div class="content">
+        <div class="wrapper">
+            <div class="title">
+                Upload Image
+            </div>
+            <%if(errors !== ''){%>
+                <% errors.forEach(function (item) {%>
+                    <p class="err"><i class="fas fa-exclamation-circle"></i> <%= item%></p>
+                <%})%>
+            <%}%>
+            <form action="/backend/uploadimage/upload" class="form" method="post" enctype="multipart/form-data">
+                <div class="inputfield">
+                    <label>Upload Image</label>
+                    <input type="file" class="input fileinput" name="file">
+                </div>
+                <div class="inputfield">
+                    <label> Image Storage</label>
+                    <div class="custom_select">
+                        <select name="storage">
+                            <option value="backend" >Backend</option>
+                            <option value="frontend" selected>Frontend</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="inputfield">
+                    <label > Image Name</label>
+                    <input type=text" class="input" id="imagename"  name="name">
+                </div>
+                <div class="inputfield">
+                    <input type="submit" value="Upload" class="btn">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<script>
+    let fileinput =  document.querySelector('.fileinput')
+    let filenameinput =  document.querySelector('#imagename')
+    fileinput.onchange = function(){
+        let fileDirectory = fileinput.value.split('\\')
+        let filename = fileDirectory[fileDirectory.length-1]
+        filenameinput.value = filename
+    }
+
+</script>
+<%- include('partials/footer')%>

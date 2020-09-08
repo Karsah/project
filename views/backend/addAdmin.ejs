@@ -2,48 +2,51 @@
 <div class="container">
     <%- include('partials/header')%>
     <%- include('partials/sidebar')%>
-    <div class="wrapper">
-        <div class="title">
-           Add Admin Form
-        </div>
-        <form action="addadmin/add" class="form" method="post">
-            <div class="inputfield">
-                <label> Name</label>
-                <input type="text" class="input" name="name">
+    <div class="content">
+        <div class="wrapper">
+            <div class="title">
+                Add Admin Form
             </div>
-            <div class="inputfield">
-                <label>Surname</label>
-                <input type="text" class="input" name="surname">
-            </div>
-            <div class="inputfield">
-                <label>Password</label>
-                <input type="password" class="input" name="password">
-            </div>
-            <div class="inputfield">
-                <label>Confirm Password</label>
-                <input type="password" class="input" name="confirm_pass">
-            </div>
-            <% if(admin.is_super === '1'){ %>
-            <div class="inputfield">
-                <label>Is Super Admin</label>
-                <div class="custom_select">
-                    <select name="is_super">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
+            <form action="addadmin/add" class="form" method="post">
+                <div class="inputfield">
+                    <label> Name</label>
+                    <input type="text" class="input" name="name">
                 </div>
-            </div>
-            <% } %>
-            <div class="inputfield">
-                <label>Email Address</label>
-                <% if(errors){%>
-                <p><%= errors%></p><%}%>
-                <input type="text" class="input" name="email">
-            </div>
-            <div class="inputfield">
-                <input type="submit" value="Add Admin" class="btn">
-            </div>
-        </form>
+                <div class="inputfield">
+                    <label>Surname</label>
+                    <input type="text" class="input" name="surname">
+                </div>
+                <div class="inputfield">
+                    <label>Password</label>
+                    <input type="password" class="input" name="password">
+                </div>
+                <div class="inputfield">
+                    <label>Confirm Password</label>
+                    <input type="password" class="input" name="confirm_pass">
+                </div>
+                <% if(admin.is_super === '1'){ %>
+                    <div class="inputfield">
+                        <label>Is Super Admin</label>
+                        <div class="custom_select">
+                            <select name="is_super">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                <% } %>
+                <div class="inputfield">
+                    <label>Email Address</label>
+                    <% if(errors){%>
+                        <p><%= errors%></p><%}%>
+                    <input type="text" class="input" name="email">
+                </div>
+                <div class="inputfield">
+                    <input type="submit" value="Add Admin" class="btn">
+                </div>
+            </form>
+        </div>
+
     </div>
 </div>
 <%- include('partials/footer')%>

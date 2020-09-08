@@ -1,6 +1,9 @@
 const express = require('express');
 const backendRout = express.Router();
 
+const multer  = require("multer");
+
+
 const bodyParser = require("body-parser");
 
 const backendController=require('../../controllers/backendController')
@@ -9,10 +12,35 @@ const urlencodedParser = bodyParser.urlencoded({extended: false})
 
 /* Get */
 
+const storageConfig = multer.diskStorage({
+    destination: (req, file, cb) =>{
+        cb(null, "public/uploads");
+    },
+    filename: (req, file, cb) =>{
+        cb(null, file.originalname);
+    }
+});
+const fileFilter = (req, file, cb) => {
+
+    if(file.mimetype === "image/png" ||
+        file.mimetype === "image/jpg"||
+        file.mimetype === "image/jpeg"){
+        cb(null, true);
+    }
+    else{
+        cb(null, false);
+    }
+}
+
+const uploads = (multer({storage:storageConfig, fileFilter: fileFilter}))
+backendRout.post('/uploadimage/upload',uploads.single("file"),backendController.uploadimage)
+backendRout.get('/uploadimage',backendController.getUploadImagePage)
+
 backendRout.post('/changepass/change',backendController.changePass)
 backendRout.get('/changepass',backendController.getChangePassPage)
 
 backendRout.get('/manageslider',backendController.getManageSliderPage)
+backendRout.get('/manageslider/delete/:id', backendController.deleteslider)
 
 backendRout.get('/managefeedbacks/unblock/:id',backendController.unblockFeedback)
 backendRout.get('/managefeedbacks/block/:id',backendController.blockFeedback)
@@ -21,7 +49,6 @@ backendRout.get('/managefeedbacks',backendController.getManageFeedbacksPage)
 
 backendRout.get('/manageadmins/delete/:id', backendController.deleteadmin);
 backendRout.get('/manageadmins', backendController.manageadmins);
-backendRout.get('/dashboard', backendController.dashboard);
 
 backendRout.get('/addadmin', backendController.getAddAdminPage)
 backendRout.post('/addadmin/add',urlencodedParser,backendController.addAdmin);
