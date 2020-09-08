@@ -5,13 +5,14 @@
     <div class="wrapper">
         <div class="title">
             Edit Admin Form
-            <% if(errors){%>
-                <p class="err"><%= errors%></p><%}%>
+            <%if(errors != ''){%>
+                <% errors.forEach(function (item) {%>
+                    <p class="err"><i class="fas fa-exclamation-circle"></i> <%= item%></p>
+                <%})%>
+            <%}%>
         </div>
-        <form action="edit" class="form" method="post">
+        <form action="edit/<%=editingAdminInfo.id%>" class="form" method="post">
             <div class="inputfield">
-                <% if(errors){%>
-                    <p><%= errors%></p><%}%>
                 <label> Name</label>
                 <input type="text" class="input" name="name" value="<%= editingAdminInfo.name%>">
             </div>
@@ -34,7 +35,6 @@
                 <label>Email Address</label>
                 <input type="text" class="input" name="email" value="<%= editingAdminInfo.email%>">
             </div>
-            <input style="visibility: hidden" value="<%=editingAdminInfo.id%>" name="id">
             <div class="inputfield">
                 <input type="submit" value="Edit Admin" class="btn">
             </div>

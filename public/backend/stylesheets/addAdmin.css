@@ -125,3 +125,7 @@
         flex-direction: row;
     }
 }
+.err{
+    color: #e00c0c;
+    font-size: 18px;
+}

@@ -3,11 +3,10 @@
     <%- include('partials/header') %>
     <%- include('partials/sidebar') %>
     <div class="content">
-
-        <% if(feedbacksArray.length == 0){ %>
-            <h2>There is not any Feedbacks yet !</h2>
+        <% if(slidesArray.length == 0){ %>
+            <h2>There is not any Slides yet !</h2>
         <% } %>
-        <% if(feedbacksArray.length > 0){ %>
+        <% if(slidessArray.length > 0){ %>
         <div class="table-box">
             <table>
                 <tr>
@@ -16,13 +15,12 @@
                     <% }) %>
                     <th>Tools</th>
                 </tr>
-                <% feedbacksArray.forEach(function (item) { %>
+                <% slidessArray.forEach(function (item) { %>
                 <tr>
                     <% fields.forEach(function (field) { %>
                     <td><%= item[field] %></td>
                     <% }) %>
-                    <td>
-                        <div class="manage-tools">
+                    <td class="manage-tools">
                         <% if(item.status === 'not-blocked'){ %>
                             <a href="managefeedbacks/block/<%= item.id %>" class="block manage_tool"><i
                                         class="fas fa-lock"></i>Block</a>
@@ -33,7 +31,6 @@
                         <% } %>
                         <a href="managefeedbacks/delete/<%= item.id %>" class="delete manage_tool"><i
                                     class="fas fa-trash"></i>Delete</a>
-                        </div>
                     </td>
                 </tr>
                 <% }) %>

@@ -1,33 +1,37 @@
-<%- include('partials/head')%>
-    <div class="container">
-        <%- include('partials/header')%>
-        <%- include('partials/sidebar')%>
-        <div class="content">
-            <div class="table-box">
-                <table>
-                    <tr>
-                        <%fields.forEach(function (field) {%>
-                           <th><%=field%></th>
-                        <% })%>
-                        <th>Tools</th>
-                    </tr>
-                    <%adminsArray.forEach(function (item) {%>
-                        <tr>
-                            <%fields.forEach(function (field) {%>
-                                    <td><%=item[field]%></td>
-                            <%})%>
-                            <td>
-                                <a href="manageadmins/editadmin/<%= item.id%>" id="manage_tool"><i class="fas fa-user-edit"></i>Edit</a>
-                                <%if (admin.id != item.id){%>
-                                <a href="manageadmins/delete/<%= item.id%>" id="manage_tool"><i class="fas fa-user-times"></i>Delete</a>
-                               <%}%>
-                            </td>
-                        </tr>
-                   <% })%>
-                </table>
-            </div>
+<%- include('partials/head') %>
+<div class="container">
+    <%- include('partials/header') %>
+    <%- include('partials/sidebar') %>
+    <div class="content">
+        <div class="table-box">
+            <table>
+                <tr>
+                    <% fields.forEach(function (field) { %>
+                    <th><%= field %></th>
+                    <% }) %>
+                    <th>Tools</th>
+                </tr>
+                <% adminsArray.forEach(function (item) { %>
+                <tr>
+                    <% fields.forEach(function (field) { %>
+                    <td><%= item[field] %></td>
+                    <% }) %>
+                    <td>
+                        <div class="manage-tools">
+                            <a href="manageadmins/editadmin/<%= item.id %>" class="manage_tool edit"><i
+                                        class="fas fa-user-edit"></i>Edit</a>
+                            <% if (admin.id != item.id){ %>
+                                <a href="manageadmins/delete/<%= item.id %>" class="manage_tool delete"><i
+                                            class="fas fa-user-times"></i>Delete</a>
+                        </div>
+                        <% } %>
+                    </td>
+                </tr>
+                <% }) %>
+            </table>
         </div>
-
     </div>
-<%- include('partials/footer')%>
+
+</div>
+<%- include('partials/footer') %>
 

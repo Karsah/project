@@ -5,6 +5,11 @@
     <div class="wrapper">
         <div class="title">
            Add Admin Form
+            <%if(errors !== ''){%>
+                <% errors.forEach(function (item) {%>
+                    <p class="err"><i class="fas fa-exclamation-circle"></i> <%= item%></p>
+                <%})%>
+            <%}%>
         </div>
         <form action="addadmin/add" class="form" method="post">
             <div class="inputfield">
@@ -36,8 +41,7 @@
             <% } %>
             <div class="inputfield">
                 <label>Email Address</label>
-                <% if(errors){%>
-                <p><%= errors%></p><%}%>
+
                 <input type="text" class="input" name="email">
             </div>
             <div class="inputfield">
