@@ -195,9 +195,9 @@ const {Validator} = require('node-input-validator');
                         const salt = bcrypt.genSaltSync(saltRounds);
                         let password = bcrypt.hashSync(request.body.password, salt);
                         let is_super = request.body.is_super
-                        if (!is_super) is_super = '0'
+                        if (is_super === undefined) is_super = '0'
 
-                        if (is_super != '1' || is_super != '0') {
+                        if (is_super != '1' && is_super != '0') {
                             request.session.errors = ['Admin status is not correct']
                             response.redirect('/backend/addadmin')
                         }
@@ -209,10 +209,9 @@ const {Validator} = require('node-input-validator');
                             password,
                             is_super
                         ];
-                        Admin.addAdmin(admin).then(result => {
-
-                            response.redirect('/backend/adminpanel')
-                        })
+                        Admin.addAdmin(admin)
+                            .then(()=>response.redirect('/backend/adminpanel'))
+                            .catch((err)=> console.log(err))
                     })
             } else {
                 let errors = [];
