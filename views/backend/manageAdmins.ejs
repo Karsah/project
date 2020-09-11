@@ -16,17 +16,19 @@
                     <% fields.forEach(function (field) { %>
                     <td><%= item[field] %></td>
                     <% }) %>
-                    <td>
-                        <div class="manage-tools">
-                            <div><a href="manageadmins/editadmin/<%= item.id %>" class="manage_tool edit"><i
-                                            class="fas fa-user-edit"></i>Edit</a>
-                                <% if (admin.id != item.id){ %>
-                                    <a href="manageadmins/delete/<%= item.id %>" class="manage_tool delete"><i
-                                                class="fas fa-user-times"></i>Delete</a></div>
+                        <td>
+                            <div class="manage-tools">
+                                <div><a href="manageadmins/editadmin/<%= item.id %>" class="manage_tool edit"><i
+                                                class="fas fa-user-edit"></i>Edit</a>
+                                    <% if (admin.id != item.id){ %>
+                                        <a href="manageadmins/delete/<%= item.id %>" class="manage_tool delete"><i
+                                                    class="fas fa-user-times"></i>Delete</a>
+                                    <% } %>
 
-                        </div>
-                        <% } %>
-                    </td>
+                                </div>
+                            </div>
+                        </td>
+
                 </tr>
                 <% }) %>
             </table>
