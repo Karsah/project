@@ -202,13 +202,13 @@ header {
     display: flex;
     height: 100%;
     align-items:center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
 }
 .manage-tools > div{
     display: flex;
     align-items:center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .table-box table tr td .manage_tool {

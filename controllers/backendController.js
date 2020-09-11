@@ -197,7 +197,7 @@ const {Validator} = require('node-input-validator');
                         let is_super = request.body.is_super
                         if (!is_super) is_super = '0'
 
-                        if (is_super != '1' || is_super != '0') {
+                        if (is_super != '1' && is_super != '0') {
                             request.session.errors = ['Admin status is not correct']
                             response.redirect('/backend/addadmin')
                         }
