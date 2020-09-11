@@ -3,9 +3,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     background-image: url("/frontend/images/leave-feedback-fon.jpg");
     background-position: center;
+    background-attachment: fixed;
     background-size: cover;
     width: 100%;
     padding: 43px 0;
@@ -86,4 +87,9 @@
     .container{
         height: 100%;
     }
+}
+.err{
+    text-align: center;
+    color: #e00c0c;
+    font-size: 18px;
 }

@@ -211,7 +211,7 @@ header {
 .manage-tools > div{
     display: flex;
     align-items:center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .table-box table tr td .manage_tool {

@@ -1,7 +1,10 @@
 <%- include('partials/head')%>
 <div class="container">
+
     <h2 class="rank">How do you rate our website?</h2>
+
     <div class="stars">
+
         <i class="fas fa-star"></i>
         <i class="far fa-star"></i>
         <i class="far fa-star"></i>
@@ -13,22 +16,39 @@
         <div class="input-container">
             <label class="input-label"><i class="fas fa-user"></i> Name</label>
             <input type="text" name="name" class="fb-input" >
+            <%if(errors.name){%>
+                <p class="err"><i class="fas fa-exclamation-circle"></i> <%=errors.name.message %></p>
+            <%}%>
         </div>
         <div class="input-container">
             <label class="input-label"><i class="fas fa-user"></i> Surname</label>
             <input type="text" name="surname" class="fb-input" >
+            <%if(errors.surname){%>
+            <p class="err"><i class="fas fa-exclamation-circle"></i> <%=errors.surname.message %></p>
+            <%}%>
         </div>
         <div class="input-container">
             <label class="input-label"><i class="fas fa-envelope"></i> Email</label>
             <input type="email" name="email" class="fb-input" >
+            <%if(errors.email){%>
+            <p class="err"><i class="fas fa-exclamation-circle"></i> <%=errors.email.message %></p>
+            <%}%>
         </div>
         <div class="input-container">
             <label class=" input-label"><i class="fas fa-calendar-alt"></i> Age</label>
             <input type="number" name="age" class="fb-input" >
+            <%if(errors.age){%>
+            <p class="err"><i class="fas fa-exclamation-circle"></i> <%=errors.age.message %></p>
+            <%}%>
         </div>
         <div class="message-container">
-            <label class="input-label"><i class="fas fa-comment-dots"></i> Message</label>
+            <div>            <label class="input-label"><i class="fas fa-comment-dots"></i> Message</label>
+                <%if(errors.message){%>
+                <p class="err"><i class="fas fa-exclamation-circle"></i> <%=errors.message.message %></p>
+                <%}%>
+            </div>
             <textarea class="message fb-input" name="message"></textarea>
+
         </div>
         <input type="hidden" value="" name="starscount" id="starscount">
         <button class="submit fb-input">Submit</button>
