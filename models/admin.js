@@ -66,8 +66,14 @@ module.exports = class Admin {
         return new Promise((resolve, reject) => {
             const sql = 'UPDATE admins SET name=?, surname=?, email=?,is_super=? WHERE id=?'
             con.query(sql, admin)
-                .then(result => resolve(result))
-                .catch(err => reject(err))
+                .then(result => {
+                    console.log('ecacy' ,admin)
+                    console.log('update exav')
+                    resolve()})
+                .catch(err => {
+                    console.log('update cheeeexav')
+                    reject(err)
+                })
         })
     }
 
@@ -75,9 +81,7 @@ module.exports = class Admin {
         return new Promise((resolve, reject) => {
             const sql = 'DELETE FROM admins where id = ?'
             con.query(sql, [id])
-                .then(result => {
-                    resolve()
-                })
+                .then(resolve())
                 .catch(err => {
                     reject(err)
                 })
@@ -131,5 +135,5 @@ module.exports = class Admin {
                 .catch(err => reject(err))
         })
     }
-}
+    }
 

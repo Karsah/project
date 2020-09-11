@@ -40,7 +40,12 @@ backendRout.post('/changepass/change',backendController.changePass)
 backendRout.get('/changepass',backendController.getChangePassPage)
 
 backendRout.get('/manageslider',backendController.getManageSliderPage)
+backendRout.get('/addslide',backendController.getAddSlidePage)
+backendRout.post('/addslide/add',backendController.addSlide)
 backendRout.get('/manageslider/delete/:id', backendController.deleteslider)
+backendRout.get('/manageslider/editslide/:id', backendController.getEditSlidePage)
+backendRout.post('/manageslider/editslide/edit/:id', backendController.editSlide)
+
 
 backendRout.get('/managefeedbacks/unblock/:id',backendController.unblockFeedback)
 backendRout.get('/managefeedbacks/block/:id',backendController.blockFeedback)
@@ -53,7 +58,7 @@ backendRout.get('/manageadmins', backendController.manageadmins);
 backendRout.get('/addadmin', backendController.getAddAdminPage)
 backendRout.post('/addadmin/add',urlencodedParser,backendController.addAdmin);
 
-backendRout.get('/manageadmins/editadmin/:id',backendController.getEditAdmin);
+backendRout.get('/manageadmins/editadmin/:id',backendController.getEditAdminPage);
 backendRout.post('/manageadmins/editadmin/edit/:id',urlencodedParser,backendController.editAdmin);
 
 backendRout.get('/adminpanel', backendController.adminPanel)
@@ -64,4 +69,12 @@ backendRout.get('/logout',backendController.logout);
 backendRout.post('/verify',urlencodedParser, backendController.verify);
 /* GET login page. */
 backendRout.get('/', backendController.login);
+
+backendRout.use(function(request, response) {
+    let logined =  request.session.admin ? true : false
+    response.render('serverError.ejs',{
+        title:'Server Error',
+        logined:logined
+    })
+});
 module.exports = backendRout

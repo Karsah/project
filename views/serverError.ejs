@@ -14,10 +14,16 @@
 
 <div class="container">
     <div class="content">
-        <h2>500</h2>
-        <h4>OPPS! Page Not Found</h4>
-        <p>oops, that's not something</p>
-        <a href="/">Back To Home</a>
+        <h2 class="er500">500</h2>
+        <h3>Server Error</h3>
+        <h4>OPPS! INTERNAL SERVER ERROR</h4>
+        <%if (logined){%>
+        <a href="/backend">Back to Admin Panel</a>
+        <%}%>
+        <%if (!logined){%>
+        <a href="/backend">Back to login page</a>
+        <%}%>
+
     </div>
     <script>
         const container = document.querySelector(".container")

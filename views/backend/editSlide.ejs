@@ -1,0 +1,35 @@
+<%- include('partials/head') %>
+<div class="container">
+    <%- include('partials/header') %>
+    <%- include('partials/sidebar') %>
+    <div class="content">
+        <div class="wrapper">
+            <div class="title">
+                 Edit Slide
+                <% if(errors != ''){ %>
+                    <% errors.forEach(function (item) { %>
+                        <p class="err"><i class="fas fa-exclamation-circle"></i> <%= item %></p>
+                    <% }) %>
+                <% } %>
+            </div>
+            <form action="edit/<%=editingSlideInfo.id%>" class="form" method="post">
+                <div class="inputfield">
+                    <label> Name</label>
+                    <input type="text" class="input" name="name" value="<%=editingSlideInfo.name%>">
+                </div>
+                <div class="inputfield">
+                    <label>Background Image</label>
+                    <input type="text" class="input" name="bg_image" value="<%=editingSlideInfo.bg_image%>" >
+                </div>
+                <div class="inputfield">
+                    <label>Information</label>
+                    <textarea class="input textarea" name="info"><%=editingSlideInfo.info%></textarea>
+                </div>
+                <div class="inputfield">
+                    <input type="submit" value="Edit Slide" class="btn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>
