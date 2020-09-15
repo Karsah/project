@@ -3,6 +3,7 @@
     <%- include('partials/header') %>
     <%- include('partials/sidebar') %>
     <div class="content">
+        <%- include('partials/message') %>
         <div class="table-box">
             <table>
                 <tr>
@@ -21,10 +22,9 @@
                                 <div><a href="manageadmins/editadmin/<%= item.id %>" class="manage_tool edit"><i
                                                 class="fas fa-user-edit"></i>Edit</a>
                                     <% if (admin.id != item.id){ %>
-                                        <a href="manageadmins/delete/<%= item.id %>" class="manage_tool delete"><i
+                                        <a href="manageadmins/deletequestion/<%=item.id%>"  class="manage_tool delete"><i
                                                     class="fas fa-user-times"></i>Delete</a>
                                     <% } %>
-
                                 </div>
                             </div>
                         </td>
@@ -34,7 +34,6 @@
             </table>
         </div>
     </div>
-
 </div>
 <%- include('partials/footer') %>
 

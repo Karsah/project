@@ -1,0 +1,55 @@
+               from  editadmin ejs
+
+                <% if(admin.is_super === '1'){ %>
+                    <div class="inputfield">
+                        <label>Is Super Admin</label>
+                        <div class="custom_select">
+                            <select name="is_super">
+                                <% if(editingAdminInfo.is_super === '1'){ %>
+                                    <option value="0">False</option>
+                                    <option value="1" selected>True</option>
+                                <% } %>
+                                <% if(editingAdminInfo.is_super === '0'){ %>
+                                    <option value="0" selected>False</option>
+                                    <option value="1">True</option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                <% } %>
+
+                from add admin ejs
+
+                                <% if(admin.is_super === '1'){ %>
+                                    <div class="inputfield">
+                                        <label>Is Super Admin</label>
+                                        <div class="custom_select">
+                                            <select name="is_super">
+                                                <option value="0">No</option>
+                                                <option value="1">Yes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                <% } %>
+
+                                add admin ic
+                                array i u sql-neri  mej el avelacnel is super y
+
+                                let is_super = request.body.is_super
+                                if (!is_super) is_super = '0'
+                                if (is_super != '1' && is_super != '0') {
+
+                                    let Writtenerror = ['Admin status is not correct']
+                                    setErrorsInSession(request, response, Writtenerror, '/backend/addadmin', 'written')
+                                }
+
+
+                                add admin ic
+                                array i 4 toxy sarqel is super u sql um avelacnel
+
+                                                    let is_super = request.body.is_super
+                                                    if (!is_super) is_super = '0'
+                                                    if (is_super != '1' && is_super != '0') {
+                                                        let Writtenerror = ['Admin status is not correct']
+                                                        setErrorsInSession(request, response, Writtenerror, `/backend/manageadmins/editadmin/${request.params.id}`, 'written')
+                                                    }

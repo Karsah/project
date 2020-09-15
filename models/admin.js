@@ -14,7 +14,7 @@ module.exports = class Admin {
             const sql = "select id,name,surname,email,is_super from admins WHERE id=? "
             con.execute(sql, [id])
                 .then((result) => resolve(result[0][0]))
-                .catch((err) => reject(err))
+                .catch(()=>{reject()})
         })
     }
 
@@ -23,57 +23,49 @@ module.exports = class Admin {
             const sql = "select id,name,surname,email,is_super from admins "
             con.execute(sql)
                 .then((result) => resolve(result[0]))
-                .catch((err) => reject(err))
+                .catch(()=>{reject()})
         })
     }
 
     static verify(email, pass) {
-        return new Promise((res, rej) => {
+        return new Promise((resolve, reject) => {
             let sql = "select id,name,surname,is_super, password from admins where email=?"
             con.query(sql, [email])
-                .then(result => {
-                    console.log(result[0])
+                .then((result) => {
                     if (result[0].length > 0) {
                         const hash = result[0][0].password;
                         bcrypt.compare(pass, hash)
                             .then(function (compareResult) {
                                 if (compareResult) {
-                                    res(result[0][0])
+                                    resolve(result[0][0])
                                 } else {
-                                    rej(['The password you entered is incorrect'])
+                                    resolve('incorrect')
                                 }
                             })
+                            .catch(()=> reject())
                     } else if (result[0].length == 0) {
-                        rej(['There is no admin with the email you wrote'])
+                        resolve('no admin')
                     }
                 })
-                .catch(err => {
-                    rej(err);
-                })
+                //.catch(()=>{reject()})
         });
     }
 
     static addAdmin(admin) {
         return new Promise((resolve, reject) => {
-            const sql = "INSERT INTO admins (name, surname, email,password,is_super) VALUES(?, ?, ?, ?,?)";
+            const sql = "INSERT INTO admins (name, surname, email,password) VALUES(?, ?, ?, ?)";
             con.query(sql, admin)
-                .then(result => resolve(result))
-                .catch(err => reject(err))
+                .then( resolve())
+                .catch(()=>{reject()})
         })
     }
 
     static editAdmin(admin) {
         return new Promise((resolve, reject) => {
-            const sql = 'UPDATE admins SET name=?, surname=?, email=?,is_super=? WHERE id=?'
+            const sql = 'UPDATE admins SET name=?, surname=?, email=? WHERE id=?'
             con.query(sql, admin)
-                .then(result => {
-                    console.log('ecacy' ,admin)
-                    console.log('update exav')
-                    resolve()})
-                .catch(err => {
-                    console.log('update cheeeexav')
-                    reject(err)
-                })
+                .then(resolve())
+                .catch(()=>{reject()})
         })
     }
 
@@ -82,9 +74,7 @@ module.exports = class Admin {
             const sql = 'DELETE FROM admins where id = ?'
             con.query(sql, [id])
                 .then(resolve())
-                .catch(err => {
-                    reject(err)
-                })
+                .catch(()=>{reject()})
         })
     }
 
@@ -96,23 +86,19 @@ module.exports = class Admin {
                     if (result[0].length > 0) {
                         if (result[0].length > 0) {
                             const hash = result[0][0].password;
-                            console.log('hash', hash)
                             bcrypt.compare(pass, hash)
                                 .then(function (compareResult) {
-                                    console.log('compared', compareResult)
                                     if (compareResult) {
                                         resolve(true)
                                     } else if (!compareResult) {
                                         resolve(false)
                                     }
                                 })
-                            // .catch(reject())
+                                .catch(()=>{reject()})
                         }
                     }
                 })
-                .catch(err => {
-                    reject()
-                })
+                .catch(()=>{reject()})
         })
     }
 
@@ -121,18 +107,23 @@ module.exports = class Admin {
             const sql = 'update admins set password = ? where email = ?'
             con.query(sql, [newPass, email])
                 .then(resolve())
-                .catch(reject(err))
+                .catch(()=>{reject()})
         })
     }
 
-    static isThereAdminWithThisEmail(email) {
+    static isThereAdminWith(searchBy,value) {
         return new Promise((resolve, reject) => {
-            const sql = "select id from admins where email = ?"
-            con.query(sql, [email])
+            let sql
+            if(searchBy === 'email'){
+                sql = "select id from admins where email = ?"
+            }else if (searchBy === 'id'){
+                sql = "select email from admins where id = ?"
+            }
+            con.query(sql, [value])
                 .then(result => {
                     resolve(result[0])
                 })
-                .catch(err => reject(err))
+                .catch(()=>{reject()})
         })
     }
     }

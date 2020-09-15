@@ -16,5 +16,3 @@ create table admins
 );
 insert into admins(name,surname,email,password,is_super)
 values ('Karen','Sahakyan','admin@mail.ru','$2b$12$VGChWeTja6tDYyM3EYy1le5X4Yru32tqYQdlShI4n5T/QydRnRk9i','1'),
-        ('Kar','Sahakyan','admmmuuunnn@mail.ru','$2b$12$VGChWeTja6tDYyM3EYy1le5X4Yru32tqYQdlShI4n5T/QydRnRk9i','0'),
-        ('Karaaan','Sahakyan','adimun@mail.ru','$2b$12$VGChWeTja6tDYyM3EYy1le5X4Yru32tqYQdlShI4n5T/QydRnRk9i','0');

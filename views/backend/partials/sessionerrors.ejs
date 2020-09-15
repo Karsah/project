@@ -1,0 +1,5 @@
+<%if(Array.isArray(errors)){%>
+    <% errors.forEach(function (item) {%>
+        <p class="err"><i class="fas fa-exclamation-circle"></i> <%= item%></p>
+    <%})%>
+<%}%>

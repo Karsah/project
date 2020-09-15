@@ -6,11 +6,7 @@
         <div class="wrapper">
             <div class="title">
                 Add Admin Form
-                <% if(errors !== ''){ %>
-                    <% errors.forEach(function (item) { %>
-                        <p class="err"><i class="fas fa-exclamation-circle"></i> <%= item %></p>
-                    <% }) %>
-                <% } %>
+                <%- include('partials/sessionerrors') %>
             </div>
             <form action="addadmin/add" class="form" method="post">
                 <div class="inputfield">
@@ -29,17 +25,6 @@
                     <label>Confirm Password</label>
                     <input type="password" class="input" name="confirm_pass">
                 </div>
-                <% if(admin.is_super === '1'){ %>
-                    <div class="inputfield">
-                        <label>Is Super Admin</label>
-                        <div class="custom_select">
-                            <select name="is_super">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
-                            </select>
-                        </div>
-                    </div>
-                <% } %>
                 <div class="inputfield">
                     <label>Email Address</label>
                     <input type="text" class="input" name="email">

@@ -1,0 +1,44 @@
+<% if(message){ %>
+    <% console.log('steinnna' , message) %>
+    <% if(message.category == 'question'){ %>
+    <div class="message-wrapper question-wrapper">
+        <i class="fas fa-question question-category"></i>
+        <div class="message-content question-message">
+            Do you want to delete Admin with id <%= message.message %>
+        </div>
+        <div class="question-buttons">
+            <a href="/backend/manageadmins/delete/<%= message.message %>">
+                <div class="btn btn-Yes">Yes</div>
+            </a>
+            <div class="btn btn-Cancel">Cancel</div>
+        </div>
+    </div>
+    <script>
+        document.querySelector('.btn-Cancel').addEventListener('click', function () {
+            document.querySelector('.content').removeChild(document.querySelector('.question-wrapper'))
+        })
+    </script>
+    <% }else{ %>
+        <div class="message-wrapper <%= message.category %>-wrapper">
+            <% if (message.category == 'warning'){ %>
+                <i class="fas fa-exclamation-circle warning-category"></i>
+            <% } %>
+            <% if (message.category == 'success'){ %>
+                <i class="fas fa-check-circle success-category"></i>
+            <% } %>
+            <% if (message.category == 'unsuccess'){ %>
+                <i class="fas fa-times-circle unsuccess-category"></i>
+            <% } %>
+            <div class="message-content <%= message.category %>-message">
+                <%= message.message %>
+            </div>
+            <div class="btn btn-ok">OK</div>
+        </div>
+        <script>
+            document.querySelector('.btn-ok').addEventListener('click', function () {
+                document.querySelector('.content').removeChild(document.querySelector('.message-wrapper'))
+            })
+        </script>
+    <% } %>
+<% } %>
+

@@ -6,11 +6,7 @@
         <div class="wrapper">
             <div class="title">
                  Edit Slide
-                <% if(errors != ''){ %>
-                    <% errors.forEach(function (item) { %>
-                        <p class="err"><i class="fas fa-exclamation-circle"></i> <%= item %></p>
-                    <% }) %>
-                <% } %>
+                <%- include('partials/sessionerrors') %>
             </div>
             <form action="edit/<%=editingSlideInfo.id%>" class="form" method="post">
                 <div class="inputfield">

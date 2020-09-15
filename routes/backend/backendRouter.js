@@ -31,6 +31,19 @@ const fileFilter = (req, file, cb) => {
         cb(null, false);
     }
 }
+/* Verify email and password. */
+backendRout.post('/verify',urlencodedParser, backendController.verify);
+/* GET login page. */
+backendRout.get('/', backendController.login);
+
+backendRout.use(function (request,response,next) {
+    if (!request.session.admin ){
+        request.session.destroy();
+        response.redirect('/backend')
+        next()
+    }
+    next()
+})
 
 const uploads = (multer({storage:storageConfig, fileFilter: fileFilter}))
 backendRout.post('/uploadimage/upload',uploads.single("file"),backendController.uploadimage)
@@ -53,6 +66,7 @@ backendRout.get('/managefeedbacks/delete/:id', backendController.deleteFeedback)
 backendRout.get('/managefeedbacks',backendController.getManageFeedbacksPage)
 
 backendRout.get('/manageadmins/delete/:id', backendController.deleteadmin);
+backendRout.get('/manageadmins/deletequestion/:id',backendController.sendDeleteAdminQuestion)
 backendRout.get('/manageadmins', backendController.manageadmins);
 
 backendRout.get('/addadmin', backendController.getAddAdminPage)
@@ -65,16 +79,7 @@ backendRout.get('/adminpanel', backendController.adminPanel)
 
 // logout from account
 backendRout.get('/logout',backendController.logout);
-/* Verify email and password. */
-backendRout.post('/verify',urlencodedParser, backendController.verify);
-/* GET login page. */
-backendRout.get('/', backendController.login);
 
-backendRout.use(function(request, response) {
-    let logined =  request.session.admin ? true : false
-    response.render('serverError.ejs',{
-        title:'Server Error',
-        logined:logined
-    })
-});
+
+
 module.exports = backendRout
