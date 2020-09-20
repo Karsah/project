@@ -4,6 +4,7 @@ const Slider = require('../models/mainSlider');
 
 let fs = require('fs')
 
+
 const bcrypt = require('bcrypt');
 let saltRounds = 12
 const {Validator} = require('node-input-validator');
@@ -50,9 +51,9 @@ function getErrorsFromSession(session) {
 function setMessageInSession(request, response, messageCategory, messageContent, redirectTo) {
     request.session.message = {
         category: messageCategory,
-        message: messageContent
+        message: messageContent,
     }
-    if(redirectTo) response.redirect(redirectTo)
+    if (redirectTo) response.redirect(redirectTo)
 }
 
 //function to get message from session
@@ -78,7 +79,7 @@ exports.login = function (request, response) {
             title: "Login",
             css: ["login.css", 'adminPanel.css'],
             errors: getErrorsFromSession(request.session),
-            message:getMessageFromSession(request.session)
+            message: getMessageFromSession(request.session)
         })
     }
 
@@ -257,7 +258,8 @@ exports.addAdmin = function (request, response) {
                 setErrorsInSession(request, response, v.errors, '/backend/addadmin', 'validator')
             }
         })
-}// manage admins
+}
+// manage admins
 exports.manageadmins = function (request, response) {
     Admin.getAdmins()
         .then(result => {
@@ -285,10 +287,10 @@ exports.deleteadmin = function (request, response) {
             'warning', 'You have no right to perform such an action', '/backend/adminpanel')
 
     } else {
-        const id = request.params.id
-        Admin.isThereAdminWith('id',id)
-            .then((result)=>{
-                if (result.length > 0){
+        let id = request.params.id
+        Admin.isThereAdminWith('id', id)
+            .then((result) => {
+                if (result.length > 0) {
                     Admin.deleteAdmin(id)
                         .then(() => {
                             setMessageInSession(request, response, 'success',
@@ -297,19 +299,24 @@ exports.deleteadmin = function (request, response) {
                         .catch(() => {
                             internalServerError(request, response)
                         })
+                } else {
+                    setMessageInSession(request, response, 'unsuccess', 'There is not admin with this ID', '/backend/manageadmins')
                 }
-                else{
-                    setMessageInSession(request,response,'unsuccess','There is not admin with this ID','/backend/manageadmins')
-                }
-            }).catch(()=>{
+            }).catch(() => {
             internalServerError(request, response)
         })
 
 
     }
 };
-exports.sendDeleteAdminQuestion = function (request,response) {
-    setMessageInSession(request,response,'question',`${request.params.id}`,'/backend/manageadmins')
+exports.sendDeleteQuestion = function (request, response) {
+    console.log('request url',)
+    console.log('params', request.params)
+    setMessageInSession(request, response, 'question', {
+        cont: `Do you want to delete ${request.params.item} with id`,
+        param: `${request.params.id}`,
+        deletebtn: `${request.headers.referer}/delete/${request.params.id}`
+    }, request.headers.referer)
 }
 exports.getEditAdminPage = function (request, response) {
     Admin.getAdmin(request.params.id)
@@ -326,10 +333,11 @@ exports.getEditAdminPage = function (request, response) {
 
 }
 exports.editAdmin = function (request, response) {
+    let id = request.params.id
     // check is there this editing admin
-    Admin.isThereAdminWith('id',request.params.id)
-        .then((result)=>{
-            if(result.length>0){
+    Admin.isThereAdminWith('id', id)
+        .then((result) => {
+            if (result.length > 0) {
                 if (!request.body) return response.sendStatus(400);
                 const v = new Validator(request.body, {
                     email: 'required|email',
@@ -341,25 +349,24 @@ exports.editAdmin = function (request, response) {
                         if (matched) {
                             Admin.isThereAdminWith('email', request.body.email)
                                 .then((result) => {
-                                    if (result.length > 0 && result[0].id != request.params.id) {
+                                    if (result.length > 0 && result[0].id != id) {
                                         response.redirect(`/backend`)
                                         let Writtenerror = ['Already there is admin with email you entered']
-                                        setErrorsInSession(request, response, Writtenerror, `/backend/manageadmins/editadmin/${request.params.id}`, 'written')
-                                    }else{
+                                        setErrorsInSession(request, response, Writtenerror, `/backend/manageadmins/editadmin/${id}`, 'written')
+                                    } else {
                                         const admin = [
                                             request.body.name,
                                             request.body.surname,
                                             request.body.email,
-                                            request.params.id
+                                            id
                                         ];
                                         Admin.editAdmin(admin).then(() => {
-                                            setMessageInSession(request,response,'success',`Admin with id ${request.params.id} was edited`,'/backend/manageAdmins')
+                                            setMessageInSession(request, response, 'success', `Admin with id ${id} was edited`, '/backend/manageAdmins')
                                         })
                                             .catch(() => {
                                                 internalServerError(request, response)
                                             })
                                     }
-
 
 
                                 })
@@ -368,11 +375,11 @@ exports.editAdmin = function (request, response) {
                                 })
 
                         } else {
-                            setErrorsInSession(request, response, v.errors, `/backend/manageadmins/editadmin/${request.params.id}`, 'validator')
+                            setErrorsInSession(request, response, v.errors, `/backend/manageadmins/editadmin/${id}`, 'validator')
                         }
                     })
-            }else{
-                setMessageInSession(request,response,'unsuccess','there is no admin you chose','/backend/manageadmins')
+            } else {
+                setMessageInSession(request, response, 'unsuccess', 'there is no admin you chose', '/backend/manageadmins')
             }
         })
 
@@ -393,6 +400,7 @@ exports.getManageFeedbacksPage = function (request, response) {
                 admin: request.session.admin,
                 fields: fields,
                 feedbacksArray: feedbacksArr,
+                message: getMessageFromSession(request.session)
             })
         })
         .catch(() => {
@@ -400,35 +408,65 @@ exports.getManageFeedbacksPage = function (request, response) {
         })
 }
 exports.deleteFeedback = function (request, response) {
-    const id = request.params.id
-    Feedbacks.deleteFeedback(id)
-        .then(() => {
-            response.redirect('/backend/managefeedbacks')
+    let id = request.params.id
+    Feedbacks.isThereFeedback(id)
+        .then((result) => {
+            if (result) {
+                Feedbacks.deleteFeedback(id)
+                    .then(() => {
+                        setMessageInSession(request, response, 'success', `feedback with id ${id} was deleted`, '/backend/managefeedbacks')
+                    })
+                    .catch(() => {
+                        internalServerError(request, response)
+                    })
+            } else if (!result) {
+                setMessageInSession(request, response, 'unsuccess', `there is not feedback with id ${id}`, '/backend/managefeedbacks')
+            }
         })
         .catch(() => {
             internalServerError(request, response)
         })
-
 }
 exports.blockFeedback = function (request, response) {
-    const id = request.params.id
-    Feedbacks.blockFeedback(id)
-        .then(() => {
-            response.redirect('/backend/managefeedbacks')
+    let id = request.params.id
+    Feedbacks.isThereFeedback(id)
+        .then((result) => {
+            if (result) {
+                Feedbacks.blockFeedback(id)
+                    .then(() => {
+                        setMessageInSession(request, response, 'success', `feedback with id ${id} was blocked`, '/backend/managefeedbacks')
+                    })
+                    .catch(() => {
+                        internalServerError(request, response)
+                    })
+            } else if (!result) {
+                setMessageInSession(request, response, 'unsuccess', `there is not feedback with id ${id}`, '/backend/managefeedbacks')
+            }
         })
         .catch(() => {
             internalServerError(request, response)
         })
 }
 exports.unblockFeedback = function (request, response) {
-    const id = request.params.id
-    Feedbacks.unblockFeedback(id)
-        .then(() => {
-            response.redirect('/backend/managefeedbacks')
+    let id = request.params.id
+    Feedbacks.isThereFeedback(id)
+        .then((result) => {
+            if (result) {
+                Feedbacks.unblockFeedback(id)
+                    .then(() => {
+                        setMessageInSession(request, response, 'success', `feedback with id ${id} was unblocked`, '/backend/managefeedbacks')
+                    })
+                    .catch(() => {
+                        internalServerError(request, response)
+                    })
+            } else if (!result) {
+                setMessageInSession(request, response, 'unsuccess', `there is not feedback with id ${id}`, '/backend/managefeedbacks')
+            }
         })
         .catch(() => {
             internalServerError(request, response)
         })
+
 }
 
 //manage slider
@@ -447,6 +485,7 @@ exports.getManageSliderPage = function (request, response) {
                 admin: request.session.admin,
                 fields: fields,
                 slidesArray: slidesArr,
+                message:getMessageFromSession(request.session)
             })
         })
         .catch(() => {
@@ -456,25 +495,41 @@ exports.getManageSliderPage = function (request, response) {
 }
 exports.deleteslider = function (request, response) {
     const id = request.params.id
-    Slider.deleteSlider(id)
-        .then(() => {
-            response.redirect('/backend/manageslider')
-        })
-        .catch(() => {
-            internalServerError(request, response)
-        })
+    Slider.isThereSlide(id)
+        .then((result)=>{
+            if(result){
+                Slider.deleteSlider(id)
+                    .then(() => {
+                        setMessageInSession(request, response, 'success', `Slide with id ${id} was deleted`, '/backend/manageslider')
+                    })
+                    .catch(() => {
+                        internalServerError(request, response)
+                    })
+            }else if (!result){
+                setMessageInSession(request,response,'unsuccess',`there is not slide with id ${id}`,'/backend/manageslider')
 
+            }
+        })
+        .catch(()=>{
+            internalServerError(request,response)
+        })
 
 };
 exports.getEditSlidePage = function (request, response) {
     Slider.getSlide(request.params.id)
         .then(result => {
-            response.render('backend/editSlide.ejs', {
-                title: 'Edit Slide',
-                editingSlideInfo: result,
-                css: ['addandEditForm.css', 'adminPanel.css'],
-                admin: request.session.admin,
-                errors: getErrorsFromSession(request.session)
+            fs.readdir('public/frontend/images', (err, files) => {
+                if (err) internalServerError(request, response)
+                else {
+                    response.render('backend/editSlide.ejs', {
+                        title: 'Edit Slide',
+                        editingSlideInfo: result,
+                        css: ['addandEditForm.css', 'adminPanel.css'],
+                        admin: request.session.admin,
+                        errors: getErrorsFromSession(request.session),
+                        filesArr: files
+                    })
+                }
             })
         })
         .catch(() => {
@@ -484,50 +539,56 @@ exports.getEditSlidePage = function (request, response) {
 }
 exports.editSlide = function (request, response) {
     if (!request.body) return response.sendStatus(400);
-    const v = new Validator(request.body, {
-        name: 'required|minLength:2',
-        bg_image: 'required',
-        info: 'required|minLength:20'
-    });
-    Slider.isThereSlideWithThisId(request.params.id)
-        .then(() => {
-            v.check()
-                .then((matched) => {
-                    if (matched) {
-                        // image name validation
-                        new Promise((resolve, reject) => {
-                            const fileExtensionArr = ['.png', '.jpg', '.jpeg']
-                            let fileNameArr = request.body.bg_image.split('.')
-                            let extension = '.' + fileNameArr[fileNameArr.length - 1]
-                            if (fileExtensionArr.includes(extension)) {
-                                fs.exists(`public/frontend/images/${request.body.bg_image}`, function (exists) {
-                                    if (exists) resolve()
-                                    else reject(['There is not  Image with this name'])
-                                });
-                            } else if (!(fileExtensionArr.includes(extension))) reject(['wrong image extension'])
-                        })
-                            .then(() => {
-                                const slide = [
-                                    request.body.name,
-                                    request.body.info,
-                                    request.body.bg_image,
-                                    request.params.id
-                                ]
-                                Slider.updateSlide(slide)
-                                    .then(() => response.redirect('/backend/manageslider'))
-                                    .catch(() => {
-                                        internalServerError(request, response)
-                                    })
+    let id = request.params.id
+    Slider.isThereSlide(id)
+        .then((result) => {
+            if (result){
+                const v = new Validator(request.body, {
+                    name: 'required|minLength:2',
+                    bg_image: 'required',
+                    info: 'required|minLength:20'
+                });
+                v.check()
+                    .then((matched) => {
+                        if (matched) {
+                            // image name validation
+                            new Promise((resolve, reject) => {
+                                const fileExtensionArr = ['.png', '.jpg', '.jpeg']
+                                let fileNameArr = request.body.bg_image.split('.')
+                                let extension = '.' + fileNameArr[fileNameArr.length - 1]
+                                if (fileExtensionArr.includes(extension)) {
+                                    fs.exists(`public/frontend/images/${request.body.bg_image}`, function (exists) {
+                                        if (exists) resolve()
+                                        else reject(['There is not  Image with this name'])
+                                    });
+                                } else if (!(fileExtensionArr.includes(extension))) reject(['wrong image extension'])
                             })
-                            .catch((prError) => {
-                                let Writtenerror = prError
-                                setErrorsInSession(request, response, Writtenerror, '/backend/addslide', 'written')
-                            })
+                                .then(() => {
+                                    const slide = [
+                                        request.body.name,
+                                        request.body.info,
+                                        request.body.bg_image,
+                                        id
+                                    ]
+                                    Slider.updateSlide(slide)
+                                        .then(() =>setMessageInSession(request,response,'success',`slide with id ${id} was edited`,'/backend/manageslider'))
+                                        .catch(() => {
+                                            internalServerError(request, response)
+                                        })
+                                })
+                                .catch((prError) => {
+                                    let Writtenerror = prError
+                                    setErrorsInSession(request, response, Writtenerror, `/backend/manageslider/editslide/${id}`, 'written')
+                                })
 
-                    } else if (!matched) {
-                        setErrorsInSession(request, response, v.errors, '/backend/addslide', 'validator')
-                    }
-                })
+                        } else if (!matched) {
+                            setErrorsInSession(request, response, v.errors, `/backend/manageslider/editslide/${id}`, 'validator')
+                        }
+                    })
+            }else if(!result){
+                setMessageInSession(request,response,'unsuccess',`there is not slide with id ${id}`,'/backend/manageslider')
+            }
+
         })
         .catch(() => {
             internalServerError(request, response)
@@ -536,11 +597,18 @@ exports.editSlide = function (request, response) {
 }
 
 exports.getAddSlidePage = function (request, response) {
-    response.render('backend/addSlide', {
-        title: 'Add SLide',
-        css: ['adminPanel.css', 'addandEditForm.css'],
-        admin: request.session.admin,
-        errors: getErrorsFromSession(request.session)
+    fs.readdir('public/frontend/images', (err, files) => {
+        if (err) {
+            internalServerError(request, response)
+        } else {
+            response.render('backend/addSlide', {
+                title: 'Add SLide',
+                css: ['adminPanel.css', 'addandEditForm.css'],
+                admin: request.session.admin,
+                errors: getErrorsFromSession(request.session),
+                filesArr: files
+            })
+        }
     })
 }
 exports.addSlide = function (request, response) {
@@ -573,7 +641,7 @@ exports.addSlide = function (request, response) {
                             request.body.bg_image
                         ]
                         Slider.CreateSlide(slide)
-                            .then(() => response.redirect('/backend/manageslider'))
+                            .then(() => setMessageInSession(request, response, 'success', 'Slide was added', '/backend/manageslider'))
                             .catch(() => {
                                 internalServerError(request, response)
                             })
@@ -638,7 +706,7 @@ exports.uploadimage = function (request, response) {
                         fs.unlink(`public/uploads/${filedata.originalname}`, (err) => {
                             if (err) throw err;
                         });
-                        response.redirect('/backend/uploadimage')
+                        setMessageInSession(request,response,'success',`Image with name ${request.body.name} was uploaded to ${request.body.storage}`)
                     })
                     .catch((prError) => {
                         fs.unlink(`public/uploads/${filedata.originalname}`, (err) => {

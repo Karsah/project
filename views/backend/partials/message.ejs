@@ -1,13 +1,12 @@
 <% if(message){ %>
-    <% console.log('steinnna' , message) %>
     <% if(message.category == 'question'){ %>
     <div class="message-wrapper question-wrapper">
         <i class="fas fa-question question-category"></i>
         <div class="message-content question-message">
-            Do you want to delete Admin with id <%= message.message %>
+             <%= message.message.cont + ' ' + message.message.param %>
         </div>
         <div class="question-buttons">
-            <a href="/backend/manageadmins/delete/<%= message.message %>">
+            <a href="<%= message.message.deletebtn%>">
                 <div class="btn btn-Yes">Yes</div>
             </a>
             <div class="btn btn-Cancel">Cancel</div>

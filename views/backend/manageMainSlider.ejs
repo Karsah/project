@@ -3,7 +3,9 @@
     <%- include('partials/header') %>
     <%- include('partials/sidebar') %>
     <div class="content">
-        <% if(slidesArray.length == 0){ %>
+        <%- include('partials/message') %>
+
+    <% if(slidesArray.length == 0){ %>
             <h2>There is not any Slides yet !</h2>
         <% } %>
         <% if(slidesArray.length > 0){ %>
@@ -29,12 +31,10 @@
                             <td>
                                 <div class="manage-tools">
                                     <div>
-<!--                                        <a href="manageslider/editslide/1" class="manage_tool edit"><i
-                                                    class="fas fa-user-edit"></i>Edit</a>-->
                                         <a href="manageslider/editslide/<%= item.id%>"  class="manage_tool edit"><i
                                                     class="fas fa-user-edit"></i>Edit</a>
-                                        <a href="manageslider/delete/<%= item.id %>" class="delete manage_tool"><i
-                                                    class="fas fa-trash"></i>Delete</a>
+                                        <a href="deletequestion/slide&<%=item.id%>"  class="manage_tool delete"><i
+                                                    class="fas fa-user-times"></i>Delete</a>
                                     </div>
                                 </div>
                             </td>

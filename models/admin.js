@@ -14,7 +14,10 @@ module.exports = class Admin {
             const sql = "select id,name,surname,email,is_super from admins WHERE id=? "
             con.execute(sql, [id])
                 .then((result) => resolve(result[0][0]))
-                .catch(()=>{reject()})
+                .catch((err) => {
+                    console.log(err)
+                    reject()
+                })
         })
     }
 
@@ -23,7 +26,10 @@ module.exports = class Admin {
             const sql = "select id,name,surname,email,is_super from admins "
             con.execute(sql)
                 .then((result) => resolve(result[0]))
-                .catch(()=>{reject()})
+                .catch((err) => {
+                    console.log(err)
+                    reject()
+                })
         })
     }
 
@@ -42,12 +48,18 @@ module.exports = class Admin {
                                     resolve('incorrect')
                                 }
                             })
-                            .catch(()=> reject())
+                            .catch((err) => {
+                                console.log(err)
+                                reject()
+                            })
                     } else if (result[0].length == 0) {
                         resolve('no admin')
                     }
                 })
-                //.catch(()=>{reject()})
+                .catch((err) => {
+                    console.log(err)
+                    reject()
+                })
         });
     }
 
@@ -55,8 +67,11 @@ module.exports = class Admin {
         return new Promise((resolve, reject) => {
             const sql = "INSERT INTO admins (name, surname, email,password) VALUES(?, ?, ?, ?)";
             con.query(sql, admin)
-                .then( resolve())
-                .catch(()=>{reject()})
+                .then(resolve())
+                .catch((err) => {
+                    console.log(err)
+                    reject()
+                })
         })
     }
 
@@ -65,7 +80,10 @@ module.exports = class Admin {
             const sql = 'UPDATE admins SET name=?, surname=?, email=? WHERE id=?'
             con.query(sql, admin)
                 .then(resolve())
-                .catch(()=>{reject()})
+                .catch((err) => {
+                    console.log(err)
+                    reject()
+                })
         })
     }
 
@@ -74,7 +92,10 @@ module.exports = class Admin {
             const sql = 'DELETE FROM admins where id = ?'
             con.query(sql, [id])
                 .then(resolve())
-                .catch(()=>{reject()})
+                .catch((err) => {
+                    console.log(err)
+                    reject()
+                })
         })
     }
 
@@ -94,37 +115,50 @@ module.exports = class Admin {
                                         resolve(false)
                                     }
                                 })
-                                .catch(()=>{reject()})
+                                .catch((err) => {
+                                    console.log(err)
+                                    reject()
+                                })
                         }
                     }
                 })
-                .catch(()=>{reject()})
+                .catch((err) => {
+                    console.log(err)
+                    reject()
+                })
         })
     }
 
-    static setNewPass(newPass, email){
+    static setNewPass(newPass, email) {
         return new Promise((resolve, reject) => {
             const sql = 'update admins set password = ? where email = ?'
             con.query(sql, [newPass, email])
                 .then(resolve())
-                .catch(()=>{reject()})
+                .catch((err) => {
+                    console.log(err)
+                    reject()
+                })
         })
     }
 
-    static isThereAdminWith(searchBy,value) {
+    static isThereAdminWith(searchBy, value) {
         return new Promise((resolve, reject) => {
             let sql
-            if(searchBy === 'email'){
+            if (searchBy === 'email') {
                 sql = "select id from admins where email = ?"
-            }else if (searchBy === 'id'){
+            } else if (searchBy === 'id') {
                 sql = "select email from admins where id = ?"
             }
             con.query(sql, [value])
                 .then(result => {
                     resolve(result[0])
                 })
-                .catch(()=>{reject()})
+                .catch((err) => {
+                    console.log(err)
+                    reject()
+                })
+
         })
     }
-    }
+}
 

@@ -66,7 +66,7 @@ backendRout.get('/managefeedbacks/delete/:id', backendController.deleteFeedback)
 backendRout.get('/managefeedbacks',backendController.getManageFeedbacksPage)
 
 backendRout.get('/manageadmins/delete/:id', backendController.deleteadmin);
-backendRout.get('/manageadmins/deletequestion/:id',backendController.sendDeleteAdminQuestion)
+backendRout.get('/deletequestion/:item&:id',backendController.sendDeleteQuestion)
 backendRout.get('/manageadmins', backendController.manageadmins);
 
 backendRout.get('/addadmin', backendController.getAddAdminPage)

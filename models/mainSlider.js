@@ -8,8 +8,10 @@ module.exports = class MainSlider {
             const sql = 'insert into main_slider(name,info,bg_image) values(?,?,?)'
             con.query(sql, slide)
                 .then(resolve())
-                .catch(reject(err))
-        })
+                .catch(err => {
+                    console.log('err' , err)
+                    reject(err)
+                })        })
     }
 
     static GetSlides() {
@@ -17,7 +19,10 @@ module.exports = class MainSlider {
             const sql = "select * from main_slider"
             con.query(sql)
                 .then((result) => resolve(result[0]))
-                .catch((err) => reject(err))
+                .catch(err => {
+                    console.log('err' , err)
+                    reject(err)
+                })
 
         })
 
@@ -31,6 +36,7 @@ module.exports = class MainSlider {
                     resolve()
                 })
                 .catch(err => {
+                    console.log('err' , err)
                     reject(err)
                 })
         })
@@ -45,7 +51,10 @@ module.exports = class MainSlider {
                     if (result[0].length > 0) resolve(result[0][0])
                     else (reject())
                 })
-                .catch(err => reject(err))
+                .catch(err => {
+                    console.log('err' , err)
+                    reject(err)
+                })
         })
     }
 
@@ -58,14 +67,16 @@ module.exports = class MainSlider {
         })
     }
 
-    static isThereSlideWithThisId(id) {
+    static isThereSlide(id) {
         return new Promise((resolve, reject) => {
             const sql = "select name from main_slider where id = ?"
             con.query(sql, [id])
                 .then(result => {
                     if (result[0].length > 0) {
-                        resolve()
-                    } else reject()
+                        resolve(true)
+                    } else if (result[0].length == 0) {
+                        resolve(false)
+                    }
                 })
                 .catch(err => {
                     console.log('err' , err)

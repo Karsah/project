@@ -3,8 +3,8 @@
     <%- include('partials/header') %>
     <%- include('partials/sidebar') %>
     <div class="content">
-
-        <% if(feedbacksArray.length == 0){ %>
+        <%- include('partials/message') %>
+    <% if(feedbacksArray.length == 0){ %>
             <h2>There is not any Feedbacks yet !</h2>
         <% } %>
         <% if(feedbacksArray.length > 0){ %>
@@ -37,8 +37,8 @@
                                                class="unblock manage_tool"><i
                                                         class="fas fa-lock-open"></i>Unblock</a>
                                         <% } %>
-                                        <a href="managefeedbacks/delete/<%= item.id %>" class="delete manage_tool"><i
-                                                    class="fas fa-trash"></i>Delete</a>
+                                            <a href="deletequestion/feedback&<%=item.id%>"  class="manage_tool delete"><i
+                                                        class="fas fa-user-times"></i>Delete</a>
                                     </div>
 
                                 </div>

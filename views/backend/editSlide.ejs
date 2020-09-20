@@ -15,7 +15,17 @@
                 </div>
                 <div class="inputfield">
                     <label>Background Image</label>
-                    <input type="text" class="input" name="bg_image" value="<%=editingSlideInfo.bg_image%>" >
+                    <%if (filesArr.length > 0){%>
+                        <div class="custom_select">
+                            <select name="bg_image">
+                                <%filesArr.forEach(function (item) {%>
+                                <option value="<%=item%>" <%if(editingSlideInfo.bg_image == item){%> <%='selected'%> <%}%>><%=item%></option>
+                                <%})%>
+                            </select>
+                        </div>
+                    <%}else{%>
+                        <input type="text" class="input" name="bg_image" value="<%=editingSlideInfo.bg_image%>">
+                    <%}%>
                 </div>
                 <div class="inputfield">
                     <label>Information</label>
