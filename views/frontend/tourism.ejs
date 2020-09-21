@@ -1,4 +1,22 @@
 <%- include('partials/head')%>
 <%- include('partials/nav')%>
-<h1><%= title%></h1>
+<%if(Array.isArray(topSights) && topSights.length ==0){%>
+    <div class="coming-soon">
+        <h1>No content yet</h1>
+    </div>
+<%}else{%>
+<section class="one">
+    <% topSights.forEach(item=>{%>
+        <div class="card">
+            <img src="/frontend/images/<%= item.image%>" class="gallery_image ">
+            <div class="card-name"><%= item.name%></div>
+            <div class="buttons">
+                <a href="/tourism/<%= item.name.toLowerCase()%>"><i class="fab fa-readme"></i>Read More</a>
+                <a href="#"><i class="fas fa-map-marked-alt"></i>See on map</a>
+        </div>
+        </div>
+    <%})%>
+
+</section>
+<%}%>
 <%- include('partials/footer')%>

@@ -1,5 +1,6 @@
 const express = require('express');
 const tourRout = express.Router();
+const tourController = require('../../controllers/tourismController')
 
 tourRout.get('/churches', function (request, response) {
     response.render('frontend/churches', {
@@ -19,12 +20,6 @@ tourRout.get('/monuments', function (request, response) {
         css :['style.css']
     })
 });
-tourRout.get('/', function (request, response) {
-    response.render('frontend/tourism', {
-        title: 'tourism',
-        css :['style.css']
-
-    })
-});
+tourRout.get('/',tourController.getSights);
 
 module.exports = tourRout;
