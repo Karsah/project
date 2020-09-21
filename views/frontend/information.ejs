@@ -1,34 +1,77 @@
 <%- include('partials/head')%>
 <%- include('partials/nav')%>
-<div class="mainheader">
-    <h1>Information page</h1>
-    <h2>About Aragatsotn</h2>
-</div>
-<div class="info-paje-container">
-    <main>
-        <section class="information-section">
-            <div class="info-header">
-                <h1>Aragatsotn</h1>
-            </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis consequuntur numquam ea dolorem magni eius. Autem necessitatibus ex iusto doloremque labore corporis perferendis similique assumenda deserunt, sequi voluptatibus voluptatum,
-                    quis officiis mollitia, ipsum distinctio enim aut dicta eveniet error neque corrupti. Nulla sit illo inventore sequi quasi quia itaque dolores!</p>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente, ab nam quo perspiciatis earum eos temporibus rerum ex suscipit laborum dolore consectetur inventore dicta quis! Nostrum nobis laborum obcaecati quo accusamus suscipit
-                    voluptatem, delectus expedita quod quas eveniet porro nesciunt nihil tenetur, exercitationem pariatur est. Illum voluptate sunt, esse repellat facilis est eius sequi corrupti laboriosam dolorum iusto labore consequatur harum reiciendis
-                    totam veniam blanditiis, similique aut ea deserunt dolores maiores! Repudiandae dolorem, explicabo numquam beatae eum quaerat deserunt cumque dicta fuga illo consectetur! Ipsam quae, error obcaecati a, perferendis, enim rerum saepe
-                    tempora voluptate voluptates expedita id quas fugiat.</p>
-        </section>
-        <section class="two">
-            <div class="firstgalleryheader">
-                <h1>Gallery</h1>
-            </div>
-            <div class="gallery">
-                <img src="frontend/images/pic03.jpg" class="gallery_image ">
-                <img src="frontend/images/pic01.jpg" class="gallery_image ">
-                <img src="frontend/images/pic04.jpg" class="gallery_image ">
-                <img src="frontend/images/pic05.jpg" class="gallery_image ">
-            </div>
-        </section>
-        <section class="three">
+<%if(Array.isArray(mainheader) && mainheader.length ==0){%>
+    <div class="coming-soon">
+        <h1>Еhere is something wrong with the content, \n please try to visit this page later</h1>
+    </div>
+<%}else{%>
+<div class="container" style="background-image: url(<%=mainheader.bg_image%>)">
+    <div class="mainheader">
+        <h1>Information page</h1>
+        <h2>About <%=mainheader.header%></h2>
+    </div>
+    <div class="info-paje-container">
+        <main>
+
+            <section class="information-section">
+                <div class="info-header">
+                    <h1><%=mainheader.header%></h1>
+                </div>
+                <div class="brief-information">
+
+                    <div>
+                        <h2>Marz</h2>
+                        <h3>Aragatsotn</h3>
+                    </div>
+                    <div>
+                        <h2>First mentioned</h2>
+                        <h3>9th century</h3>
+                    </div>
+                    <div>
+                        <h2>City status</h2>
+                        <h3>1963</h3>
+                    </div>
+                    <div>
+                        <h2>Government</h2>
+                        <h3>Tovmas Shahverdyan</h3>
+
+                    </div>
+
+                    <div>
+                        <h2>Area</h2>
+                        <h3>	7.5 km2 (2.9 sq mi)</h3>
+                    </div>
+                    <div>
+                        <h2>Elevation</h2>
+                        <h3>1,110 m (3,640 ft)</h3>
+                    </div>
+                    <div>
+                        <h2>Population </h2>
+                        <h3>18,834</h3>
+                    </div>
+                    <div>
+                        <h2>Postal code</h2>
+                        <h3>0201-0205</h3>
+                    </div>
+
+                </div>
+                <%information.forEach(function (item) {%>
+                    <h3 class="patagraph-header"><%=item.header%></h3>
+                    <p><%=item.info%></p>
+                <%})%>
+            </section>
+            <section class="two">
+                <div class="firstgalleryheader">
+                    <h1>Gallery</h1>
+                </div>
+                <div class="gallery">
+                    <% console.log(gallery)%>
+                    <%gallery.forEach(function (item) {%>
+                    <img src="<%=item.gallery_image%>" class="gallery_image ">
+                    <%})%>
+                </div>
+            </section>
+            <section class="three">
                 <div class="card">
                     <img src="frontend/images/pic03.jpg" class="gallery_image ">
                     <div class="card-name">Ashtarak</div>
@@ -37,7 +80,9 @@
                         <a href="#"><i class="fas fa-map-marked-alt"></i>See on map</a>
                     </div>
                 </div>
-        </section>
-    </main>
+            </section>
+        </main>
+    </div>
 </div>
+<%}%>
 <%- include('partials/footer')%>

@@ -19,7 +19,8 @@ module.exports.getFeedbackPage = function (request, response) {
 }
 
 module.exports.getOthersFeedbacksPage = function (request, response) {
-    feedbacksmodel.getAllFeedbacksForFrontend().then(allfeedbacks => {
+    feedbacksmodel.getAllFeedbacksForFrontend()
+        .then((allfeedbacks)=> {
         let feedbacksArr
         if (!allfeedbacks) feedbacksArr = [null,'SORRY but there is not any Feedbacks yet !']
         else feedbacksArr = allfeedbacks
@@ -32,6 +33,8 @@ module.exports.getOthersFeedbacksPage = function (request, response) {
             feedbacks: feedbacksArr
         })
     })
+        .catch(()=>internalServerError(response))
+
 }
 
 module.exports.getLeaveFeedbackPage = function (request, response) {
@@ -64,10 +67,12 @@ module.exports.leaveFeedback = function (request, response) {
                 request.body.age,
                 request.body.message
             ]
-            feedbacksmodel.addFeedback(feedback)
-            response.redirect('/feedback')
+            feedbacksmodel.addFeedback(feedback).then(()=>{
+                response.redirect('/feedback')
+            })
+                .catch(()=>internalServerError(response))
+
         }else {
-            console.log(v.errors)
             let errors = [];
             for (let key in v.errors) {
                 if (v.errors.hasOwnProperty(key))

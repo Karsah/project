@@ -16,6 +16,7 @@ function internalServerError(request, response) {
     let logined = request.session.admin ? true : false
     response.render('serverError.ejs', {
         title: 'Server Error',
+        end:'back',
         logined: logined
     })
 }
@@ -706,7 +707,7 @@ exports.uploadimage = function (request, response) {
                         fs.unlink(`public/uploads/${filedata.originalname}`, (err) => {
                             if (err) throw err;
                         });
-                        setMessageInSession(request,response,'success',`Image with name ${request.body.name} was uploaded to ${request.body.storage}`)
+                        setMessageInSession(request,response,'success',`Image with name ${request.body.name} was uploaded to ${request.body.storage} storage`,'/backend/adminpanel')
                     })
                     .catch((prError) => {
                         fs.unlink(`public/uploads/${filedata.originalname}`, (err) => {
