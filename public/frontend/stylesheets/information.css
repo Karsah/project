@@ -137,7 +137,7 @@ main {
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
-    height: auto;
+    min-height: 100%;
 }
 
 /* three */

@@ -13,9 +13,9 @@ module.exports = class Sights {
                 })        })
     }
 
-    static GetTopSights() {
+    static GetSights() {
         return new Promise((resolve, reject) => {
-            const sql = "select image,name from sights where status = 'top'"
+            const sql = "select image,name from sights where type ='?'"
             con.query(sql)
                 .then((result) =>{  if (result[0].length>0){
                     resolve(result[0])

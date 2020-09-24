@@ -8,9 +8,9 @@ tourRout.get('/churches', function (request, response) {
         css :['style.css']
     })
 });
-tourRout.get('/sightseeing', function (request, response) {
-    response.render('frontend/sightseeing', {
-        title: 'sightseeing',
+tourRout.get('/sights', function (request, response) {
+    response.render('frontend/sights', {
+        title: 'sights',
         css :['style.css']
     })
 });

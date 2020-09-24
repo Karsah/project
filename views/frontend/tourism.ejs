@@ -1,22 +1,37 @@
-<%- include('partials/head')%>
-<%- include('partials/nav')%>
-<%if(Array.isArray(topSights) && topSights.length ==0){%>
-    <div class="coming-soon">
-        <h1>No content yet</h1>
-    </div>
-<%}else{%>
-<section class="one">
-    <% topSights.forEach(item=>{%>
-        <div class="card">
-            <img src="/frontend/images/<%= item.image%>" class="gallery_image ">
-            <div class="card-name"><%= item.name%></div>
-            <div class="buttons">
-                <a href="/tourism/<%= item.name.toLowerCase()%>"><i class="fab fa-readme"></i>Read More</a>
-                <a href="#"><i class="fas fa-map-marked-alt"></i>See on map</a>
-        </div>
-        </div>
-    <%})%>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
 
-</section>
-<%}%>
-<%- include('partials/footer')%>
+<div class="container">
+    <div class="mainheader">
+        <h1>Tourism</h1>
+    </div>
+    <section class="one">
+        <div class="header">Main Sections</div>
+        <div class="card">
+            <img src="frontend/images/ekexeci.jpg" class="gallery_image"/>
+            <div class="card-name">Churches</div>
+            <div class="buttons">
+                <a href="/tourism/churches">Go to section</a>
+
+            </div>
+        </div>
+        <div class="card">
+            <img src="frontend/images/Veratsnundmemorial.jpg" class="gallery_image"/>
+            <div class="card-name">Memorials</div>
+            <div class="buttons">
+                <a href="/tourism/monuments">Go to section</a>
+
+            </div>
+        </div>
+        <div class="card">
+            <img src="frontend/images/ekexeci.jpg" class="gallery_image"/>
+            <div class="card-name">Sights</div>
+            <div class="buttons">
+                <a href="/tourism/sights">Go to section</a>
+
+            </div>
+        </div>
+
+    </section>
+</div>
+<%- include('partials/footer') %>
