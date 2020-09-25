@@ -46,6 +46,10 @@ backendRout.use(function (request,response,next) {
 })
 
 const uploads = (multer({storage:storageConfig, fileFilter: fileFilter}))
+
+backendRout.get('/informationpages/:name',backendController.getInformationPage)
+backendRout.get('/informationpages',backendController.getInformationPages)
+
 backendRout.post('/uploadimage/upload',uploads.single("file"),backendController.uploadimage)
 backendRout.get('/uploadimage',backendController.getUploadImagePage)
 

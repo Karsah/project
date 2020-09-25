@@ -14,16 +14,16 @@ exports.getAragatsotnInfoPage = function(request, response) {
             let mainheader = result.mainheader[0]
             let information = result.information
             let gallery = result.gallery
-            if (!result){
-                mainheader = []
-            }
+            let beifinfo = result.beifinfo
+
             response.render('frontend/information', {
                 title: 'Information',
                 pageName:'information',
                 css:['information.css','style.css'],
                 mainheader:mainheader,
                 information:information,
-                gallery:gallery
+                gallery:gallery,
+                beifinfo:beifinfo
             })
         })
         .catch(()=>internalServerError(response))

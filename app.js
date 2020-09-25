@@ -6,7 +6,7 @@ const logger = require('morgan');
 const session = require("express-session");
 const app = express();
 app.use(session({
-  secret: "kar",
+  secret: "secret",
   resave: false,
   saveUninitialized: true,
   cookie: {}

@@ -1,0 +1,152 @@
+<%- include('partials/head') %>
+<div class="container">
+    <%- include('partials/header') %>
+    <%- include('partials/sidebar') %>
+    <div class="content">
+        <%- include('partials/message') %>
+        <h2 class="tableHeader">Header and background</h2>
+        <div class="table-box">
+            <table>
+                <tr>
+                    <% fields.header_back_fields.forEach(function (field) { %>
+                        <th><%= field %></th>
+                    <% }) %>
+                    <th>Image Demo</th>
+                    <th>Tools</th>
+                </tr>
+                <% header_back.forEach(function (item) { %>
+                    <tr>
+                        <% fields.header_back_fields.forEach(function (field) { %>
+                            <% if (field == 'info'){ %>
+                                <td class="td-big"><%= item[field] %></td>
+                                <%return%>
+                            <% } %>
+                            <td><%= item[field] %></td>
+                        <% }) %>
+                        <td class="image-demo"><img src="<%= item.bg_image %>"></td>
+                        <td>
+                            <div class="manage-tools">
+                                <div>
+                                    <a href="informationpages/editheader/<%= item.id%>"  class="manage_tool edit"><i
+                                                class="fas fa-user-edit"></i>Edit</a>
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+            </table>
+        </div>
+        <h2 class="tableHeader">Beif Information</h2>
+        <%if (Array.isArray(beif_info) && beif_info.length == 0){%>
+            <div class="noinfo">No aviable information</div>
+        <%}else{%>
+        <div class="table-box">
+            <table>
+                <tr>
+                    <% fields.beif_info_fields.forEach(function (field) { %>
+                        <th><%= field %></th>
+                    <% }) %>
+                    <th>Tools</th>
+                </tr>
+                <% beif_info.forEach(function (item) { %>
+                    <tr>
+                        <% fields.beif_info_fields.forEach(function (field) { %>
+                            <% if (field == 'info'){ %>
+                                <td class="td-big"><%= item[field] %></td>
+                                <%return%>
+                            <% } %>
+                            <td><%= item[field] %></td>
+                        <% }) %>
+                        <td>
+                            <div class="manage-tools">
+                                <div>
+                                    <a href="informationpages/editbeifinfo/<%= item.id%>"  class="manage_tool edit"><i
+                                                class="fas fa-user-edit"></i>Edit</a>
+                                    <a href="deletequestion/beifinfo&<%=item.id%>"  class="manage_tool delete"><i
+                                                class="fas fa-user-times"></i>Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+            </table>
+        </div>
+            <%}%>
+        <h2 class="tableHeader">Paragraphs</h2>
+        <%if (Array.isArray(paragraphs) && paragraphs.length == 0){%>
+            <div class="noinfo">No aviable information</div>
+        <%}else{%>
+            <div class="table-box">
+                <table>
+                    <tr>
+                        <% fields.paragraphs_fields.forEach(function (field) { %>
+                            <th><%= field %></th>
+                        <% }) %>
+                        <th>Tools</th>
+                    </tr>
+                    <% paragraphs.forEach(function (item) { %>
+                        <tr>
+                            <% fields.paragraphs_fields.forEach(function (field) { %>
+                                <% if (field == 'info'){ %>
+                                    <td class="td-big"><%= item[field] %></td>
+                                    <%return%>
+                                <% } %>
+                                <td><%= item[field] %></td>
+                            <% }) %>
+                            <td>
+                                <div class="manage-tools">
+                                    <div>
+                                        <a href="informationpages/editparagraph/<%= item.id%>"  class="manage_tool edit"><i
+                                                    class="fas fa-user-edit"></i>Edit</a>
+                                        <a href="deletequestion/paragraph&<%=item.id%>"  class="manage_tool delete"><i
+                                                    class="fas fa-user-times"></i>Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </table>
+            </div>
+        <%}%>
+        <h2 class="tableHeader">Gallery</h2>
+        <%if (Array.isArray(gallery) && gallery.length == 0){%>
+            <div class="noinfo">No aviable information</div>
+        <%}else{%>
+        <div class="table-box">
+            <table>
+                <tr>
+                    <% fields.gallery_fields.forEach(function (field) { %>
+                        <th><%= field %></th>
+                    <% }) %>
+                    <th>Tools</th>
+                </tr>
+                <% gallery.forEach(function (item) { %>
+                    <tr>
+                        <% fields.gallery_fields.forEach(function (field) { %>
+                            <% if (field == 'info'){ %>
+                                <td class="td-big"><%= item[field] %></td>
+                                <%return%>
+                            <% } %>
+                            <td><%= item[field] %></td>
+                        <% }) %>
+                        <td>
+                            <div class="manage-tools">
+                                <div>
+                                    <a href="informationpages/editgalleryimg/<%= item.id%>"  class="manage_tool edit"><i
+                                                class="fas fa-user-edit"></i>Edit</a>
+                                    <a href="deletequestion/gallery_image&<%=item.id%>"  class="manage_tool delete"><i
+                                                class="fas fa-user-times"></i>Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+            </table>
+        </div>
+        <%}%>
+
+    </div>
+
+</div>
+<%- include('partials/footer') %>

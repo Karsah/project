@@ -1,11 +1,11 @@
 <%- include('partials/head')%>
 <%- include('partials/nav')%>
-<%if(Array.isArray(mainheader) && mainheader.length ==0){%>
+<%if(Array.isArray(mainheader) && mainheader.length == 0){%>
     <div class="coming-soon">
-        <h1>Еhere is something wrong with the content, \n please try to visit this page later</h1>
+        <h1>There is something wrong with the content please try to visit this page later</h1>
     </div>
 <%}else{%>
-<div class="container" style="background-image: url(<%=mainheader.bg_image%>)">
+<div class="container" style="background-image: url('/frontend/images/<%=mainheader.bg_image%>')">
     <div class="mainheader">
         <h1>Information page</h1>
         <h2>About <%=mainheader.header%></h2>
@@ -17,49 +17,30 @@
                 <div class="info-header">
                     <h1><%=mainheader.header%></h1>
                 </div>
+                <%if (Array.isArray(beifinfo) && beifinfo.length != 0){%>
                 <div class="brief-information">
-
+                <%beifinfo.forEach(function (item) {%>
                     <div>
-                        <h2>Marz</h2>
-                        <h3>Aragatsotn</h3>
+                        <h2><%=item.title%></h2>
+                        <h3><%=item.info%></h3>
                     </div>
-                    <div>
-                        <h2>First mentioned</h2>
-                        <h3>9th century</h3>
-                    </div>
-                    <div>
-                        <h2>City status</h2>
-                        <h3>1963</h3>
-                    </div>
-                    <div>
-                        <h2>Government</h2>
-                        <h3>Tovmas Shahverdyan</h3>
-
-                    </div>
-
-                    <div>
-                        <h2>Area</h2>
-                        <h3>	7.5 km2 (2.9 sq mi)</h3>
-                    </div>
-                    <div>
-                        <h2>Elevation</h2>
-                        <h3>1,110 m (3,640 ft)</h3>
-                    </div>
-                    <div>
-                        <h2>Population </h2>
-                        <h3>18,834</h3>
-                    </div>
-                    <div>
-                        <h2>Postal code</h2>
-                        <h3>0201-0205</h3>
-                    </div>
-
+                    <%})%>
                 </div>
+                <%}%>
+                <%if (Array.isArray(information) && information.length != 0){%>
+
                 <%information.forEach(function (item) {%>
-                    <h3 class="patagraph-header"><%=item.header%></h3>
-                    <p><%=item.info%></p>
+                    <div class="paragraph">
+                        <h3 class="paragraph-header"><%=item.header%><i class="fas fa-sort-amount-down-alt"></i></h3>
+                        <p><%=item.info%></p>
+                    </div>
+
                 <%})%>
+
+                <%}%>
             </section>
+            <%if (Array.isArray(gallery) && gallery.length != 0){%>
+
             <section class="two">
                 <div class="firstgalleryheader">
                     <h1>Gallery</h1>
@@ -71,16 +52,48 @@
                     <%})%>
                 </div>
             </section>
+                <%}%>
             <section class="three">
-                <div class="card">
-                    <img src="frontend/images/pic03.jpg" class="gallery_image ">
-                    <div class="card-name">Ashtarak</div>
-                    <div class="buttons">
-                        <a href="#"><i class="fab fa-readme"></i>Read More</a>
-                        <a href="#"><i class="fas fa-map-marked-alt"></i>See on map</a>
+                <div class="cardsheader">
+                    <h1>Cities and Rural communications</h1>
+                </div>
+                <div class="cards">
+                    <div class="card">
+                        <img src="frontend/images/pic03.jpg" class="gallery_image ">
+                        <div class="card-name">Ashtarak</div>
+                        <div class="buttons">
+                            <a href="information/ashtarak"><i class="fab fa-readme"></i>Read More</a>
+                            <a href="#"><i class="fas fa-map-marked-alt"></i>See on map</a>
+                        </div>
                     </div>
+                    <div class="card">
+                        <img src="frontend/images/Aparan.jpg" class="gallery_image ">
+                        <div class="card-name">Aparan</div>
+                        <div class="buttons">
+                            <a href="information/aparan"><i class="fab fa-readme"></i>Read More</a>
+                            <a href="#"><i class="fas fa-map-marked-alt"></i>See on map</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="frontend/images/pic03.jpg" class="gallery_image ">
+                        <div class="card-name">Talin</div>
+                        <div class="buttons">
+                            <a href="information/talin"><i class="fab fa-readme"></i>Read More</a>
+                            <a href="#"><i class="fas fa-map-marked-alt"></i>See on map</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="frontend/images/pic03.jpg" class="gallery_image ">
+                        <div class="card-name">Rural Communications</div>
+                        <div class="buttons">
+                            <a href="information/ruralcommunications"><i class="fab fa-readme"></i>Read More</a>
+                            <a href="#"><i class="fas fa-map-marked-alt"></i>See on map</a>
+                        </div>
+                    </div>
+
                 </div>
             </section>
+<script src="frontend/javaScript/openParagraph.js"></script>
         </main>
     </div>
 </div>

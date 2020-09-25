@@ -1,6 +1,7 @@
 const Admin = require("../models/admin");
 const Feedbacks = require('../models/feedback');
 const Slider = require('../models/mainSlider');
+const Info = require('../models/information')
 
 let fs = require('fs')
 
@@ -11,12 +12,24 @@ const {Validator} = require('node-input-validator');
 
 // functons
 
+// get fields
+
+let getFields = function (obj) {
+    if (Array.isArray(obj) & obj.length == 0 ) return []
+    let fields = []
+    for (let key in obj[0]) {
+        console.log('key' , key)
+        fields.push(key)
+    }
+    return fields
+}
+
 // Internal server error
 function internalServerError(request, response) {
     let logined = request.session.admin ? true : false
     response.render('serverError.ejs', {
         title: 'Server Error',
-        end:'back',
+        end: 'back',
         logined: logined
     })
 }
@@ -264,11 +277,8 @@ exports.addAdmin = function (request, response) {
 exports.manageadmins = function (request, response) {
     Admin.getAdmins()
         .then(result => {
-            let fields = []
             let adminsArr = result
-            for (let key in adminsArr[0]) {
-                fields.push(key)
-            }
+            let fields = getFields(adminsArr)
             response.render('backend/manageAdmins', {
                 title: 'Manage Admins',
                 css: ['adminPanel.css'],
@@ -390,11 +400,8 @@ exports.editAdmin = function (request, response) {
 exports.getManageFeedbacksPage = function (request, response) {
     Feedbacks.getAllFeedbacksForManagement()
         .then(result => {
-            let fields = []
             let feedbacksArr = result
-            for (let key in feedbacksArr[0]) {
-                fields.push(key)
-            }
+            let fields = getFields(feedbacksArr)
             response.render('backend/manageFeedbacks', {
                 title: 'Manage Feedbacks',
                 css: ['adminPanel.css'],
@@ -474,19 +481,15 @@ exports.unblockFeedback = function (request, response) {
 exports.getManageSliderPage = function (request, response) {
     Slider.GetSlides()
         .then((result) => {
-            let fields = []
             let slidesArr = result
-            for (let key in slidesArr[0]) {
-                fields.push(key)
-            }
-
+            let fields = getFields(slidesArr)
             response.render('backend/manageMainSlider', {
                 title: 'Manage Main SLider',
                 css: ['adminPanel.css'],
                 admin: request.session.admin,
                 fields: fields,
                 slidesArray: slidesArr,
-                message:getMessageFromSession(request.session)
+                message: getMessageFromSession(request.session)
             })
         })
         .catch(() => {
@@ -497,8 +500,8 @@ exports.getManageSliderPage = function (request, response) {
 exports.deleteslider = function (request, response) {
     const id = request.params.id
     Slider.isThereSlide(id)
-        .then((result)=>{
-            if(result){
+        .then((result) => {
+            if (result) {
                 Slider.deleteSlider(id)
                     .then(() => {
                         setMessageInSession(request, response, 'success', `Slide with id ${id} was deleted`, '/backend/manageslider')
@@ -506,13 +509,13 @@ exports.deleteslider = function (request, response) {
                     .catch(() => {
                         internalServerError(request, response)
                     })
-            }else if (!result){
-                setMessageInSession(request,response,'unsuccess',`there is not slide with id ${id}`,'/backend/manageslider')
+            } else if (!result) {
+                setMessageInSession(request, response, 'unsuccess', `there is not slide with id ${id}`, '/backend/manageslider')
 
             }
         })
-        .catch(()=>{
-            internalServerError(request,response)
+        .catch(() => {
+            internalServerError(request, response)
         })
 
 };
@@ -543,7 +546,7 @@ exports.editSlide = function (request, response) {
     let id = request.params.id
     Slider.isThereSlide(id)
         .then((result) => {
-            if (result){
+            if (result) {
                 const v = new Validator(request.body, {
                     name: 'required|minLength:2',
                     bg_image: 'required',
@@ -572,7 +575,7 @@ exports.editSlide = function (request, response) {
                                         id
                                     ]
                                     Slider.updateSlide(slide)
-                                        .then(() =>setMessageInSession(request,response,'success',`slide with id ${id} was edited`,'/backend/manageslider'))
+                                        .then(() => setMessageInSession(request, response, 'success', `slide with id ${id} was edited`, '/backend/manageslider'))
                                         .catch(() => {
                                             internalServerError(request, response)
                                         })
@@ -586,8 +589,8 @@ exports.editSlide = function (request, response) {
                             setErrorsInSession(request, response, v.errors, `/backend/manageslider/editslide/${id}`, 'validator')
                         }
                     })
-            }else if(!result){
-                setMessageInSession(request,response,'unsuccess',`there is not slide with id ${id}`,'/backend/manageslider')
+            } else if (!result) {
+                setMessageInSession(request, response, 'unsuccess', `there is not slide with id ${id}`, '/backend/manageslider')
             }
 
         })
@@ -698,7 +701,7 @@ exports.uploadimage = function (request, response) {
                     .then(() => {
                         function callback(err) {
                             if (err) {
-                                let Writtenerror = prError
+                                let Writtenerror = err
                                 setErrorsInSession(request, response, Writtenerror, '/backend/uploadimage', 'written')
                             }
                         }
@@ -707,7 +710,7 @@ exports.uploadimage = function (request, response) {
                         fs.unlink(`public/uploads/${filedata.originalname}`, (err) => {
                             if (err) throw err;
                         });
-                        setMessageInSession(request,response,'success',`Image with name ${request.body.name} was uploaded to ${request.body.storage} storage`,'/backend/adminpanel')
+                        setMessageInSession(request, response, 'success', `Image with name ${request.body.name} was uploaded to ${request.body.storage} storage`, '/backend/adminpanel')
                     })
                     .catch((prError) => {
                         fs.unlink(`public/uploads/${filedata.originalname}`, (err) => {
@@ -724,5 +727,66 @@ exports.uploadimage = function (request, response) {
                 });
                 setErrorsInSession(request, response, v.errors, '/backend/uploadimage', 'validator')
             }
+        })
+}
+
+exports.getInformationPages = function (request, response) {
+    Info.getPagenames()
+        .then((result) => {
+            infoPagesArray = result
+            response.render('backend/manageInfoPages', {
+                title: 'Manage Information Pages',
+                css: ['adminPanel.css', 'infopages.css'],
+                admin: request.session.admin,
+                message: getMessageFromSession(request.session),
+                infoPagesArray: infoPagesArray
+            })
+        })
+        .catch(() => {
+            internalServerError(request, response)
+        })
+}
+
+exports.getInformationPage = function (request, response) {
+    let name = request.params.name
+    Info.isThereInfoPage(name)
+        .then((result) => {
+            if (result) {
+                Info.getAllPageInformation(name)
+                    .then((result) => {
+                        if (typeof result === 'object') {
+
+                            let header_back = result.maininfo,
+                                beif_info = result.beifinfo,
+                                paragraphs = result.paragraphs,
+                                gallery = result.gallery
+                            let fields = {
+                                header_back_fields: getFields(header_back),
+                                beif_info_fields: getFields(beif_info),
+                                paragraphs_fields: getFields(paragraphs),
+                                gallery_fields: getFields(gallery)
+                            }
+                            response.render('backend/manageInfoPage', {
+                                title: 'Manage Page',
+                                css: ['adminPanel.css'],
+                                admin: request.session.admin,
+                                fields: fields,
+                                header_back: header_back,
+                                beif_info: beif_info,
+                                paragraphs: paragraphs,
+                                gallery: gallery,
+                                message: getMessageFromSession(request.session)
+                            })
+                        } else setMessageInSession(request, response, 'warrning', 'No Actual information', '/backend/informationpages')
+                    })
+                    .catch(() => {
+                        internalServerError(request, response)
+                    })
+            } else if (!result) {
+                setMessageInSession(request, response, 'unsuccess', `There is not Information Page with name ${name}`, '/backend/informationpages')
+            }
+        })
+        .catch(() => {
+            internalServerError(request, response)
         })
 }

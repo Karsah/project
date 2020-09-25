@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+<div class="container">
+    <%- include('partials/header') %>
+    <%- include('partials/sidebar') %>
+    <div class="content">
+        <%- include('partials/message') %>
+
+        <% if(infoPagesArray.length == 0){ %>
+            <h2>There is not Information Pages yet !</h2>
+        <% } %>
+        <% if(infoPagesArray.length > 0){ %>
+        <ul class="infopages">
+            <% infoPagesArray.forEach(function (item) { %>
+                <li>
+                    <div class="name">
+                        <span><%=item.id%></span>
+                        <span><%=item.header%></span>
+                    </div>
+                    <div class="openinfopage"><a href="informationpages/<%=item.name%>"><i class="fas fa-external-link-alt"></i> Open</a></div>
+                </li>
+            <% }) %>
+        </ul>
+        <% } %>
+    </div>
+
+</div>
+<%- include('partials/footer') %>
+

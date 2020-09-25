@@ -5,11 +5,13 @@ const homeRout = express.Router();
 const infoRout = require('./infoRouter');
 const tourRout = require('./tourRouter');
 const feedbackRout = require('./feedbackRouter');
+const teamRout = require('./teamRouter');
 
 // routes
 homeRout.use('/tourism', tourRout);
 homeRout.use('/feedback', feedbackRout);
 homeRout.use('/information', infoRout)
+homeRout.use('/team', teamRout)
 
 const slider = require('../../models/mainSlider')
 

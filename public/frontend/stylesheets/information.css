@@ -24,14 +24,7 @@
     color: white;
 }
 
-.patagraph-header{
-    font-size: 25px;
-    padding:10px 30px;
-    padding-right: 100px;
-    color: #121212;
-    display: inline-block;
-    border-bottom: 1px solid #121212;
-}
+
 
 .info-paje-container {
     width: 100%;
@@ -91,12 +84,40 @@ main {
     padding: 0 10vw;
 }
 
+.information-section > .info-header > i{
+    cursor: pointer;
+}
+
 .information-section > .info-header > h1 {
     font-size: 64px;
     color: #111;
     padding-bottom: 10px;
     margin-bottom: 20px;
     border-bottom: 1px #c7c7c7 solid;
+}
+
+.paragraph > p {
+    display: none;
+    margin: 10px 0;
+}
+
+.paragraph-header{
+    font-size: 25px;
+    padding:10px 30px;
+    padding-right: 100px;
+    color: #121212;
+    display: inline-block;
+    border-bottom: 1px solid #121212;
+}
+.paragraph-header >  i{
+    margin-left: 15px;
+}
+.paragraph-header >  i:hover{
+    transform: scale(0.9);
+    color: #0082e6;
+}
+.opened > p {
+    display: block;
 }
 
 /* two */
@@ -110,12 +131,6 @@ main {
     background-color: #121315;
     padding: 60px 85px;
     text-align: center;
-}
-
-.firstgalleryheader > p {
-    color: #999;
-    font-size: 14px;
-    text-transform: uppercase;
 }
 
 .firstgalleryheader > h1 {
@@ -133,36 +148,55 @@ main {
 }
 
 .gallery_image {
+    background-image: url("/frontend/images/Aparan.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
     height: auto;
+    object-fit: cover;
 }
 
 /* three */
 
 .three {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding:3vw 10vw ;
     background-color: #fff;
 }
 
+.three > .cards{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+}
+
+.cardsheader {
+    padding: 60px 85px;
+    text-align: center;
+}
+.cardsheader > h1 {
+    font-size: 64px;
+    color: #121212;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px #121212 solid;
+}
+/*card*/
 .card {
     box-shadow: 0 7px 20px rgba(0, 0, 0, 0.9);
-    overflow: hidden;
     position: relative;
     height: 100%;
     width: 100%;
     transition: 0.5s;
 }
-
-
 .card img {
-    height: auto;
+    height: 100%;
     display: block;
+    object-fit: cover;
     width: 100%;
     transition: 0.2s;
 }
@@ -176,7 +210,6 @@ main {
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
 }
-
 .card > .buttons {
     display: none;
     flex-direction: column;
@@ -185,7 +218,6 @@ main {
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
 }
-
 .card > .buttons > a {
     cursor: pointer;
     text-decoration: none;
@@ -202,24 +234,24 @@ main {
     transition: 0.5s;
     padding: 10px;
 }
-
 .card > .buttons > a >  i{
     margin-right: 10px;
 }
-
 .card > .buttons >  a:hover{
     background-color: rgba(0,0,0,0.5);
 }
-
-.ci-1 {
-    background-image: url('../images/aragac.jpg');
-}
-
 .card:hover > img{
     filter: blur(5px);
     transition: 0.2s;
 }
+.card:hover > .card-name{
+    display: none;
+}
+.card:hover > .buttons{
+    display: flex;
+}
 
+/*beif information*/
 .brief-information{
     display: grid;
     grid-template-columns: repeat(3,1fr);
@@ -233,27 +265,12 @@ main {
     color: #ffffff;
     padding: 10px;
 }
-@media screen and (max-width: 900px) {
-    .brief-information{
-        grid-template-columns: repeat(2,1fr);
+
+@media (max-width: 1200px) {
+    .card> .card-name {
+        font-size: 35px;
     }
-}
-@media screen and (max-width: 600px) {
-    .brief-information{
-        grid-template-columns: repeat(1,1fr);
-    }
-}
 
-
-
-
-
-.card:hover > .card-name{
-    display: none;
-}
-.card:hover > .buttons{
-    display: flex;
-}
 @media (max-width: 986px) {
     /* main */
 
@@ -262,11 +279,15 @@ main {
         border-bottom: none;
     }
 
+    .brief-information{
+        grid-template-columns: repeat(2,1fr);
+    }
+
     .mainheader > h2 {
         font-size: 40px;
     }
     /* two */
-    .gallery {
+    .gallery , .three > .cards {
         grid-template-columns: 1fr;
         grid-gap: 20px;
     }
@@ -279,61 +300,22 @@ main {
         justify-content: center;
     }
 
-    .card {
-        width: 100%;
-        height: auto;
-        overflow: visible;
-    }
-
-
-    .card > .buttons , .card > .card-name {
-        background-color: #0082e6;
-        display: flex;
-        flex-direction: row;
-        text-align: center;
-        transform: none;
-        align-items: center;
-        position: static;
-    }
-
-    .card > .buttons > a {
-        width: 40%;
-        margin: 15px auto;
-    }
-
-
-    .card:hover > img{
-        filter: none;
-    }
-
-    .card > .card-name{
-        text-shadow: none;
-    }
-
-    .card:hover > .card-name , .card > .card-name{
-        display: block;
-    }
-    .card:hover > .buttons{
-        display: flex;
     }
 }
 
 @media (max-width: 725px) {
 
-    .firstgalleryheader {
+    .firstgalleryheader, .cardsheader {
         padding: 40px;
     }
 
-    .firstgalleryheader > h1,
+    .firstgalleryheader > h1, .cardsheader > h1,
     .information-section > .info-header > h1{
         font-size: 40px;
     }
-    .firstgalleryheader > p,
     .information-section > p {
         font-size: 16px;
     }
-
-
     .card > .buttons{
         flex-direction: column ;
     }
@@ -345,11 +327,33 @@ main {
     }
 }
 
+@media screen and (max-width: 600px) {
+    .brief-information{
+        grid-template-columns: repeat(1,1fr);
+    }
+
+    .paragraph-header{
+        padding:10px 5px;
+        padding-right: 5px;
+    }
+
+    .card> .card-name {
+        font-size: 30px;
+    }
+
+
+    .card > .buttons > a {
+        margin: 5px;
+        font-size: 16px;
+        padding: 8px;
+        border-top-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+}
+
 
 @media (max-width: 450px) {
     /* main */
-
-
     .mainheader > h1 {
         font-size: 30px;
         padding: 0;
@@ -360,7 +364,7 @@ main {
     }
     /* two */
 
-    .firstgalleryheader > h1,
+    .firstgalleryheader > h1,.cardsheader > h1,
     .information-section > .info-header > h1{
         font-size: 30px;
     }
