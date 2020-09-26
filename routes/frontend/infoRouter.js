@@ -14,7 +14,8 @@ infoRout.get('/cities', function (request, response) {
         css :['style.css']
     })
 });
-infoRout.get('/', infoController.getAragatsotnInfoPage);
+infoRout.get('/:name', infoController.getInfoPage);
+infoRout.get('/', infoController.getInfoPage);
 module.exports = infoRout;
 
 

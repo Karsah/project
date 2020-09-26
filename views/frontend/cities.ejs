@@ -1,4 +1,84 @@
 <%- include('partials/head')%>
-<%- include('partials/head')%>
-<h1><%= title%></h1>
-<%- include('partials/head')%>
+<%- include('partials/nav')%>
+<%if(Array.isArray(mainheader) && mainheader.length == 0){%>
+    <div class="coming-soon">
+        <h1>There is something wrong with the content please try to visit this page later</h1>
+    </div>
+<%}else{%>
+<div class="container" style="background-image: url('/frontend/images/<%=mainheader.bg_image%>')">
+    <div class="mainheader">
+        <h1>Information page</h1>
+        <h2>About <%=mainheader.header%></h2>
+    </div>
+    <div class="info-paje-container">
+        <% let noinfocount = 0 %>
+        <main>
+            <section class="information-section">
+                <div class="info-header">
+                    <h1><%=mainheader.header%></h1>
+                </div>
+                <%if (Array.isArray(beifinfo) && beifinfo.length != 0){%>
+                <div class="brief-information">
+                    <%beifinfo.forEach(function (item) {%>
+                    <div>
+                        <h2><%=item.title%></h2>
+                        <h3><%=item.info%></h3>
+                    </div>
+                    <%})%>
+                </div>
+                <%}else {%>
+                    <%if (noinfocount < 1){%>
+                    <div class="no-info">
+                        <h1>There is something wrong with the content please try to visit this page later</h1>
+                    </div>
+                    <%noinfocount++%>
+                <%}%>
+                <%}%>
+                <%if (Array.isArray(information) && information.length != 0){%>
+
+                <%information.forEach(function (item) {%>
+                <div class="paragraph">
+                    <h3 class="paragraph-header"><%=item.header%><i class="fas fa-sort-amount-down-alt"></i></h3>
+                    <p><%=item.info%></p>
+                </div>
+
+                <%})%>
+
+                <%}else {%>
+                <%if (noinfocount < 1){%>
+                <div class="no-info">
+                    <h1>There is something wrong with the content please try to visit this page later</h1>
+                </div>
+                <%noinfocount++%>
+                <%}%>
+                <%}%>
+
+            </section>
+            <%if (Array.isArray(gallery) && gallery.length != 0){%>
+                <section class="two">
+                    <div class="firstgalleryheader">
+                        <h1>Gallery</h1>
+                    </div>
+                    <div class="gallery">
+                        <% console.log(gallery)%>
+                        <%gallery.forEach(function (item) {%>
+                        <img src="<%=item.gallery_image%>" class="gallery_image ">
+                        <%})%>
+                    </div>
+                </section>
+            <%}else {%>
+            <%if (noinfocount < 1){%>
+            <div class="no-info">
+                <h1>There is something wrong with the content please try to visit this page later</h1>
+            </div>
+            <%noinfocount++%>
+            <%}%>
+            <%}%>
+
+            <script src="frontend/javaScript/openParagraph.js"></script>
+        </main>
+    </div>
+</div>
+<%}%>
+<%- include('partials/footer')%>
+

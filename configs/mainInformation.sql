@@ -15,4 +15,9 @@ create table informationpagegallery(
                                 parent_id int unsigned,
                                 foreign key(parent_id)  references maininformationpages(id),
                                 gallery_image varchar(63) collate   utf8mb4_unicode_ci not null
+);
+create table see_on_map(
+                                id int unsigned auto_increment not null ,
+                                name varchar(63) collate   utf8mb4_unicode_ci not null,
+                                iframe varchar(200) collate utf8mb4_unicode_ci not null
 )

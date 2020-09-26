@@ -1,0 +1,190 @@
+*{
+	padding: 0;
+	margin: 0;
+    box-sizing: border-box;
+    font-family: arial;
+
+}
+
+.container{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-image: url('../images/tourism_back.jpg');
+    /* display: flex; */
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+flex-direction: column;
+}
+
+.mainheader {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.mainheader > h1 {
+    font-size: 84px;
+    color: #fff;
+    padding: 20px 45px;
+    text-transform: uppercase;
+    text-shadow: 0 0 7px #000;
+}
+
+.one{
+	grid-template-columns: repeat(3,minmax(300px,1fr));
+	display: grid;
+	grid-gap: 20px;
+    background-color: #fff;
+    padding: 90px;
+    width: 100%;
+    text-align: center;
+}
+
+.one > .header{
+    grid-column: 1/-1;
+    font-size: 70px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card {
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    max-width: 550px;
+    min-width: 300px;
+    transition: 0.5s;
+}
+
+
+.card img {
+    height: auto;
+    display: block;
+    width: 100%;
+    transition: 0.2s;
+    height: 100%;
+    object-fit: cover;
+}
+.card> .card-name {
+    font-size: 50px;
+    display: flex;
+    color: #fff;
+    position: absolute;
+    text-shadow: 0 0 10px #000;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.card > .buttons {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.card > .buttons > a {
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    border: 2px solid #fff;
+    margin: 15px 0;
+    text-align: center;
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    color: #ffffff;
+    font-size: 20px;
+    width: 100%;
+    line-height: 2;
+    transition: 0.5s;
+    padding: 10px 20px;
+}
+
+.card > .buttons > a >  i{
+    margin-right: 10px;
+}
+
+.card > .buttons >  a:hover{
+    background-color: rgba(0,0,0,0.5);
+}
+
+
+.card:hover > img{
+    filter: blur(5px);
+    transition: 0.2s;
+}
+
+.card:hover > .card-name{
+    display: none;
+}
+.card:hover > .buttons{
+    display: flex;
+}
+
+.two{
+    background:none ;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.coming-soon{
+    grid-column: 1/-1;
+    font-size: 25px;
+    padding: 15px 25px;
+    background-color: #0082e3;
+}
+
+.hrefs{
+    padding: 200px 90px;
+    grid-template-columns: repeat(3,minmax(300px,1fr));
+	display: grid;
+	grid-gap: 20px;
+    padding: 90px;
+    width: 100%;
+    text-align: center;
+}
+.hrefs div{
+
+}
+
+@media (max-width:1350px){
+    .one{
+        grid-template-columns: repeat(2,minmax(300px,1fr));
+
+    }
+}
+@media (max-width:920px){
+    .one{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;    
+    }
+    
+    .mainheader > h1 {
+        font-size: 70px;
+    }
+    .one > .header{
+        font-size: 50px;
+    }
+}
+@media (max-width:600px){
+    .one{
+        padding: 30px;  
+    }
+}

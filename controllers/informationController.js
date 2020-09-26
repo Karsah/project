@@ -8,23 +8,28 @@ function internalServerError(response) {
     })
 }
 
-exports.getAragatsotnInfoPage = function(request, response) {
-    Information.getInfoPage('aragatsotn')
+exports.getInfoPage = function(request, response) {
+    let name = request.params.name ? request.params.name:'aragatsotn'
+    Information.getInfoPage(name)
         .then((result)=>{
             let mainheader = result.mainheader[0]
-            let information = result.information
+            let information = result.paragraphs
             let gallery = result.gallery
             let beifinfo = result.beifinfo
-
-            response.render('frontend/information', {
-                title: 'Information',
+            console.log('mainnn',mainheader)
+            let renderObj = {
+                title: `${mainheader.header}`,
                 pageName:'information',
                 css:['information.css','style.css'],
                 mainheader:mainheader,
                 information:information,
                 gallery:gallery,
                 beifinfo:beifinfo
-            })
+            }
+            if (name == 'aragatsotn')
+            response.render('frontend/information',renderObj )
+            else             response.render('frontend/cities',renderObj )
+
         })
         .catch(()=>internalServerError(response))
 }

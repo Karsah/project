@@ -4,61 +4,66 @@ module.exports = class Information {
 
     static getInfoPage(name) {
         return new Promise((resolve, reject) => {
-                const sql = 'select id, header,bg_image from info_header_back where name = ?'
-                con.query(sql, [name])
+                this.isThereInfoPage(name)
                     .then((result) => {
-                        let allObjects = {}
-                        if (result[0].length > 0) {
-                            let parentid = result[0][0].id
-                            delete result[0][0].id
-                            allObjects.mainheader = result[0]
-                            let sql = 'select header,info from info_paragraphs where parent_id = ?'
-                            con.query(sql, [parentid])
-                                .then((result) => {
-                                    if (result[0].length > 0) {
-                                        allObjects.information = result[0]
-                                        let sql = 'select gallery_image from informationpagegallery where parent_id = ?'
-                                        con.query(sql, [parentid])
+                        if (result) {
+                            let allInfo = {
+                                maininfo: [],
+                                beifinfo: [],
+                                paragraphs: [],
+                                gallery: [],
+                            }
+                            const sql = 'select id, header,bg_image from info_header_back where name = ?'
+                            new Promise((res) => {
+                                con.query(sql, [name])
+                                    .then((result)=>{
+                                        if (result[0].length > 0) {
+                                            let parentid = result[0][0].id
+                                            delete result[0][0].id
+                                            allInfo.mainheader = result[0]
+                                            res(parentid)
+                                        }
+                                    })
+                            }).then((id) => {
+                                let sqlPar = 'select header,info from info_paragraphs where parent_id = ?'
+                                let sqlBeif = 'select title,info from info_beif where parent_id = ?'
+                                let sqlGall = 'select gallery_image from informationpagegallery where parent_id = ?'
+                                con.query(sqlBeif, [id])
+                                    .then((result) => {
+                                        if (result[0].length > 0) {
+                                            allInfo.beifinfo = result[0]
+                                        }
+                                        con.query(sqlPar, [id])
                                             .then((result) => {
                                                 if (result[0].length > 0) {
-                                                    allObjects.gallery = result[0]
-                                                    let sql = 'select title,info from info_beif where parent_id = ?'
-                                                    con.query(sql, [parentid])
-                                                        .then((result) => {
-                                                            if (result[0].length > 0) {
-                                                                allObjects.beifinfo = result[0]
-                                                                resolve(allObjects)
-                                                            } else {
-                                                                resolve([])
-                                                            }
-                                                        })
-                                                        .catch((err) => {
-                                                            console.log(err)
-                                                            reject()
-                                                        })
-                                                } else {
-                                                    resolve([])
+                                                    allInfo.paragraphs = result[0]
                                                 }
+                                                con.query(sqlGall, [id])
+                                                    .then((result) => {
+                                                        if (result[0].length > 0) {
+                                                            allInfo.gallery = result[0]
+                                                        }
+                                                        resolve(allInfo)
+                                                    })
+                                                    .catch((err) => {
+                                                        console.log(err)
+                                                        reject()
+                                                    })
                                             })
                                             .catch((err) => {
                                                 console.log(err)
                                                 reject()
                                             })
-                                    } else {
-                                        resolve([])
-                                    }
-                                })
-                                .catch((err) => {
-                                    console.log(err)
-                                    reject()
-                                })
+                                    })
+                                    .catch((err) => {
+                                        console.log(err)
+                                        reject()
+                                    })
+                            })
+
                         } else {
-                            resolve([])
+                            reject()
                         }
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                        reject()
                     })
             }
         )

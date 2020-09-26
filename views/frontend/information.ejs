@@ -11,8 +11,8 @@
         <h2>About <%=mainheader.header%></h2>
     </div>
     <div class="info-paje-container">
+        <%let noinfocount = 0%>
         <main>
-
             <section class="information-section">
                 <div class="info-header">
                     <h1><%=mainheader.header%></h1>
@@ -26,7 +26,15 @@
                     </div>
                     <%})%>
                 </div>
+                <%}else {%>
+                <%if (noinfocount < 1){%>
+                <div class="no-info">
+                    <h1>There is something wrong with the content please try to visit this page later</h1>
+                </div>
+                <%noinfocount++%>
                 <%}%>
+                <%}%>
+
                 <%if (Array.isArray(information) && information.length != 0){%>
 
                 <%information.forEach(function (item) {%>
@@ -37,10 +45,17 @@
 
                 <%})%>
 
+                <%}else {%>
+                <%if (noinfocount < 1){%>
+                <div class="no-info">
+                    <h1>There is something wrong with the content please try to visit this page later</h1>
+                </div>
+                <%noinfocount++%>
                 <%}%>
+                <%}%>
+
             </section>
             <%if (Array.isArray(gallery) && gallery.length != 0){%>
-
             <section class="two">
                 <div class="firstgalleryheader">
                     <h1>Gallery</h1>
@@ -52,14 +67,22 @@
                     <%})%>
                 </div>
             </section>
-                <%}%>
+            <%}else {%>
+            <%if (noinfocount < 1){%>
+            <div class="no-info">
+                <h1>There is something wrong with the content please try to visit this page later</h1>
+            </div>
+            <%noinfocount++%>
+            <%}%>
+            <%}%>
+
             <section class="three">
                 <div class="cardsheader">
                     <h1>Cities and Rural communications</h1>
                 </div>
                 <div class="cards">
                     <div class="card">
-                        <img src="frontend/images/pic03.jpg" class="gallery_image ">
+                        <img src="frontend/images/Ashtarak.jpg" class="gallery_image ">
                         <div class="card-name">Ashtarak</div>
                         <div class="buttons">
                             <a href="information/ashtarak"><i class="fab fa-readme"></i>Read More</a>
@@ -75,7 +98,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <img src="frontend/images/pic03.jpg" class="gallery_image ">
+                        <img src="frontend/images/Talin.jpg" class="gallery_image ">
                         <div class="card-name">Talin</div>
                         <div class="buttons">
                             <a href="information/talin"><i class="fab fa-readme"></i>Read More</a>
@@ -83,7 +106,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <img src="frontend/images/pic03.jpg" class="gallery_image ">
+                        <img src="frontend/images/Byurakan.jpg" class="gallery_image ">
                         <div class="card-name">Rural Communications</div>
                         <div class="buttons">
                             <a href="information/ruralcommunications"><i class="fab fa-readme"></i>Read More</a>

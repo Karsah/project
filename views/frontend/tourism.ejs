@@ -1,4 +1,37 @@
-<%- include('partials/head')%>
-<%- include('partials/nav')%>
-<h1><%= title%></h1>
-<%- include('partials/footer')%>
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="container">
+    <div class="mainheader">
+        <h1>Tourism</h1>
+    </div>
+    <section class="one">
+        <div class="header">Main Sections</div>
+        <div class="card">
+            <img src="frontend/images/ekexeci.jpg" />
+            <div class="card-name">Churches</div>
+            <div class="buttons">
+                <a href="/tourism/churches">Go to section</a>
+
+            </div>
+        </div>
+        <div class="card">
+            <img src="frontend/images/Veratsnundmemorial.jpg" />
+            <div class="card-name">Memorials</div>
+            <div class="buttons">
+                <a href="/tourism/monuments">Go to section</a>
+
+            </div>
+        </div>
+        <div class="card">
+            <img src="frontend/images/ekexeci.jpg" />
+            <div class="card-name">Sights</div>
+            <div class="buttons">
+                <a href="/tourism/sights">Go to section</a>
+
+            </div>
+        </div>
+
+    </section>
+</div>
+<%- include('partials/footer') %>
